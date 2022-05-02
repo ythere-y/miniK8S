@@ -1,9 +1,9 @@
 package main
 
 import (
-	"minik8s/lab"
+	"minik8s/service"
 )
 
 func main() {
-	lab.Labmain()
+	service.SerMain()
 }
