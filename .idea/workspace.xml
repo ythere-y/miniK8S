@@ -4,17 +4,12 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ff7eaf14-29e1-400c-9715-c03be26b0e72" name="Changes" comment="修改项目名字、配置">
-      <change afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/core/types.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/time.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/cmd_service.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab/Nullfun.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/minik8s.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/minik8s.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2022_5_2_11_37__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2022_5_2_11_37__Changes_.xml" afterDir="false" />
+    <list default="true" id="ff7eaf14-29e1-400c-9715-c03be26b0e72" name="Changes" comment="增加创建service的框架，具体步骤待完善">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/type.go" beforeDir="false" afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/type.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apimachinery/pkg/apis/core/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/core/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/type.go" beforeDir="false" afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cmd_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cmd_service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/Service.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/Service.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +35,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="28VK8BbCFjyZjGTG5JVBSk09uXv" />
   <component name="ProjectViewState">
@@ -122,7 +120,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="基本配置、运行" />
     <MESSAGE value="修改项目名字、配置" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改项目名字、配置" />
+    <MESSAGE value="增加创建service的框架，具体步骤待完善" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加创建service的框架，具体步骤待完善" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

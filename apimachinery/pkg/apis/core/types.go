@@ -1,6 +1,9 @@
 package core
 
-import "minik8s/apimachinery/pkg/apis/meta"
+import (
+	"k8s.io/apimachinery/pkg/util/intstr"
+	"minik8s/apimachinery/pkg/apis/meta"
+)
 
 /*
 Copyright 2014 The Kubernetes Authors.
@@ -3939,7 +3942,7 @@ type ServicePort struct {
 	// of the 'port' field is used (an identity map).
 	// This field is ignored for services with clusterIP=None, and should be
 	// omitted or set equal to the 'port' field.
-	//TargetPort intstr.IntOrString
+	TargetPort intstr.IntOrString
 
 	// The port on each node on which this service is exposed.
 	// Default is to auto-allocate a port if the ServiceType of this Service requires one.

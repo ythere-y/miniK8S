@@ -2,7 +2,8 @@ package cmd
 
 import (
 	"fmt"
-	"minik8s/apimachinery/pkg/apis/meta"
+	"k8s.io/apimachinery/pkg/util/intstr"
+	"minik8s/apimachinery/pkg/apis/core"
 	"minik8s/service"
 
 	"github.com/spf13/cobra"
@@ -34,24 +35,24 @@ var serviceCreateCmd = cobra.Command{
 
 		// 新的 Service 的定义
 		var newService service.Service
-		var newServiceSpec meta.ServiceSpec
+		var newServiceSpec core.ServiceSpec
 		// 设置标签选择器
 		newServiceSpec.Selector = map[string]string{
 			"app": "echo-go",
 		}
 
 		// 设置 Service 端口
-		//newServiceSpec.Ports = []v1.ServicePort{
-		//	v1.ServicePort{
-		//		Name:       fmt.Sprintf("tcp-9090-9090-%s", serviceCreateName),
-		//		Port:       9090,
-		//		TargetPort: intstr.FromInt(9090),
-		//		Protocol:   v1.ProtocolTCP,
-		//	},
-		//}
+		newServiceSpec.Ports = []core.ServicePort{
+			core.ServicePort{
+				Name:       fmt.Sprintf("tcp-9090-9090-%s", serviceCreateName),
+				Port:       9090,
+				TargetPort: intstr.FromInt(9090),
+				Protocol:   core.ProtocolTCP,
+			},
+		}
 
 		// 设置 ServiceType 为 NodePort
-		//newServiceSpec.Type = v1.ServiceTypeNodePort
+		newServiceSpec.Type = core.ServiceTypeNodePort
 
 		// 设置 Service 的各个参数
 		newService.Spec = newServiceSpec
