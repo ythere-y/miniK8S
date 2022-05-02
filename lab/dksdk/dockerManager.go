@@ -129,6 +129,19 @@ func RemoveContainer(containerID string, cli *client.Client) (string, error) {
 	return containerID, err
 }
 
+// docker ps -a
+func ListContainer(cli *client.Client) {
+	containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{All:true})
+	if err != nil {
+		panic(err)
+
+	}
+	fmt.Println("container.ID,\t\t\t\t\t\t\tcontainer.Names,    container.Created,   container.Status,    container.Ports")
+	for _, container := range containers {
+		fmt.Println(container.ID,container.Names,container.Created,container.Status,container.Ports)
+	}
+}
+
 // 后台运行容器，相当于键入 docker run -d bfirsh/reticulate-splines
 func CreateContainerInBackground()  {
 	ctx := context.Background()
