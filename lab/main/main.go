@@ -1,7 +1,7 @@
 package main
 
 import (
-	"minik/lab/dksdk"
+	"minik8s/lab/dksdk"
 )
 
 func main() {
@@ -12,7 +12,6 @@ func main() {
 	//}
 	//
 	//fmt.Println(cl.ImageList(context.Background(), types.ImageListOptions{}))
-
 
 	dksdk.CreateContainerInBackground()
 
