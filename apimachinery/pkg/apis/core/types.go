@@ -5,6 +5,11 @@ import (
 	"minik8s/apimachinery/pkg/apis/meta"
 )
 
+func (ser Service) Create(newService Service) (Service, error) {
+
+	return newService, nil
+}
+
 /*
 Copyright 2014 The Kubernetes Authors.
 

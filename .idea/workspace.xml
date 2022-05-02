@@ -4,10 +4,14 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1afc6e72-037f-423e-8c68-d787d2ccaede" name="Changes" comment="项目配置文件">
+    <list default="true" id="1afc6e72-037f-423e-8c68-d787d2ccaede" name="Changes" comment="更新配置文件，不知道为什么每次merge都要重新配置">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apimachinery/pkg/apis/core/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/core/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/meta.go" beforeDir="false" afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/meta.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cmd_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cmd_service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/Service.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/ServiceController.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/ServiceController.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,9 +106,21 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="项目配置文件" />
-    <option name="LAST_COMMIT_MESSAGE" value="项目配置文件" />
+    <MESSAGE value="更新配置文件，不知道为什么每次merge都要重新配置" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新配置文件，不知道为什么每次merge都要重新配置" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/cmd/cmd_service.go</url>
+          <line>17</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

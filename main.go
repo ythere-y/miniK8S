@@ -1,14 +1,17 @@
 package main
 
 import (
-	"minik8s/lab/dksdk"
-	"github.com/docker/docker/client"
 	"fmt"
+	"github.com/docker/docker/client"
+	"minik8s/lab/dksdk"
+	"minik8s/service"
 	"time"
 )
 
 func main() {
-	//service.SerMain()
+	service.SerMain()
+	return
+
 	cli, err := client.NewClientWithOpts(client.WithVersion("1.38"))
 	if err != nil {
 		panic(err)

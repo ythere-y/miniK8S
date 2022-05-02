@@ -18,7 +18,7 @@ limitations under the License.
 
 // TODO: move this, Object, List, and Type to a different package
 type ObjectMetaAccessor interface {
-	GetObjectMeta() Object
+	//GetObjectMeta() Object
 }
 
 // ListMetaAccessor retrieves the list interface from an object
@@ -41,16 +41,16 @@ type Common interface {
 // internal API objects. Attempting to set or retrieve a field on an object that does
 // not support that field will be a no-op and return a default value.
 // TODO: move this, and TypeMeta and ListMeta, to a different package
-//type ListInterface interface {
-//	GetResourceVersion() string
-//	SetResourceVersion(version string)
-//	GetSelfLink() string
-//	SetSelfLink(selfLink string)
-//	GetContinue() string
-//	SetContinue(c string)
-//	GetRemainingItemCount() *int64
-//	SetRemainingItemCount(c *int64)
-//}
+type ListInterface interface {
+	//	GetResourceVersion() string
+	//	SetResourceVersion(version string)
+	//	GetSelfLink() string
+	//	SetSelfLink(selfLink string)
+	//	GetContinue() string
+	//	SetContinue(c string)
+	//	GetRemainingItemCount() *int64
+	//	SetRemainingItemCount(c *int64)
+}
 
 // Type exposes the type and APIVersion of versioned or internal API objects.
 // TODO: move this, and TypeMeta and ListMeta, to a different package
