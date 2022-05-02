@@ -13,11 +13,14 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	id := dksdk.CreateContainer(cli, "library/alpine", []string{"echo", "hello world"}, "testCreate", nil, nil)
-	fmt.Printf("%s\n", id)
+	id := dksdk.CreateContainer(cli, "library/nginx", nil, "testCreate", nil, nil)
 	time.Sleep(time.Second * 1)
 	dksdk.StartContainer(id, cli)
-	time.Sleep(time.Second * 2)
+	time.Sleep(time.Second * 1)
+	flag := dksdk.IsRun(cli, id)
+	if flag {
+		fmt.Printf("container %s is running\n", id)
+	}
 	dksdk.ListContainer(cli)
 	time.Sleep(time.Second * 1)
 	dksdk.StopContainer(id, cli)

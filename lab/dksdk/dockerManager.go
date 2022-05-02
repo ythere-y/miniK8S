@@ -142,6 +142,18 @@ func ListContainer(cli *client.Client) {
 	}
 }
 
+func IsRun(cli *client.Client, containerID string) bool {
+	stat, err := cli.ContainerInspect(context.Background(), containerID)
+	if err != nil {
+		return false
+	}
+	if !stat.State.Running {
+		return false
+	}
+	return true
+}
+
+
 // 后台运行容器，相当于键入 docker run -d bfirsh/reticulate-splines
 func CreateContainerInBackground()  {
 	ctx := context.Background()
