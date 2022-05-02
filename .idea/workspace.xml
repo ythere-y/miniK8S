@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ff7eaf14-29e1-400c-9715-c03be26b0e72" name="Changes" comment="修改项目名字、配置">
-      <change afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/meta.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/type.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/Service.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/Service.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/core/types.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/time.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/cmd_service.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/Nullfun.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/minik8s.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/minik8s.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2022_5_2_11_37__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2022_5_2_11_37__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/type.go" beforeDir="false" afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/type.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +107,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="dev" />
+                        <option value="service_api" />
                       </list>
                     </value>
                   </entry>
