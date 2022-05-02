@@ -1,9 +1,13 @@
 package main
 
 import (
-	"minik8s/service"
+	podm "minik8s/src/pod"
 )
 
 func main() {
-	service.SerMain()
+	file := "podtest.yaml"
+	podm.CreatePod(file)
+	podm.GetAllPodInfo()
+	podm.RunPodByName("testpod")
+	podm.GetAllPodInfo()
 }
