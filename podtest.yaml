@@ -1,0 +1,22 @@
+kind: Pod
+metadata: 
+  name: testpod
+spec:
+  containers: [
+    {
+      image: bfirsh/reticulate-splines,
+      command: docker run,
+      cpu: 1,
+      memory: 512,
+      volumn: vol1,
+      port: 10081,
+    },
+    {
+      image: bfirsh/reticulate-splines,
+      command: docker run,
+      cpu: 1,
+      memory: 512,
+      volumn: vol2,
+      port: 10082,
+    }
+  ]
