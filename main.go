@@ -1,9 +1,9 @@
 package main
 
 import (
-	"minik8s/lab/dksdk"
-	"github.com/docker/docker/client"
 	"fmt"
+	"github.com/docker/docker/client"
+	"minik8s/lab/dksdk"
 	"time"
 )
 
@@ -13,7 +13,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	id := dksdk.CreateContainer(cli, "library/nginx", nil, "testCreate", nil, nil)
+	source := dksdk.Resource{
+		CPUShares: 2,
+		Memory:    128000000,
+	}
+	id := dksdk.CreateContainer(cli, "library/nginx", nil, source, "testCreate", nil, nil)
 	time.Sleep(time.Second * 1)
 	dksdk.StartContainer(id, cli)
 	time.Sleep(time.Second * 1)
@@ -21,7 +25,7 @@ func main() {
 	if flag {
 		fmt.Printf("container %s is running\n", id)
 	}
-	dksdk.ContainerStat(cli, id)
+	//dksdk.ContainerStat(cli, id)
 	dksdk.ListContainer(cli)
 	time.Sleep(time.Second * 1)
 	dksdk.StopContainer(id, cli)
