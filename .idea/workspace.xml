@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1afc6e72-037f-423e-8c68-d787d2ccaede" name="Changes" comment="更新配置文件，不知道为什么每次merge都要重新配置">
+    <list default="true" id="1afc6e72-037f-423e-8c68-d787d2ccaede" name="Changes" comment="基本流程OK，命令行解析还有待完善">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apimachinery/pkg/apis/core/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/core/types.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/meta.go" beforeDir="false" afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/meta/meta.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/cmd_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cmd_service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/Service.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/service/ServiceController.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/ServiceController.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,7 +22,7 @@
       </list>
     </option>
   </component>
-  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../../Download/package/go" />
+  <component name="GOROOT" url="file://C:/Program Files/Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -46,22 +43,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.format.on.save.advertiser.fired&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Schoolwork/2022_spring/CloudComputing/labs/Minik8s/minik8s/lab&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Runtime.Targets.Configurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "C:/Users/HC",
+    "settings.editor.selected.configurable": "Runtime.Targets.Configurable"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Go Build.go build minik8s">
     <configuration name="go build minik8s" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="minik8s" />
@@ -107,20 +105,10 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="项目配置文件" />
     <MESSAGE value="更新配置文件，不知道为什么每次merge都要重新配置" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新配置文件，不知道为什么每次merge都要重新配置" />
+    <MESSAGE value="基本流程OK，命令行解析还有待完善" />
+    <option name="LAST_COMMIT_MESSAGE" value="基本流程OK，命令行解析还有待完善" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/cmd/cmd_service.go</url>
-          <line>17</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

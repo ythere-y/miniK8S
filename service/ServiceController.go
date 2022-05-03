@@ -10,7 +10,7 @@ type ServiceController struct {
 
 func (s ServiceController) CreateService() {
 	fmt.Println("create Service")
-	cmd.CreatServerTest()
+	cmd.CreatServiceTest()
 }
 
 func SerMain() {

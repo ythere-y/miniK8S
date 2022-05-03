@@ -10,6 +10,14 @@ func (ser Service) Create(newService Service) (Service, error) {
 	return newService, nil
 }
 
+func (ser Service) Get(serviceUpdateName string, options meta.GetOptions) (Service, error) {
+	return ser, nil
+}
+
+func (ser Service) Update(newService Service) (Service, error) {
+	return newService, nil
+}
+
 /*
 Copyright 2014 The Kubernetes Authors.
 
