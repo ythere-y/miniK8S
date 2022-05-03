@@ -9,6 +9,7 @@ import (
 	"io"
 	"os"
 	"time"
+	"bytes"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
@@ -151,6 +152,28 @@ func IsRun(cli *client.Client, containerID string) bool {
 		return false
 	}
 	return true
+}
+
+func ContainerStat(cli *client.Client, containerID string) {
+	ctx := context.Background()
+	containerStats, err := cli.ContainerStats(ctx, containerID ,false)
+	if err != nil {
+		panic(err)
+	}
+	/**
+	ContainerStats的返回的结构如下 注意这个Body的类型是io.ReadCloser 好奇怪的类型 下面我们给他转成json
+	type ContainerStats struct {
+		Body   io.ReadCloser `json:"body"`
+		OSType string        `json:"ostype"`
+	}
+	*/
+	fmt.Println(containerStats)
+	fmt.Println("containerStats.Body的内容是: ",containerStats.Body)
+	buf := new(bytes.Buffer)
+	//io.ReadCloser 转换成 Buffer 然后转换成json字符串
+	buf.ReadFrom(containerStats.Body)
+	newStr := buf.String()
+	fmt.Printf(newStr)
 }
 
 

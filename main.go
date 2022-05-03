@@ -21,6 +21,7 @@ func main() {
 	if flag {
 		fmt.Printf("container %s is running\n", id)
 	}
+	dksdk.ContainerStat(cli, id)
 	dksdk.ListContainer(cli)
 	time.Sleep(time.Second * 1)
 	dksdk.StopContainer(id, cli)
