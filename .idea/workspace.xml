@@ -4,17 +4,15 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1afc6e72-037f-423e-8c68-d787d2ccaede" name="Changes" comment="用同样的方式增加update流程">
-      <change afterPath="$PROJECT_DIR$/lab/cmd/add.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab/cmd/root.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab/cmd/server.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab/cmd/version.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab/cobraT.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/stringUtils.go" afterDir="false" />
+    <list default="true" id="1afc6e72-037f-423e-8c68-d787d2ccaede" name="Changes" comment="初步写了一个命令行交互的过程">
+      <change afterPath="$PROJECT_DIR$/K8SClient/k8sClient.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/cmd/pod.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/cmd/service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/cmd_service.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/cmd/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/cmd/root.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/cmd/server.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/ServiceController.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/ServiceController.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +106,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -118,7 +128,8 @@
     <MESSAGE value="项目配置文件" />
     <MESSAGE value="更新配置文件，不知道为什么每次merge都要重新配置" />
     <MESSAGE value="基本流程OK，命令行解析还有待完善" />
-    <option name="LAST_COMMIT_MESSAGE" value="基本流程OK，命令行解析还有待完善" />
+    <MESSAGE value="初步写了一个命令行交互的过程" />
+    <option name="LAST_COMMIT_MESSAGE" value="初步写了一个命令行交互的过程" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

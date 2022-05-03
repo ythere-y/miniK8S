@@ -5,10 +5,9 @@ import (
 )
 
 var RootCmd = &cobra.Command{
-	Use:   "demo",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:`,
+	Use:   "minik",
+	Short: "minik8s命令行系统",
+	Long:  `可以通过命令行和minik8s系统交互`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	//    Run: func(cmd *cobra.Command, args []string) { },
@@ -16,7 +15,6 @@ examples and usage of using your application. For example:`,
 
 func init() {
 	RootCmd.AddCommand(addCmd)
-
-	RootCmd.AddCommand(versionCmd)
-	RootCmd.AddCommand(serveCmd)
+	RootCmd.AddCommand(ServiceCmd)
+	RootCmd.AddCommand(PodCmd)
 }
