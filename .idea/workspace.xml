@@ -4,11 +4,17 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1afc6e72-037f-423e-8c68-d787d2ccaede" name="Changes" comment="基本流程OK，命令行解析还有待完善">
+    <list default="true" id="1afc6e72-037f-423e-8c68-d787d2ccaede" name="Changes" comment="用同样的方式增加update流程">
+      <change afterPath="$PROJECT_DIR$/lab/cmd/add.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/cmd/root.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/cmd/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/cmd/version.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/cobraT.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/stringUtils.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apimachinery/pkg/apis/core/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/core/types.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cmd_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cmd_service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/ServiceController.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/ServiceController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +31,7 @@
   <component name="GOROOT" url="file://C:/Program Files/Go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/go.mod" root0="FORCE_HIGHLIGHTING" />
@@ -37,7 +44,7 @@
   </component>
   <component name="ProjectId" id="28TJ6SfQf7cwneJlHYwPfoy8wnB" />
   <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="1" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -57,13 +64,14 @@
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
     "last_opened_file_path": "C:/Users/HC",
-    "settings.editor.selected.configurable": "Runtime.Targets.Configurable"
+    "settings.editor.selected.configurable": "project.propVCSSupport.Confirmation"
   }
 }]]></component>
   <component name="RunManager" selected="Go Build.go build minik8s">
     <configuration name="go build minik8s" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="minik8s" />
       <working_directory value="$PROJECT_DIR$" />
+      <parameters value="add" />
       <kind value="PACKAGE" />
       <package value="minik8s" />
       <directory value="$PROJECT_DIR$" />
@@ -81,6 +89,10 @@
       <option name="build_on_remote_target" value="true" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Go Build.go build " />
+      <item itemvalue="Go Build.go build minik8s" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.go build minik8s" />
@@ -110,5 +122,16 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/utils/stringUtils.go</url>
+          <line>13</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

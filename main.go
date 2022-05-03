@@ -1,15 +1,46 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"github.com/docker/docker/client"
+	"minik8s/lab/cmd"
 	"minik8s/lab/dksdk"
-	"minik8s/service"
+	"minik8s/utils"
+	"os"
+	"strings"
 	"time"
 )
 
+var rootName string
+
 func main() {
-	service.SerMain()
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Println("Please input your command, type 'quit' to exit.")
+	for true {
+		fmt.Print("-> ")
+		input, err := reader.ReadString('\n')
+		if err != nil {
+			panic(fmt.Errorf("fatal error: %w \n", err))
+		}
+		input = strings.TrimRight(input, "\r\n")
+		if input == "quit" {
+			break
+		}
+		rootName = cmd.RootCmd.Name()
+		if strings.Compare(utils.FirstWord(input), rootName) == 0 {
+			input = utils.CutFirst(input, rootName)
+			fmt.Println("Executing command ...")
+
+			cmd.RootCmd.SetArgs(strings.Fields(input))
+
+			err = cmd.RootCmd.Execute()
+		} else {
+			fmt.Printf("shold start with %v\n", rootName)
+		}
+
+	}
+
 	return
 
 	cli, err := client.NewClientWithOpts(client.WithVersion("1.38"))
