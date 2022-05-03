@@ -1,46 +1,21 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"github.com/docker/docker/client"
-	"minik8s/lab/cmd"
+	"minik8s/lab/circle"
 	"minik8s/lab/dksdk"
-	"minik8s/utils"
-	"os"
-	"strings"
 	"time"
 )
 
 var rootName string
 
 func main() {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("Please input your command, type 'quit' to exit.")
-	for true {
-		fmt.Print("-> ")
-		input, err := reader.ReadString('\n')
-		if err != nil {
-			panic(fmt.Errorf("fatal error: %w \n", err))
-		}
-		input = strings.TrimRight(input, "\r\n")
-		if input == "quit" {
-			break
-		}
-		rootName = cmd.RootCmd.Name()
-		if strings.Compare(utils.FirstWord(input), rootName) == 0 {
-			input = utils.CutFirst(input, rootName)
-			fmt.Println("Executing command ...")
+	//cmd.RootCmdRun()// 关于命令行的测试
 
-			cmd.RootCmd.SetArgs(strings.Fields(input))
+	//service.SerReadTest()	// 关于读取yamle文件建立service的测试
 
-			err = cmd.RootCmd.Execute()
-		} else {
-			fmt.Printf("shold start with %v\n", rootName)
-		}
-
-	}
-
+	circle.CircleTest() // 关于循环import的测试
 	return
 
 	cli, err := client.NewClientWithOpts(client.WithVersion("1.38"))

@@ -6,37 +6,40 @@ import (
 	"minik8s/K8SClient"
 	"minik8s/apimachinery/pkg/apis/core"
 	"minik8s/apimachinery/pkg/apis/meta"
+	"minik8s/utils/miniyaml"
 )
 
+var serviceController1 = ServiceController{}
+
 type ServiceController struct {
+	ServiceList []MiniService
 }
 
 func (s ServiceController) CreateService() {
 	fmt.Println("create Service")
-	CreatServiceTest()
-}
-
-func SerMain() {
-
-	var serviceController1 ServiceController
-
-	serviceController1.CreateService()
-
-}
-
-var namespace = "hello"
-
-func CreatServiceTest() {
-	// 创建 Service 的选项参数
-	//serviceCreateCmd.Flags().StringVar(&serviceCreateName, "name", "", "service name")
 	ActuallyCreateRun()
 }
 
-func UpdateServiceTest() {
-	// 更新 Service 的选项参数
-	//serviceUpdateCmd.Flags().StringVar(&serviceUpdateName, "name", "", "service name")
-	ActuallyUpdateRun()
+func ServiceTestMain() {
+	serviceController1.CreateService()
 }
+
+func BuildService(file string) {
+	serviceYaml := miniyaml.ParseServiceYaml(file)
+	service := miniyaml.ServiceYamlToService(serviceYaml)
+	serviceController1.ServiceList = append(serviceController1.ServiceList, service)
+}
+func GetAllServicInfo() {
+	for _, service := range serviceController1.ServiceList {
+		service.Display()
+	}
+}
+func CreateService(file string) {
+	//TODO:完成这个函数的具体内容
+	//ActuallyCreateRun()
+}
+
+var namespace = "hello"
 
 var serviceCreateName string
 var serviceUpdateName string
@@ -122,4 +125,7 @@ func ActuallyCreateRun() {
 
 	fmt.Println("Create service success!")
 
+}
+
+func init() {
 }

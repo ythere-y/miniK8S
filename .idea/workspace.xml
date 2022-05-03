@@ -4,14 +4,23 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1afc6e72-037f-423e-8c68-d787d2ccaede" name="Changes" comment="初步写了一个命令行交互的过程">
-      <change afterPath="$PROJECT_DIR$/K8SClient/k8sClient.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab/cmd/pod.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab/cmd/service.go" afterDir="false" />
+    <list default="true" id="efb65171-e989-417d-acba-4e61fbf72150" name="Changes" comment="初步写了一个命令行交互的过程">
+      <change afterPath="$PROJECT_DIR$/cmd/root.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/circle/a/a.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/circle/a/f/f.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/circle/b/b.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/circle/c/c.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/circle/circleTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/service/service.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/servicetest.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/miniyaml/ParseYaml.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/cmd_service.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/cmd/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/cmd/root.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/cmd/server.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/cmd/add.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/add.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/cmd/pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/pod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/cmd/root.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/cmd/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/cmd/version.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/version.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/ServiceController.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/ServiceController.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,10 +70,22 @@
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "C:/Users/HC",
+    "last_opened_file_path": "D:/06-2021Spring/云操作系统设计与实践/Minik8s_lab/minik8s",
     "settings.editor.selected.configurable": "project.propVCSSupport.Confirmation"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s\lab\circle\a" />
+      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s\lab\circle\b" />
+      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s" />
+      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s\lab" />
+      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s\cmd" />
+    </key>
+  </component>
   <component name="RunManager" selected="Go Build.go build minik8s">
     <configuration name="go build minik8s" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="minik8s" />
@@ -138,9 +159,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/utils/stringUtils.go</url>
-          <line>13</line>
-          <option name="timeStamp" value="10" />
+          <url>file://$PROJECT_DIR$/service/service.go</url>
+          <line>58</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
