@@ -9,6 +9,7 @@ import (
 	"io"
 	"os"
 	"time"
+	"bytes"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
@@ -128,6 +129,53 @@ func RemoveContainer(containerID string, cli *client.Client) (string, error) {
 	//log(err)
 	return containerID, err
 }
+
+// docker ps -a
+func ListContainer(cli *client.Client) {
+	containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{All:true})
+	if err != nil {
+		panic(err)
+
+	}
+	fmt.Println("container.ID,\t\t\t\t\t\t\tcontainer.Names,    container.Created,   container.Status,    container.Ports")
+	for _, container := range containers {
+		fmt.Println(container.ID,container.Names,container.Created,container.Status,container.Ports)
+	}
+}
+
+func IsRun(cli *client.Client, containerID string) bool {
+	stat, err := cli.ContainerInspect(context.Background(), containerID)
+	if err != nil {
+		return false
+	}
+	if !stat.State.Running {
+		return false
+	}
+	return true
+}
+
+func ContainerStat(cli *client.Client, containerID string) {
+	ctx := context.Background()
+	containerStats, err := cli.ContainerStats(ctx, containerID ,false)
+	if err != nil {
+		panic(err)
+	}
+	/**
+	ContainerStats的返回的结构如下 注意这个Body的类型是io.ReadCloser 好奇怪的类型 下面我们给他转成json
+	type ContainerStats struct {
+		Body   io.ReadCloser `json:"body"`
+		OSType string        `json:"ostype"`
+	}
+	*/
+	fmt.Println(containerStats)
+	fmt.Println("containerStats.Body的内容是: ",containerStats.Body)
+	buf := new(bytes.Buffer)
+	//io.ReadCloser 转换成 Buffer 然后转换成json字符串
+	buf.ReadFrom(containerStats.Body)
+	newStr := buf.String()
+	fmt.Printf(newStr)
+}
+
 
 // 后台运行容器，相当于键入 docker run -d bfirsh/reticulate-splines
 func CreateContainerInBackground()  {
