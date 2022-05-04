@@ -1,6 +1,10 @@
 package service
 
-import "fmt"
+import (
+	"fmt"
+	"gopkg.in/yaml.v2"
+	"io/ioutil"
+)
 
 // Container meta data in yaml
 
@@ -11,8 +15,8 @@ type ServiceYaml struct {
 	}
 	Selector []string `yaml:"selector,flow"`
 
-	Port       int32 `yaml:"port"`
-	TargetPort int32 `yaml:"targetPort"`
+	Port       int `yaml:"port"`
+	TargetPort int `yaml:"targetPort"`
 }
 
 type MiniService struct {
@@ -22,17 +26,20 @@ type MiniService struct {
 	}
 	Selector map[string]string
 
-	Port       int32
-	TargetPort int32
+	Port       int
+	TargetPort int
 }
 
-func (mini MiniService) Build(yaml ServiceYaml) {
+func (mini *MiniService) Build(yaml ServiceYaml) {
 	mini.Kind = yaml.Kind
 	mini.MetaData.Name = yaml.MetaData.Name
 	mini.Port = yaml.Port
 	mini.TargetPort = yaml.TargetPort
+	tmp := make(map[string]string, len(yaml.Selector))
+	mini.Selector = tmp
 	for _, str := range yaml.Selector {
 		//TODO:这部分的转换需要考虑一下
+		//fmt.Println(str)
 		mini.Selector[str] = "hello_but_nil"
 	}
 }
@@ -55,14 +62,23 @@ const (
 	String             // The IntOrString holds a string.
 )
 
-func SerReadTest() {
-	file := "servicetest.yaml"
+func ParseServiceYaml(file string) ServiceYaml {
+	fmt.Println("start parsing yaml file")
+	var newPodYaml ServiceYaml
+	yamlFile, err := ioutil.ReadFile(file)
+	if err != nil {
+		fmt.Println("yaml file read error")
+	}
 
-	BuildService(file)
-	GetAllServicInfo()
-	CreateService(file)
+	err = yaml.Unmarshal(yamlFile, &newPodYaml)
+	if err != nil {
+		fmt.Println("yaml unmarshal error")
+	}
+	return newPodYaml
 }
 
-func SerStartCreat() {
-	CreateServiceTest()
+func ServiceYamlToService(serviceyaml ServiceYaml) MiniService {
+	var newservice MiniService
+	newservice.Build(serviceyaml)
+	return newservice
 }

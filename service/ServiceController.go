@@ -6,42 +6,50 @@ import (
 	"minik8s/K8SClient"
 	"minik8s/apimachinery/pkg/apis/core"
 	"minik8s/apimachinery/pkg/apis/meta"
-	"minik8s/miniInterface"
-	"minik8s/utils/miniyaml"
 )
 
 var serviceController1 = ServiceController{}
 
 type ServiceController struct {
-	ServiceList []miniInterface.MiniService
+	ServiceList []MiniService
 }
 
 func (s ServiceController) CreateService() {
-	fmt.Println("create Service")
-	ActuallyCreateRun()
+	fmt.Println("create Service default")
+
 }
 
-func ServiceTestMain() {
-	serviceController1.CreateService()
+func SerReadTest() {
+	file := "servicetest.yaml"
+
+	BuildService(file)
+	GetAllServicInfo()
 }
 
+func SerStartCreat() {
+	CreateServiceTest()
+}
+
+// 打开一个yaml文件构建service并放到servicecontroller的记录中
 func BuildService(file string) {
-	serviceYaml := miniyaml.ParseServiceYaml(file)
-	service := miniyaml.ServiceYamlToService(serviceYaml)
+	serviceYaml := ParseServiceYaml(file)
+	fmt.Println(serviceYaml)
+	service := ServiceYamlToService(serviceYaml)
 	serviceController1.ServiceList = append(serviceController1.ServiceList, service)
 }
+
+// 打印所有的记录的service的信息
 func GetAllServicInfo() {
 	for _, service := range serviceController1.ServiceList {
 		service.Display()
 	}
 }
-func CreateService(file string) {
-	//TODO:完成这个函数的具体内容
-	//ActuallyCreateRun()
-}
 
 func CreateServiceTest() {
 	fmt.Println("create service")
+
+	serviceController1.CreateService()
+
 }
 
 var namespace = "hello"
