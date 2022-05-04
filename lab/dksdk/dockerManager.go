@@ -61,7 +61,7 @@ import (
 //	stdcopy.StdCopy(os.Stdout, os.Stderr, out)
 //}
 
-func CreateContainer(cli *client.Client, image string, cmd []string, resource Resource, name string, volumn map[string]struct{}, exports nat.PortSet) string {
+func CreateContainer(cli *client.Client, image string, cmd []string, resource Resource, name string, volumn map[string]struct{}, exports nat.PortSet, network string) string {
 
 	ctx := context.Background()
 	reader, err := cli.ImagePull(ctx, "docker.io/"+image, types.ImagePullOptions{})
@@ -74,8 +74,12 @@ func CreateContainer(cli *client.Client, image string, cmd []string, resource Re
 		CPUShares: resource.CPUShares,
 		Memory:    resource.Memory,
 	}
-	//resources.CPUShares = resource.CPUShares
-	//resources.Memory = resource.Memory
+	hostconfig := &container.HostConfig{
+		Resources: resources,
+	}
+	if network != "" {
+		hostconfig.NetworkMode = container.NetworkMode("container:" + network)
+	}
 
 	resp, err := cli.ContainerCreate(ctx, &container.Config{
 		Image:        image,
@@ -83,9 +87,7 @@ func CreateContainer(cli *client.Client, image string, cmd []string, resource Re
 		Tty:          true,
 		Volumes:      volumn,
 		ExposedPorts: exports,
-	}, &container.HostConfig{
-		Resources: resources,
-	}, nil, nil, name)
+	}, hostconfig, nil, nil, name)
 	if err != nil {
 		panic(err)
 	}
