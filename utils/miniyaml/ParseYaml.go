@@ -2,15 +2,14 @@ package miniyaml
 
 import (
 	"fmt"
-	"io/ioutil"
-	"minik8s/service"
-
 	yaml "gopkg.in/yaml.v2"
+	"io/ioutil"
+	"minik8s/miniInterface"
 )
 
-func ParseServiceYaml(file string) service.ServiceYaml {
+func ParseServiceYaml(file string) miniInterface.ServiceYaml {
 	fmt.Println("start parsing yaml file")
-	var newPodYaml service.ServiceYaml
+	var newPodYaml miniInterface.ServiceYaml
 	yamlFile, err := ioutil.ReadFile(file)
 	if err != nil {
 		fmt.Println("yaml file read error")
@@ -23,8 +22,8 @@ func ParseServiceYaml(file string) service.ServiceYaml {
 	return newPodYaml
 }
 
-func ServiceYamlToService(serviceyaml service.ServiceYaml) service.MiniService {
-	var newservice service.MiniService
+func ServiceYamlToService(serviceyaml miniInterface.ServiceYaml) miniInterface.MiniService {
+	var newservice miniInterface.MiniService
 	newservice.Build(serviceyaml)
 	return newservice
 }

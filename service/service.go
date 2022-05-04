@@ -1,5 +1,7 @@
 package service
 
+import "fmt"
+
 // Container meta data in yaml
 
 type ServiceYaml struct {
@@ -36,7 +38,7 @@ func (mini MiniService) Build(yaml ServiceYaml) {
 }
 
 func (mini MiniService) Display() {
-	println(mini)
+	fmt.Println(mini)
 }
 
 type IntOrString struct {
@@ -59,4 +61,8 @@ func SerReadTest() {
 	BuildService(file)
 	GetAllServicInfo()
 	CreateService(file)
+}
+
+func SerStartCreat() {
+	CreateServiceTest()
 }

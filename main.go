@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/docker/docker/client"
-	"minik8s/lab/circle"
 	"minik8s/lab/dksdk"
+	"minik8s/service"
 	"time"
 )
 
@@ -13,9 +13,9 @@ var rootName string
 func main() {
 	//cmd.RootCmdRun()// 关于命令行的测试
 
-	//service.SerReadTest()	// 关于读取yamle文件建立service的测试
+	service.SerStartCreat() // 关于读取yamle文件建立service的测试
 
-	circle.CircleTest() // 关于循环import的测试
+	//circle.CircleTest() // 关于循环import的测试
 	return
 
 	cli, err := client.NewClientWithOpts(client.WithVersion("1.38"))

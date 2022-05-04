@@ -5,7 +5,3 @@ port:
     123
 targetPort:
     321
-selector:[
-  "hello",
-  "world"
-]

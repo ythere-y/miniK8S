@@ -6,13 +6,14 @@ import (
 	"minik8s/K8SClient"
 	"minik8s/apimachinery/pkg/apis/core"
 	"minik8s/apimachinery/pkg/apis/meta"
+	"minik8s/miniInterface"
 	"minik8s/utils/miniyaml"
 )
 
 var serviceController1 = ServiceController{}
 
 type ServiceController struct {
-	ServiceList []MiniService
+	ServiceList []miniInterface.MiniService
 }
 
 func (s ServiceController) CreateService() {
@@ -37,6 +38,10 @@ func GetAllServicInfo() {
 func CreateService(file string) {
 	//TODO:完成这个函数的具体内容
 	//ActuallyCreateRun()
+}
+
+func CreateServiceTest() {
+	fmt.Println("create service")
 }
 
 var namespace = "hello"
