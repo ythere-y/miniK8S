@@ -22,9 +22,6 @@ func (s ServiceController) CreateService() {
 
 func SerReadTest() {
 	file := "servicetest.yaml"
-	pod.PutPods()
-
-	pod.PodTest()
 
 	BuildService(file)
 	GetAllServicInfo()
@@ -32,6 +29,17 @@ func SerReadTest() {
 
 func SerStartCreat() {
 	CreateServiceTest()
+}
+
+func CreateServiceTest() {
+	fmt.Println("create service")
+
+	serviceController1.CreateService()
+
+}
+
+func CreateServcieByFile(filename string) {
+	BuildService(filename)
 }
 
 // 打开一个yaml文件构建service并放到servicecontroller的记录中
@@ -49,11 +57,12 @@ func GetAllServicInfo() {
 	}
 }
 
-func CreateServiceTest() {
-	fmt.Println("create service")
-
-	serviceController1.CreateService()
-
+func GetServiceByName(name string) {
+	for _, service := range serviceController1.ServiceList {
+		if service.Name == name {
+			service.Display()
+		}
+	}
 }
 
 func RemoveAllService() {
@@ -67,6 +76,8 @@ func RemoveAllService() {
 func DeleteServiceByName(name string) {
 	for index, service := range serviceController1.ServiceList {
 		if service.Name == name {
+			fmt.Println("delete the servcie\n")
+			service.Display()
 			service.DeleteServcie()
 		}
 		serviceController1.ServiceList = append(serviceController1.ServiceList[:index], serviceController1.ServiceList[index+1:]...)

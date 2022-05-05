@@ -134,6 +134,25 @@ func StopPod(podId uint32) {
  * API: remove pod
  * cli: docker client; podId: pod to remove
 **/
+func RemovePodByName(name string) {
+	for index, pod := range KPods {
+		if pod.Meta.Name == name {
+			// get its client
+			cli := pod.PodClient
+			// remove containers first
+			for _, cont := range pod.Containers {
+				dksdk.RemoveContainer(cont.Id, cli)
+			}
+			// delete pod info from global list
+			KPods = append(KPods[:index], KPods[index+1:]...)
+		}
+	}
+}
+
+/**
+ * API: remove pod
+ * cli: docker client; podId: pod to remove
+**/
 func RemovePod(podId uint32) {
 	for index, pod := range KPods {
 		if pod.Meta.Uid == podId {
@@ -179,6 +198,24 @@ func GetAllPodInfo() {
 		duration := nowtime.Sub(pod.Stats.CreateTime)
 		livingTime := duration.String()
 		fmt.Printf("%d, %s, %s, %s\n", uid, name, status, livingTime)
+	}
+}
+
+/**
+ * API: print pod info by uid
+ * uid: pod id
+**/
+func GetPodInfoByName(name string) {
+	for _, pod := range KPods {
+		if pod.Meta.Name == name {
+			uid := pod.Meta.Uid
+			name := pod.Meta.Name
+			status := pod.Stats.Status
+			nowtime := time.Now()
+			duration := nowtime.Sub(pod.Stats.CreateTime)
+			livingTime := duration.String()
+			fmt.Printf("%d, %s, %s, %s\n", uid, name, status, livingTime)
+		}
 	}
 }
 

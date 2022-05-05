@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6712102b-65bb-40d6-9c33-250e56e9044c" name="Changes" comment="增加ObjectMeta部分，增加Labels，service建立">
+    <list default="true" id="6712102b-65bb-40d6-9c33-250e56e9044c" name="Changes" comment="pod的部分unmarshal fail">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/podtest.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/podtest.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/pod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/ServiceController.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/ServiceController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pod/podtest.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/pod/podtest.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pod/Pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/pod/Pod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pod/podtest.go" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,20 +37,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultGoTemplateProperty": "Go File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "C:/Users/HC"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/HC&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="go build minik8s" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="minik8s" />
@@ -94,7 +96,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="增加ObjectMeta部分，增加Labels，service建立" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加ObjectMeta部分，增加Labels，service建立" />
+    <MESSAGE value="pod的部分unmarshal fail" />
+    <option name="LAST_COMMIT_MESSAGE" value="pod的部分unmarshal fail" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
@@ -104,12 +107,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/service/ServiceController.go</url>
-          <line>27</line>
+          <line>26</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/src/pod/Pod.go</url>
-          <line>261</line>
+          <line>298</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
