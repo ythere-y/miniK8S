@@ -3,6 +3,7 @@ package dksdk
 // SDK官方指南https://docs.docker.com/engine/api/sdk/examples/
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	//"github.com/docker/docker/pkg/stdcopy"
@@ -60,7 +61,7 @@ import (
 //	stdcopy.StdCopy(os.Stdout, os.Stderr, out)
 //}
 
-func CreateContainer(cli *client.Client, image string, cmd []string, name string, volumn map[string]struct{}, exports nat.PortSet) string{
+func CreateContainer(cli *client.Client, image string, cmd []string, resource Resource, name string, volumn map[string]struct{}, exports nat.PortSet, network string) string {
 
 	ctx := context.Background()
 	reader, err := cli.ImagePull(ctx, "docker.io/"+image, types.ImagePullOptions{})
@@ -69,13 +70,24 @@ func CreateContainer(cli *client.Client, image string, cmd []string, name string
 	}
 	io.Copy(os.Stdout, reader)
 
+	resources := container.Resources{
+		CPUShares: resource.CPUShares,
+		Memory:    resource.Memory,
+	}
+	hostconfig := &container.HostConfig{
+		Resources: resources,
+	}
+	if network != "" {
+		hostconfig.NetworkMode = container.NetworkMode("container:" + network)
+	}
+
 	resp, err := cli.ContainerCreate(ctx, &container.Config{
-		Image: image,
-		Cmd:   cmd,
-		Tty:   true,
-		Volumes: volumn,
+		Image:        image,
+		Cmd:          cmd,
+		Tty:          true,
+		Volumes:      volumn,
 		ExposedPorts: exports,
-	}, nil, nil, nil, name)
+	}, hostconfig, nil, nil, name)
 	if err != nil {
 		panic(err)
 	}
@@ -109,9 +121,11 @@ func StartContainer(containerID string, cli *client.Client) {
 	if err == nil {
 		fmt.Println("容器", containerID, "启动成功")
 	} else {
-		fmt.Println("容器", containerID, "启动失败")
+		panic(err)
+		//fmt.Println("容器", containerID, "启动失败")
 	}
 }
+
 // 停止
 func StopContainer(containerID string, cli *client.Client) {
 	timeout := time.Second * 10
@@ -122,6 +136,7 @@ func StopContainer(containerID string, cli *client.Client) {
 		fmt.Printf("容器%s已经被停止\n", containerID)
 	}
 }
+
 // 删除
 func RemoveContainer(containerID string, cli *client.Client) (string, error) {
 	err := cli.ContainerRemove(context.Background(), containerID, types.ContainerRemoveOptions{})
@@ -131,14 +146,14 @@ func RemoveContainer(containerID string, cli *client.Client) (string, error) {
 
 // docker ps -a
 func ListContainer(cli *client.Client) {
-	containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{All:true})
+	containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{All: true})
 	if err != nil {
 		panic(err)
 
 	}
 	fmt.Println("container.ID,\t\t\t\t\t\t\tcontainer.Names,    container.Created,   container.Status,    container.Ports")
 	for _, container := range containers {
-		fmt.Println(container.ID,container.Names,container.Created,container.Status,container.Ports)
+		fmt.Println(container.ID, container.Names, container.Created, container.Status, container.Ports)
 	}
 }
 
@@ -153,9 +168,30 @@ func IsRun(cli *client.Client, containerID string) bool {
 	return true
 }
 
+func ContainerStat(cli *client.Client, containerID string) {
+	ctx := context.Background()
+	containerStats, err := cli.ContainerStats(ctx, containerID, false)
+	if err != nil {
+		panic(err)
+	}
+	/**
+	ContainerStats的返回的结构如下 注意这个Body的类型是io.ReadCloser 好奇怪的类型 下面我们给他转成json
+	type ContainerStats struct {
+		Body   io.ReadCloser `json:"body"`
+		OSType string        `json:"ostype"`
+	}
+	*/
+	fmt.Println(containerStats)
+	fmt.Println("containerStats.Body的内容是: ", containerStats.Body)
+	buf := new(bytes.Buffer)
+	//io.ReadCloser 转换成 Buffer 然后转换成json字符串
+	buf.ReadFrom(containerStats.Body)
+	newStr := buf.String()
+	fmt.Printf(newStr)
+}
 
 // 后台运行容器，相当于键入 docker run -d bfirsh/reticulate-splines
-func CreateContainerInBackground()  {
+func CreateContainerInBackground() {
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.WithVersion("1.38"))
 	if err != nil {
