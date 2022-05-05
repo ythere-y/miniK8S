@@ -1,7 +1,12 @@
 kind: Pod
 metadata: 
   name: testpod
+<<<<<<< HEAD
   label: test
+=======
+  labels:
+    app: "nginx"
+>>>>>>> service_api
 spec:
   containers: [
     {
@@ -12,9 +17,7 @@ spec:
       ],
       cpu: 2,
       memory: 512,
-      volumn: [
-
-      ],
+      volumn:
       port: 10081/tcp,
     },
     {
@@ -25,9 +28,7 @@ spec:
       ],
       cpu: 4,
       memory: 1024,
-      volumn: [
-
-      ],
+      volumn:
       port: 10082/tcp,
     }
   ]

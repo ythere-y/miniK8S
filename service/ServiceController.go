@@ -6,6 +6,7 @@ import (
 	"minik8s/K8SClient"
 	"minik8s/apimachinery/pkg/apis/core"
 	"minik8s/apimachinery/pkg/apis/meta"
+	"minik8s/src/pod"
 )
 
 var serviceController1 = ServiceController{}
@@ -21,6 +22,9 @@ func (s ServiceController) CreateService() {
 
 func SerReadTest() {
 	file := "servicetest.yaml"
+	pod.PutPods()
+
+	pod.PodTest()
 
 	BuildService(file)
 	GetAllServicInfo()
@@ -50,6 +54,31 @@ func CreateServiceTest() {
 
 	serviceController1.CreateService()
 
+}
+
+func RemoveAllService() {
+	for _, service := range serviceController1.ServiceList {
+		for _, pd := range service.Pods {
+			pod.RemovePod(pd.Meta.Uid)
+		}
+	}
+}
+
+func DeleteServiceByName(name string) {
+	for index, service := range serviceController1.ServiceList {
+		if service.Name == name {
+			service.DeleteServcie()
+		}
+		serviceController1.ServiceList = append(serviceController1.ServiceList[:index], serviceController1.ServiceList[index+1:]...)
+	}
+}
+func DeleteServiceByUID(UID uint32) {
+	for index, service := range serviceController1.ServiceList {
+		if service.UID == UID {
+			service.DeleteServcie()
+		}
+		serviceController1.ServiceList = append(serviceController1.ServiceList[:index], serviceController1.ServiceList[index+1:]...)
+	}
 }
 
 var namespace = "hello"

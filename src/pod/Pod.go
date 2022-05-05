@@ -2,9 +2,9 @@ package pod
 
 import (
 	"fmt"
-	"hash/crc32"
 	"io/ioutil"
 	"minik8s/lab/dksdk"
+	"minik8s/utils"
 	"time"
 
 	"github.com/docker/docker/client"
@@ -29,6 +29,7 @@ func CreatePod(file string) uint32 {
 			KPods[index].PodClient = cli
 		}
 	}
+	return uid
 }
 
 /**
@@ -218,13 +219,6 @@ func PrintContainerInfoInPod(uid uint32) {
 }
 
 /* not for api use */
-// using pod name to get pod uid via hash
-func HashToUid(s string) uint32 {
-	uid := uint32(crc32.ChecksumIEEE([]byte(s)))
-	return uid
-}
-
-/* not for api use */
 // turn yaml pod to pod structure
 func YamlToPod(podYaml PodYaml) Pod {
 	fmt.Println("start creating pod")
@@ -233,7 +227,7 @@ func YamlToPod(podYaml PodYaml) Pod {
 	// generate metadata and status
 	newPod.Meta.Kind = podYaml.Kind
 	newPod.Meta.Name = podYaml.MetaData.Name
-	newPod.Meta.Uid = HashToUid(podYaml.MetaData.Name)
+	newPod.Meta.Uid = utils.HashToUid(podYaml.MetaData.Name)
 	newPod.Stats.CreateTime = time.Now()
 	newPod.Stats.Status = POD_PENDING
 

@@ -4,6 +4,10 @@ import (
 	"fmt"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"minik8s/meta"
+	"minik8s/src/pod"
+	"minik8s/utils"
+	"time"
 )
 
 // Container meta data in yaml
@@ -11,36 +15,37 @@ import (
 type ServiceYaml struct {
 	Kind     string `yaml:"kind"`
 	MetaData struct {
-		Name string `yaml:"name"`
+		Name   string            `yaml:"name"`
+		Labels map[string]string `yaml:"labels"`
 	}
-	Selector []string `yaml:"selector,flow"`
+	Selector map[string]string `yaml:"selector"`
 
 	Port       int `yaml:"port"`
 	TargetPort int `yaml:"targetPort"`
 }
 
 type MiniService struct {
-	Kind     string
-	MetaData struct {
-		Name string
-	}
-	Selector map[string]string
+	meta.TypeMeta
+	meta.ObjectMeat
 
+	Selector   map[string]string
+	Pods       []pod.Pod
 	Port       int
 	TargetPort int
 }
 
 func (mini *MiniService) Build(yaml ServiceYaml) {
 	mini.Kind = yaml.Kind
-	mini.MetaData.Name = yaml.MetaData.Name
+	mini.Name = yaml.MetaData.Name
+	mini.UID = utils.HashToUid(mini.Name)
+	mini.CreationTimestamp = time.Now()
+
 	mini.Port = yaml.Port
 	mini.TargetPort = yaml.TargetPort
-	tmp := make(map[string]string, len(yaml.Selector))
-	mini.Selector = tmp
-	for _, str := range yaml.Selector {
-		//TODO:这部分的转换需要考虑一下
-		//fmt.Println(str)
-		mini.Selector[str] = "hello_but_nil"
+	mini.Selector = yaml.Selector
+
+	for _, pod := range pod.KPods {
+		mini.Pods = append(mini.Pods, pod)
 	}
 }
 
@@ -81,4 +86,10 @@ func ServiceYamlToService(serviceyaml ServiceYaml) MiniService {
 	var newservice MiniService
 	newservice.Build(serviceyaml)
 	return newservice
+}
+
+func (mini MiniService) DeleteServcie() {
+	for _, p := range mini.Pods {
+		pod.RemovePod(p.Meta.Uid)
+	}
 }
