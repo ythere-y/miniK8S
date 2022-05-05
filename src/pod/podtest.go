@@ -8,7 +8,7 @@ func main() {
 }
 
 func PutPods() {
-	file := "yamltest1.yaml"
+	file := "podtest.yaml"
 	CreatePod(file)
 	//GetAllPodInfo()
 

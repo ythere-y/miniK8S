@@ -87,3 +87,9 @@ func ServiceYamlToService(serviceyaml ServiceYaml) MiniService {
 	newservice.Build(serviceyaml)
 	return newservice
 }
+
+func (mini MiniService) DeleteServcie() {
+	for _, p := range mini.Pods {
+		pod.RemovePod(p.Meta.Uid)
+	}
+}

@@ -4,21 +4,11 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6712102b-65bb-40d6-9c33-250e56e9044c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/meta/types.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/hashUtils.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/minik8s.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/minik8s.iml" afterDir="false" />
+    <list default="true" id="6712102b-65bb-40d6-9c33-250e56e9044c" name="Changes" comment="增加ObjectMeta部分，增加Labels，service建立">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/podtest.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/podtest.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/ServiceController.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/ServiceController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/dksdktest.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/dksdktest.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/servicetest.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/servicetest.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pod/Pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/pod/Pod.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pod/PodMeta.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/pod/PodMeta.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pod/podtest.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/pod/podtest.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -102,6 +92,10 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="增加ObjectMeta部分，增加Labels，service建立" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加ObjectMeta部分，增加Labels，service建立" />
+  </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
   </component>
@@ -112,6 +106,11 @@
           <url>file://$PROJECT_DIR$/service/ServiceController.go</url>
           <line>27</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/src/pod/Pod.go</url>
+          <line>261</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

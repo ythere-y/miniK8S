@@ -2,7 +2,7 @@ kind: Pod
 metadata: 
   name: testpod
   labels:
-    name: "hello"
+    app: "nginx"
 spec:
   containers: [
     {
@@ -13,9 +13,7 @@ spec:
       ],
       cpu: 2,
       memory: 512,
-      volumn: [
-
-      ],
+      volumn:
       port: 10081/tcp,
     },
     {
@@ -26,9 +24,7 @@ spec:
       ],
       cpu: 2,
       memory: 1024,
-      volumn: [
-
-      ],
+      volumn:
       port: 10082/tcp,
     }
   ]

@@ -55,11 +55,28 @@ func CreateServiceTest() {
 }
 
 func RemoveAllService() {
-	//for _, service := range serviceController1.ServiceList {
-	//for i, i := range service {
-	//
-	//}
-	//}
+	for _, service := range serviceController1.ServiceList {
+		for _, pd := range service.Pods {
+			pod.RemovePod(pd.Meta.Uid)
+		}
+	}
+}
+
+func DeleteServiceByName(name string) {
+	for index, service := range serviceController1.ServiceList {
+		if service.Name == name {
+			service.DeleteServcie()
+		}
+		serviceController1.ServiceList = append(serviceController1.ServiceList[:index], serviceController1.ServiceList[index+1:]...)
+	}
+}
+func DeleteServiceByUID(UID uint32) {
+	for index, service := range serviceController1.ServiceList {
+		if service.UID == UID {
+			service.DeleteServcie()
+		}
+		serviceController1.ServiceList = append(serviceController1.ServiceList[:index], serviceController1.ServiceList[index+1:]...)
+	}
 }
 
 var namespace = "hello"
