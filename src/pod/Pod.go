@@ -240,13 +240,7 @@ func (pod Pod) Display() {
 func GetPodInfoByName(name string) {
 	for _, pod := range KPods {
 		if pod.Meta.Name == name {
-			uid := pod.Meta.Uid
-			name := pod.Meta.Name
-			status := pod.Stats.Status
-			nowtime := time.Now()
-			duration := nowtime.Sub(pod.Stats.CreateTime)
-			livingTime := duration.String()
-			fmt.Printf("%d, %s, %s, %s\n", uid, name, status, livingTime)
+			pod.Display()
 		}
 	}
 }

@@ -47,7 +47,8 @@ var podcreate = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("create pod by file %v\n", args[0])
-		pod.CreatePod(args[0])
+		uid := pod.CreatePod(args[0])
+		pod.RunPod(uid)
 	},
 }
 
