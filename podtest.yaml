@@ -4,29 +4,23 @@ metadata:
   labels:
     app: "nginx"
 spec:
-  containers: [
-    {
-      name: cont1,
-      image: bfirsh/reticulate-splines,
-      command: [
-       
-      ],
-      cpu: 2,
-      memory: 512,
+  containers:
+    - name: cont1
+      image: bfirsh/reticulate-splines
+      command: 
+      cpu: 2
+      memory: 8000000000
       volumn: 
-        path: {},
-      port: 10081/tcp
-    },
-    {
-      name: cont2,
-      image: bfirsh/reticulate-splines,
+        path: {}
+      port: 
+        10081/tcp: {}
+    - name: cont2
+      image: bfirsh/reticulate-splines
       command: [
-        
-      ],
-      cpu: 4,
-      memory: 1024,
+      ]
+      cpu: 4
+      memory: 8000000000
       volumn: 
-        path: {},
-      port: 10082/tcp
-    }
-  ]
+        path: {}
+      port: 
+        10082/tcp: {}
