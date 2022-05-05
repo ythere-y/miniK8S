@@ -69,7 +69,8 @@ type ContainerYaml struct {
 type PodYaml struct {
 	Kind     string `yaml:"kind"`
 	MetaData struct {
-		Name string `yaml:"name"`
+		Name   string            `yaml:"name"`
+		Labels map[string]string `yaml:"labels"`
 	}
 	Spec struct {
 		Containers []ContainerYaml `yaml:"containers,flow"`
