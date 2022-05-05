@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+
 	//"github.com/docker/docker/pkg/stdcopy"
 	"io"
 	"os"
@@ -16,50 +17,6 @@ import (
 	"github.com/docker/docker/client"
 	"github.com/docker/go-connections/nat"
 )
-
-// 运行一个容器，相当于docker run alpine echo hello world
-//func CreateContainerde() {
-//	ctx := context.Background()
-//	cli, err := client.NewClientWithOpts(client.WithVersion("1.38"))
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	reader, err := cli.ImagePull(ctx, "docker.io/library/alpine", types.ImagePullOptions{})
-//	if err != nil {
-//		panic(err)
-//	}
-//	io.Copy(os.Stdout, reader)
-//
-//	resp, err := cli.ContainerCreate(ctx, &container.Config{
-//		Image: "alpine",
-//		Cmd:   []string{"echo", "hello world"},
-//		Tty:   true,
-//	}, nil, nil, nil, "")
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	if err := cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{}); err != nil {
-//		panic(err)
-//	}
-//
-//	statusCh, errCh := cli.ContainerWait(ctx, resp.ID, container.WaitConditionNotRunning)
-//	select {
-//	case err := <-errCh:
-//		if err != nil {
-//			panic(err)
-//		}
-//	case <-statusCh:
-//	}
-//
-//	out, err := cli.ContainerLogs(ctx, resp.ID, types.ContainerLogsOptions{ShowStdout: true})
-//	if err != nil {
-//		panic(err)
-//	}
-//
-//	stdcopy.StdCopy(os.Stdout, os.Stderr, out)
-//}
 
 func CreateContainer(cli *client.Client, image string, cmd []string, resource Resource, name string, volumn map[string]struct{}, exports nat.PortSet, network string) string {
 
@@ -93,26 +50,6 @@ func CreateContainer(cli *client.Client, image string, cmd []string, resource Re
 	}
 	fmt.Printf("ID: %s\n", resp.ID)
 	return resp.ID
-
-	//if err := cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{}); err != nil {
-	//	panic(err)
-	//}
-	//
-	//statusCh, errCh := cli.ContainerWait(ctx, resp.ID, container.WaitConditionNotRunning)
-	//select {
-	//case err := <-errCh:
-	//	if err != nil {
-	//		panic(err)
-	//	}
-	//case <-statusCh:
-	//}
-	//
-	//out, err := cli.ContainerLogs(ctx, resp.ID, types.ContainerLogsOptions{ShowStdout: true})
-	//if err != nil {
-	//	panic(err)
-	//}
-	//
-	//stdcopy.StdCopy(os.Stdout, os.Stderr, out)
 }
 
 // 启动

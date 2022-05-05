@@ -3,6 +3,7 @@ package pod
 import (
 	"time"
 
+	"github.com/docker/docker/client"
 	"github.com/docker/go-connections/nat"
 )
 
@@ -46,6 +47,9 @@ type PodStatus struct {
 
 // Pod structure
 type Pod struct {
+	// client in which pod lives, allocate when create
+	PodClient *client.Client
+
 	Meta       PodMeta
 	Stats      PodStatus // Pod status
 	Containers []ContainerMeta

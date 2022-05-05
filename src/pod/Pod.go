@@ -12,12 +12,36 @@ import (
 )
 
 /**
- * API: create pod using yaml file
+ * API: create pod using yaml file, use default client
+ * file: yaml file specify pod structure
+**/
+func CreatePod(file string) uint32 {
+	// currently, use local machine as client
+	cli, err := client.NewClientWithOpts(client.FromEnv)
+	if err != nil {
+		panic(err)
+	}
+	// create pod with local client
+	uid := CliCreatePod(cli, file)
+	for index, pod := range KPods {
+		if pod.Meta.Uid == uid {
+			// allocate cli
+			KPods[index].PodClient = cli
+		}
+	}
+}
+
+/**
+ * API: create pod in a specified client
  * specify a docker client, using a yaml file to
  * create a pod, and return its uid.
 **/
 func CliCreatePod(cli *client.Client, file string) uint32 {
+	// create meta datas
 	newPod := ForeHeadCreatePod(file)
+	// allocate client
+	newPod.PodClient = cli
+	// create containers
 	for index, cont := range newPod.Containers {
 		image := cont.ContainerImage
 		cmd := cont.Command
@@ -36,13 +60,15 @@ func CliCreatePod(cli *client.Client, file string) uint32 {
 }
 
 /**
- * API: run pod
+ * API: run pod on specified client
  * cli: docker client, podId: the pod id specified to run
 **/
-func RunPod(cli *client.Client, podId uint32) {
+func RunPod(podId uint32) {
 	for _, pod := range KPods {
 		// get specified pod
 		if pod.Meta.Uid == podId {
+			// get its client
+			cli := pod.PodClient
 			// run containers
 			for _, cont := range pod.Containers {
 				// start container
@@ -53,12 +79,31 @@ func RunPod(cli *client.Client, podId uint32) {
 }
 
 /**
+ * API: run pod on specified client
+ * cli: docker client, podId: the pod id specified to run
+**/
+// func CliRunPod(cli *client.Client, podId uint32) {
+// 	for _, pod := range KPods {
+// 		// get specified pod
+// 		if pod.Meta.Uid == podId {
+// 			// run containers
+// 			for _, cont := range pod.Containers {
+// 				// start container
+// 				dksdk.StartContainer(cont.Id, cli)
+// 			}
+// 		}
+// 	}
+// }
+
+/**
  * API: stop pod
  * cli: docker client; podId: pod id specified to stop
 **/
-func StopPod(cli *client.Client, podId uint32) {
+func StopPod(podId uint32) {
 	for index, pod := range KPods {
 		if pod.Meta.Uid == podId {
+			// get its client
+			cli := pod.PodClient
 			for _, cont := range pod.Containers {
 				dksdk.StopContainer(cont.Id, cli)
 			}
@@ -69,12 +114,30 @@ func StopPod(cli *client.Client, podId uint32) {
 }
 
 /**
+ * API: stop pod on a specified client
+ * cli: docker client; podId: pod id specified to stop
+**/
+// func CliStopPod(cli *client.Client, podId uint32) {
+// 	for index, pod := range KPods {
+// 		if pod.Meta.Uid == podId {
+// 			for _, cont := range pod.Containers {
+// 				dksdk.StopContainer(cont.Id, cli)
+// 			}
+// 			// stop manually, failed
+// 			KPods[index].Stats.Status = POD_FAILED
+// 		}
+// 	}
+// }
+
+/**
  * API: remove pod
  * cli: docker client; podId: pod to remove
 **/
-func RemovePod(cli *client.Client, podId uint32) {
+func RemovePod(podId uint32) {
 	for index, pod := range KPods {
 		if pod.Meta.Uid == podId {
+			// get its client
+			cli := pod.PodClient
 			// remove containers first
 			for _, cont := range pod.Containers {
 				dksdk.RemoveContainer(cont.Id, cli)
@@ -84,6 +147,23 @@ func RemovePod(cli *client.Client, podId uint32) {
 		}
 	}
 }
+
+/**
+ * API: remove pod on a specified client
+ * cli: docker client; podId: pod to remove
+**/
+// func CliRemovePod(cli *client.Client, podId uint32) {
+// 	for index, pod := range KPods {
+// 		if pod.Meta.Uid == podId {
+// 			// remove containers first
+// 			for _, cont := range pod.Containers {
+// 				dksdk.RemoveContainer(cont.Id, cli)
+// 			}
+// 			// delete pod info from global list
+// 			KPods = append(KPods[:index], KPods[index+1:]...)
+// 		}
+// 	}
+// }
 
 /**
  * API: get all pod info
