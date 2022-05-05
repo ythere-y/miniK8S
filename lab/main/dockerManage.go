@@ -1,17 +1,17 @@
 package main
 
 import (
-"io"
-"log"
-"os"
-"time"
+	"io"
+	"log"
+	"os"
+	"time"
 
-"github.com/docker/docker/api/types"
-"github.com/docker/docker/api/types/container"
-"github.com/docker/docker/api/types/mount"
-"github.com/docker/docker/client"
-"github.com/docker/go-connections/nat"
-"golang.org/x/net/context"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/mount"
+	"github.com/docker/docker/client"
+	"github.com/docker/go-connections/nat"
+	"golang.org/x/net/context"
 )
 
 const (
