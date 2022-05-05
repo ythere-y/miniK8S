@@ -21,6 +21,7 @@ var serviceget = &cobra.Command{
 	Long:  "打印service的各种信息",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
+		service.ServicePreDisplay()
 		service.GetServiceByName(args[0])
 	},
 }

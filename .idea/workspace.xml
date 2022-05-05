@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6712102b-65bb-40d6-9c33-250e56e9044c" name="Changes" comment="pod的部分unmarshal fail">
+    <list default="true" id="6712102b-65bb-40d6-9c33-250e56e9044c" name="Changes" comment="针对service和pod的命令行完成了增加、删除、查看。">
+      <change afterPath="$PROJECT_DIR$/utils/calculateUtils.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/pod.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/ServiceController.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/ServiceController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pod/Pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/pod/Pod.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pod/podtest.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/service.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +97,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="增加ObjectMeta部分，增加Labels，service建立" />
     <MESSAGE value="pod的部分unmarshal fail" />
-    <option name="LAST_COMMIT_MESSAGE" value="pod的部分unmarshal fail" />
+    <MESSAGE value="针对service和pod的命令行完成了增加、删除、查看。" />
+    <option name="LAST_COMMIT_MESSAGE" value="针对service和pod的命令行完成了增加、删除、查看。" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

@@ -7,10 +7,20 @@ import (
 	"minik8s/meta"
 	"minik8s/src/pod"
 	"minik8s/utils"
+	"strconv"
 	"time"
 )
 
 // Container meta data in yaml
+
+type ServiceType string
+
+const (
+	ServiceTypeClusterIP    ServiceType = "ClusterIP"
+	ServiceTypeNodePort     ServiceType = "NodePort"
+	ServiceTypeLoadBalancer ServiceType = "LoadBalancer"
+	ServiceTypeExternalName ServiceType = "ExternalName"
+)
 
 type ServiceYaml struct {
 	Kind     string `yaml:"kind"`
@@ -32,6 +42,7 @@ type MiniService struct {
 	Pods       []pod.Pod
 	Port       int
 	TargetPort int
+	Type       ServiceType
 }
 
 func (mini *MiniService) Build(yaml ServiceYaml) {
@@ -42,15 +53,41 @@ func (mini *MiniService) Build(yaml ServiceYaml) {
 
 	mini.Port = yaml.Port
 	mini.TargetPort = yaml.TargetPort
+
 	mini.Selector = yaml.Selector
 
+	mini.Type = ServiceTypeClusterIP
 	for _, pod := range pod.KPods {
 		mini.Pods = append(mini.Pods, pod)
 	}
 }
 
+//TODO:delete this test
+func OutPutFmtTest() {
+	BuildService("servicetest.yaml")
+	ServicePreDisplay()
+	serviceController1.ServiceList[0].Display()
+}
+
+var blockSize = 20
+
+func ServicePreDisplay() {
+
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", "NAME")
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", "TYPE")
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", "PORT")
+	fmt.Printf("%s", "AGE")
+	fmt.Println()
+}
+
 func (mini MiniService) Display() {
-	fmt.Println(mini)
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", mini.Name)
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", mini.Type)
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", mini.Port)
+	fmt.Printf("%v", utils.GetAge(mini.CreationTimestamp))
+	fmt.Println()
+
+	//litter.Dump(mini)
 }
 
 type IntOrString struct {
