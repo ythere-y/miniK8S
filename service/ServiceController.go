@@ -24,6 +24,8 @@ func SerReadTest() {
 	file := "servicetest.yaml"
 	pod.PutPods()
 
+	pod.PodTest()
+
 	BuildService(file)
 	GetAllServicInfo()
 }
