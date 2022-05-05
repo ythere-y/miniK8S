@@ -166,7 +166,7 @@ func RemovePod(podId uint32) {
 // }
 
 /**
- * API: get all pod info
+ * API: print all pod info
 **/
 func GetAllPodInfo() {
 	fmt.Println("UID, name, status, living_time")
@@ -182,7 +182,7 @@ func GetAllPodInfo() {
 }
 
 /**
- * API: get pod info by uid
+ * API: print pod info by uid
  * uid: pod id
 **/
 func GetPodInfoById(uid uint32) {
@@ -195,6 +195,24 @@ func GetPodInfoById(uid uint32) {
 			duration := nowtime.Sub(pod.Stats.CreateTime)
 			livingTime := duration.String()
 			fmt.Printf("%d, %s, %s, %s\n", uid, name, status, livingTime)
+		}
+	}
+}
+
+/**
+ * API: print containers info in specified pod
+ * uid: pod id
+**/
+func PrintContainerInfoInPod(uid uint32) {
+	for _, pod := range KPods {
+		// find the pod
+		if pod.Meta.Uid == uid {
+			// get the client
+			cli := pod.PodClient
+			for _, cont := range pod.Containers {
+				// print container info
+				dksdk.ContainerStat(cli, cont.Id)
+			}
 		}
 	}
 }
