@@ -6,6 +6,7 @@ import (
 	"minik8s/K8SClient"
 	"minik8s/apimachinery/pkg/apis/core"
 	"minik8s/apimachinery/pkg/apis/meta"
+	"minik8s/src/pod"
 )
 
 var serviceController1 = ServiceController{}
@@ -21,6 +22,8 @@ func (s ServiceController) CreateService() {
 
 func SerReadTest() {
 	file := "servicetest.yaml"
+
+	pod.PodTest()
 
 	BuildService(file)
 	GetAllServicInfo()

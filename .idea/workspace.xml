@@ -4,16 +4,15 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7d97fddb-d23a-44ad-b99c-12f6fa328540" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/service/dksdktest.go" afterDir="false" />
+    <list default="true" id="7d97fddb-d23a-44ad-b99c-12f6fa328540" name="Changes" comment="interface没什么用。完成从yaml文件到servicecontroller的记录">
+      <change afterPath="$PROJECT_DIR$/meta/types.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/hashUtils.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/main/dockerManage.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/main/dockerManage.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/miniInterface/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/miniInterface/service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/ServiceController.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/ServiceController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/service/service.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/servicetest.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/servicetest.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/miniyaml/ParseYaml.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pod/Pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/pod/Pod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pod/podtest.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/pod/podtest.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +52,11 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/HC&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="go build minik8s" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="minik8s" />
@@ -84,7 +88,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/dkctrl" />
+                        <option value="origin/podBasic" />
                       </list>
                     </value>
                   </entry>
@@ -98,20 +102,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="增加interface文件夹解决循环import问题，但是yaml解析还有问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加interface文件夹解决循环import问题，但是yaml解析还有问题" />
+    <MESSAGE value="interface没什么用。完成从yaml文件到servicecontroller的记录" />
+    <option name="LAST_COMMIT_MESSAGE" value="interface没什么用。完成从yaml文件到servicecontroller的记录" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/service/service.go</url>
-          <line>82</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

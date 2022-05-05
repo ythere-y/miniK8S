@@ -2,18 +2,14 @@ package pod
 
 import (
 	"fmt"
-	"hash/crc32"
 	"io/ioutil"
+	"minik8s/utils"
 	"time"
 
 	yaml "gopkg.in/yaml.v2"
 )
 
 // using pod name to get pod uid via hash
-func HashToUid(s string) uint32 {
-	uid := uint32(crc32.ChecksumIEEE([]byte(s)))
-	return uid
-}
 
 func YamlToPod(podYaml PodYaml) Pod {
 	fmt.Println("start creating pod")
@@ -22,7 +18,7 @@ func YamlToPod(podYaml PodYaml) Pod {
 	// generate metadata and status
 	newPod.Meta.Kind = podYaml.Kind
 	newPod.Meta.Name = podYaml.MetaData.Name
-	newPod.Meta.Uid = HashToUid(podYaml.MetaData.Name)
+	newPod.Meta.Uid = utils.HashToUid(podYaml.MetaData.Name)
 	newPod.Stats.CreateTime = time.Now()
 	newPod.Stats.Status = POD_PENDING
 

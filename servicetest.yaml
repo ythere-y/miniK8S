@@ -1,9 +1,11 @@
 kind: Service
 metadata: 
   name: testservice
-port: 123
-targetPort: 321
-selector: [
-            "hello",
-            "world"
-            ]
+  labels:
+    "name":"good"
+port: 80
+targetPort: 80
+selector:
+  "name": "hello"
+  "app": "world"
+
