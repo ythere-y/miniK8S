@@ -1,6 +1,7 @@
 kind: Pod
 metadata: 
   name: testpod
+  label: test
 spec:
   containers: [
     {
@@ -22,7 +23,7 @@ spec:
       command: [
         "docker ps"
       ],
-      cpu: 2,
+      cpu: 4,
       memory: 1024,
       volumn: [
 
