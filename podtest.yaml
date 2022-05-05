@@ -4,19 +4,29 @@ metadata:
 spec:
   containers: [
     {
+      name: cont1,
       image: bfirsh/reticulate-splines,
-      command: docker run,
-      cpu: 1,
+      command: [
+        "docker ps"
+      ],
+      cpu: 2,
       memory: 512,
-      volumn: vol1,
+      volumn: [
+
+      ],
       port: 10081/tcp,
     },
     {
+      name: cont2,
       image: bfirsh/reticulate-splines,
-      command: docker run,
-      cpu: 1,
-      memory: 512,
-      volumn: vol2,
+      command: [
+        "docker ps"
+      ],
+      cpu: 2,
+      memory: 1024,
+      volumn: [
+
+      ],
       port: 10082/tcp,
     }
   ]

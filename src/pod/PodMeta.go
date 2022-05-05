@@ -2,6 +2,8 @@ package pod
 
 import (
 	"time"
+
+	"github.com/docker/go-connections/nat"
 )
 
 // global variable for k8s pods
@@ -19,12 +21,14 @@ const (
 
 // Containers meta data in pod
 type ContainerMeta struct {
+	Id             string // allocate when created
+	Name           string
 	ContainerImage string
-	Command        string
-	CpuNum         int
-	Memory         int
-	Volumn         string
-	Port           int
+	Command        []string
+	CpuNum         int64
+	Memory         int64
+	Volumn         map[string]struct{}
+	Port           nat.PortSet
 }
 
 // Pod meta data for specification
@@ -49,12 +53,13 @@ type Pod struct {
 
 // Container meta data in yaml
 type ContainerYaml struct {
-	Image   string `yaml:"image"`
-	Command string `yaml:"command"`
-	Cpu     int    `yaml:"cpu"`
-	Memory  int    `yaml:"memory"`
-	Volumn  string `yaml:"volumn"`
-	Port    string `yaml:"port"`
+	Name    string              `yaml:"name"`
+	Image   string              `yaml:"image"`
+	Command []string            `yaml:"command,flow"`
+	Cpu     int64               `yaml:"cpu"`
+	Memory  int64               `yaml:"memory"`
+	Volumn  map[string]struct{} `yaml:"volumn"`
+	Port    nat.PortSet         `yaml:"port"`
 }
 
 type PodYaml struct {
