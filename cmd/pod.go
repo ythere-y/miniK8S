@@ -22,8 +22,8 @@ var podget = &cobra.Command{
 	Long:  "打印pod的各种信息",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		//TODO:需要接上正确的接口
 		fmt.Println("获取并打印pod信息")
+		pod.PodPreDisplay()
 		pod.GetPodInfoByName(args[0])
 	},
 }
@@ -34,8 +34,8 @@ var poddelete = &cobra.Command{
 	Long:  "可以删除pod",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		//TODO:需要接上正确的接口
 		fmt.Printf("delete pod by name %v\n", args[0])
+		pod.StopPodByName(args[0])
 		pod.RemovePodByName(args[0])
 	},
 }
@@ -46,7 +46,6 @@ var podcreate = &cobra.Command{
 	Long:  "根据参数创建pod",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		//TODO:需要接上正确的接口
 		fmt.Printf("create pod by file %v\n", args[0])
 		pod.CreatePod(args[0])
 	},
