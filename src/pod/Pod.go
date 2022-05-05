@@ -265,6 +265,7 @@ func YamlToPod(podYaml PodYaml) Pod {
 	newPod.Meta.Kind = podYaml.Kind
 	newPod.Meta.Name = podYaml.MetaData.Name
 	newPod.Meta.Uid = utils.HashToUid(podYaml.MetaData.Name)
+	newPod.Meta.Labels = podYaml.MetaData.Labels
 	newPod.Stats.CreateTime = time.Now()
 	newPod.Stats.Status = POD_PENDING
 

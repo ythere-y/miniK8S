@@ -34,9 +34,10 @@ type ContainerMeta struct {
 
 // Pod meta data for specification
 type PodMeta struct {
-	Kind string
-	Name string
-	Uid  uint32
+	Kind   string
+	Name   string
+	Uid    uint32
+	Labels map[string]string
 }
 
 // Pod status
@@ -59,7 +60,7 @@ type Pod struct {
 type ContainerYaml struct {
 	Name    string              `yaml:"name"`
 	Image   string              `yaml:"image"`
-	Command []string            `yaml:"command,flow"`
+	Command []string            `yaml:"command"`
 	Cpu     int64               `yaml:"cpu"`
 	Memory  int64               `yaml:"memory"`
 	Volumn  map[string]struct{} `yaml:"volumn"`
@@ -73,6 +74,6 @@ type PodYaml struct {
 		Labels map[string]string `yaml:"labels"`
 	}
 	Spec struct {
-		Containers []ContainerYaml `yaml:"containers,flow"`
+		Containers []ContainerYaml `yaml:"containers"`
 	}
 }
