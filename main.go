@@ -43,7 +43,7 @@ func main() {
 
 	//circle.CircleTest() // 关于循环import的测试
 
-	id := pod.CreatePod("podtest2.yaml") // test yaml and create pod
+	id := pod.CreatePod("podtest.yaml") // test yaml and create pod
 	pod.RunPod(id)
 	pod.StopPod(id)
 	pod.RemovePod(id)
