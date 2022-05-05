@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"minik8s/lab/dksdk"
 	"minik8s/utils"
+	"strconv"
 	"time"
 
 	"github.com/docker/docker/client"
@@ -65,11 +66,12 @@ func CliCreatePod(cli *client.Client, file string) uint32 {
  * cli: docker client, podId: the pod id specified to run
 **/
 func RunPod(podId uint32) {
-	for _, pod := range KPods {
+	for index, pod := range KPods {
 		// get specified pod
 		if pod.Meta.Uid == podId {
 			// get its client
 			cli := pod.PodClient
+			KPods[index].Stats.Status = POD_RUNNING
 			// run containers
 			for _, cont := range pod.Containers {
 				// start container
@@ -185,20 +187,32 @@ func RemovePod(podId uint32) {
 // 	}
 // }
 
+var blockSize = 20
+
+func PodPreDisplay() {
+
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", "NAME")
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", "STATUS")
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", "AGE")
+	fmt.Println()
+}
+
 /**
  * API: print all pod info
 **/
 func GetAllPodInfo() {
-	fmt.Println("UID, name, status, living_time")
 	for _, pod := range KPods {
-		uid := pod.Meta.Uid
-		name := pod.Meta.Name
-		status := pod.Stats.Status
-		nowtime := time.Now()
-		duration := nowtime.Sub(pod.Stats.CreateTime)
-		livingTime := duration.String()
-		fmt.Printf("%d, %s, %s, %s\n", uid, name, status, livingTime)
+
+		pod.Display()
 	}
+}
+
+func (pod Pod) Display() {
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", pod.Meta.Name)
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", pod.Stats.Status)
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", utils.GetAge(pod.Stats.CreateTime))
+	fmt.Println()
+
 }
 
 /**

@@ -22,8 +22,16 @@ func (s ServiceController) CreateService() {
 
 func SerReadTest() {
 	file := "servicetest.yaml"
+	uid := pod.CreatePod("podtest.yaml")
+
+	pod.RunPod(uid)
+	pod.PodPreDisplay()
+	pod.GetAllPodInfo()
+	pod.StopPod(uid)
+	pod.RemovePod(uid)
 
 	BuildService(file)
+	ServicePreDisplay()
 	GetAllServicInfo()
 }
 
