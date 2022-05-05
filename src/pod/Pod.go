@@ -65,7 +65,7 @@ func CliCreatePod(cli *client.Client, file string) uint32 {
  * cli: docker client, podId: the pod id specified to run
 **/
 func RunPod(podId uint32) {
-	for _, pod := range KPods {
+	for index, pod := range KPods {
 		// get specified pod
 		if pod.Meta.Uid == podId {
 			// get its client
@@ -75,6 +75,7 @@ func RunPod(podId uint32) {
 				// start container
 				dksdk.StartContainer(cont.Id, cli)
 			}
+			KPods[index].Stats.Status = POD_RUNNING
 		}
 	}
 }
