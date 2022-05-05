@@ -54,7 +54,7 @@ type ContainerYaml struct {
 	Cpu     int    `yaml:"cpu"`
 	Memory  int    `yaml:"memory"`
 	Volumn  string `yaml:"volumn"`
-	Port    int    `yaml:"port"`
+	Port    string `yaml:"port"`
 }
 
 type PodYaml struct {

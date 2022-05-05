@@ -9,7 +9,7 @@ spec:
       cpu: 1,
       memory: 512,
       volumn: vol1,
-      port: 10081,
+      port: 10081/tcp,
     },
     {
       image: bfirsh/reticulate-splines,
@@ -17,6 +17,6 @@ spec:
       cpu: 1,
       memory: 512,
       volumn: vol2,
-      port: 10082,
+      port: 10082/tcp,
     }
   ]
