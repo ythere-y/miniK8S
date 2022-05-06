@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6712102b-65bb-40d6-9c33-250e56e9044c" name="Changes" comment="开启命令行模式">
+    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="开启命令行模式">
+      <change afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/pod.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pod/Pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/pod/Pod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +27,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="podBasic" />
+        <entry key="$PROJECT_DIR$" value="service_api" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
