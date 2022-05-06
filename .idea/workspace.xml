@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="开启命令行模式">
-      <change afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
+    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="etcd消息订阅机制的框架完成（带锁）">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +101,8 @@
     <MESSAGE value="针对service和pod的命令行完成了增加、删除、查看。" />
     <MESSAGE value="能够完成命令行和操作的互动" />
     <MESSAGE value="开启命令行模式" />
-    <option name="LAST_COMMIT_MESSAGE" value="开启命令行模式" />
+    <MESSAGE value="etcd消息订阅机制的框架完成（带锁）" />
+    <option name="LAST_COMMIT_MESSAGE" value="etcd消息订阅机制的框架完成（带锁）" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
