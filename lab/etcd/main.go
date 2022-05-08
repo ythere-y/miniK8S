@@ -8,6 +8,7 @@ import (
 	clientv3 "go.etcd.io/etcd/client/v3"
 	recipe "go.etcd.io/etcd/client/v3/experimental/recipes"
 	"log"
+	"minik8s/cmd"
 	"os"
 	"strings"
 	"sync"
@@ -16,6 +17,27 @@ import (
 
 // etcd client put/get demo
 // use etcd/clientv3
+
+var syncCount = 0
+
+func LabMain() {
+	EasyPutGetTest()
+	//MessagingTest()
+	//WatchTest()
+	go SyncWatch("minik")
+	go SyncWatch("t2")
+	go SyncWatch("t3")
+	//go SyncPutTest("minik --help")
+	go SyncPutTest("minik", " --help")
+	go SyncPutTest("minik", " pod -h")
+	go SyncPutTest("minik", "pod -h")
+
+	holdPro()
+}
+func holdPro() {
+	for true {
+	}
+}
 
 func EasyPutGetTest() {
 	cli, err := clientv3.New(clientv3.Config{
@@ -69,17 +91,6 @@ func EasyPutGetTest() {
 	}
 }
 
-var syncCount = 0
-
-func LabMain() {
-	EasyPutGetTest()
-	//MessagingTest()
-	//WatchTest()
-	go SyncWatch("t1")
-	go SyncWatch("t2")
-	SyncWatch("t3")
-}
-
 //etcd 实现分布式队列
 
 var (
@@ -128,6 +139,29 @@ func MessagingTest() {
 	}
 
 }
+func SyncPutTest(key string, input string) {
+	time.Sleep(time.Second * 3)
+	cli, err := clientv3.New(clientv3.Config{
+		Endpoints:   []string{"127.0.0.1:2379"},
+		DialTimeout: 5 * time.Second,
+	})
+	if err != nil {
+		// handle error!
+		fmt.Printf("connect to etcd failed, err:%v\n", err)
+		return
+	}
+	fmt.Println("connect to etcd success")
+
+	defer cli.Close()
+	// put
+	ctx, _ := context.WithTimeout(context.Background(), time.Second)
+	_, err = cli.Put(ctx, key, input)
+	//cancel()
+	if err != nil {
+		fmt.Printf("put to etcd failed, err:%v\n", err)
+		return
+	}
+}
 func SyncWatch(name string) {
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   []string{"127.0.0.1:2379"},
@@ -146,13 +180,24 @@ func SyncWatch(name string) {
 		for _, ev := range wresp.Events {
 			fmt.Printf("Type: %s Key:%s Value:%s\n", ev.Type, ev.Kv.Key, ev.Kv.Value)
 			syncCount++
+
+			if name == "minik" {
+				var setArgs []string
+				setArgs = append(setArgs, string(ev.Kv.Value))
+				cmd.RootCmd.SetArgs(strings.Fields(string((ev.Kv.Value))))
+
+				err := cmd.RootCmd.Execute()
+				if err != nil {
+					fmt.Printf(err.Error())
+				}
+			}
 			fmt.Printf("syncCount = %v, and start sleeping\n", syncCount)
-			time.Sleep(time.Second * 10)
+			time.Sleep(time.Second * 2)
 		}
 		mtx.Unlock()
 	}
 }
-func WatchTest() {
+func ServiceWatchSync() {
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   []string{"127.0.0.1:2379"},
 		DialTimeout: 5 * time.Second,
@@ -164,10 +209,14 @@ func WatchTest() {
 	fmt.Println("connect to etcd success")
 	defer cli.Close()
 	// watch key:q1mi change
-	rch := cli.Watch(context.Background(), "q1mi") // <-chan WatchResponse
+	rch := cli.Watch(context.Background(), "service") // <-chan WatchResponse
 	for wresp := range rch {
+		mtx.Lock()
 		for _, ev := range wresp.Events {
 			fmt.Printf("Type: %s Key:%s Value:%s\n", ev.Type, ev.Kv.Key, ev.Kv.Value)
+			fmt.Printf("syncCount = %v, and start sleeping\n", syncCount)
+			time.Sleep(time.Second * 10)
 		}
+		mtx.Unlock()
 	}
 }

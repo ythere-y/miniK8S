@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="etcd消息订阅机制的框架完成（带锁）">
+    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="etcd程序发送put已经OK，命令行解析还有问题">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +84,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="service_api" />
+                        <option value="HEAD" />
                       </list>
                     </value>
                   </entry>
@@ -102,7 +103,8 @@
     <MESSAGE value="能够完成命令行和操作的互动" />
     <MESSAGE value="开启命令行模式" />
     <MESSAGE value="etcd消息订阅机制的框架完成（带锁）" />
-    <option name="LAST_COMMIT_MESSAGE" value="etcd消息订阅机制的框架完成（带锁）" />
+    <MESSAGE value="etcd程序发送put已经OK，命令行解析还有问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="etcd程序发送put已经OK，命令行解析还有问题" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

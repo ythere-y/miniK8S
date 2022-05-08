@@ -1,6 +1,8 @@
 package main
 
-import "minik8s/lab/etcd"
+import (
+	"minik8s/lab/etcd"
+)
 
 // func main() {
 // 	//service.SerMain()
