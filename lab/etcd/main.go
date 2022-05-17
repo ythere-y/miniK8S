@@ -19,18 +19,21 @@ import (
 // use etcd/clientv3
 
 var syncCount = 0
+var ip = "localhost:2379"
 
 func LabMain() {
 	EasyPutGetTest()
 	//MessagingTest()
 	//WatchTest()
-	go SyncWatch("minik")
-	go SyncWatch("t2")
-	go SyncWatch("t3")
+	//
+	go TestRemoteIp(ip, "hello", "world")
+	//go SyncWatch("minik")
+	//go SyncWatch("t2")
+	//go SyncWatch("t3")
 	//go SyncPutTest("minik --help")
-	go SyncPutTest("minik", " --help")
-	go SyncPutTest("minik", " pod -h")
-	go SyncPutTest("minik", "pod -h")
+	//go SyncPutTest("minik", " --help")
+	//go SyncPutTest("minik", " pod -h")
+	//go SyncPutTest("minik", "pod -h")
 
 	holdPro()
 }
@@ -38,7 +41,29 @@ func holdPro() {
 	for true {
 	}
 }
+func TestRemoteIp(ip string, key string, input string) {
+	time.Sleep(time.Second * 3)
+	cli, err := clientv3.New(clientv3.Config{
+		Endpoints:   []string{ip},
+		DialTimeout: 5 * time.Second,
+	})
+	if err != nil {
+		// handle error!
+		fmt.Printf("connect to etcd failed, err:%v\n", err)
+		return
+	}
+	fmt.Println("connect to etcd success")
 
+	defer cli.Close()
+	// put
+	ctx, _ := context.WithTimeout(context.Background(), time.Second)
+	_, err = cli.Put(ctx, key, input)
+	//cancel()
+	if err != nil {
+		fmt.Printf("put to etcd failed, err:%v\n", err)
+		return
+	}
+}
 func EasyPutGetTest() {
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   []string{"127.0.0.1:2379"},
