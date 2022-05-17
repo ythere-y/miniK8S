@@ -5,10 +5,13 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	mvccpb2 "go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	recipe "go.etcd.io/etcd/client/v3/experimental/recipes"
 	"log"
 	"minik8s/cmd"
+	"minik8s/constant"
+	"minik8s/utils"
 	"os"
 	"strings"
 	"sync"
@@ -26,21 +29,18 @@ func LabMain() {
 	//MessagingTest()
 	//WatchTest()
 	//
-	go TestRemoteIp(ip, "hello", "world")
+	//go TestRemoteIp(ip, "hello", "world")
 	//go SyncWatch("minik")
-	//go SyncWatch("t2")
-	//go SyncWatch("t3")
-	//go SyncPutTest("minik --help")
+	go SyncWatch("t2")
+	go SyncWatch("t3")
 	//go SyncPutTest("minik", " --help")
 	//go SyncPutTest("minik", " pod -h")
 	//go SyncPutTest("minik", "pod -h")
+	go SyncPutTest("t2", "pod -h")
 
-	holdPro()
+	utils.HoldPro()
 }
-func holdPro() {
-	for true {
-	}
-}
+
 func TestRemoteIp(ip string, key string, input string) {
 	time.Sleep(time.Second * 3)
 	cli, err := clientv3.New(clientv3.Config{
@@ -164,6 +164,32 @@ func MessagingTest() {
 	}
 
 }
+
+func Put(prefix string, sourceType string, namespace string, name string, value string) {
+	key := "/" + prefix + "/" + sourceType + "/" + namespace + "/" + name
+
+	cli, err := clientv3.New(clientv3.Config{
+		Endpoints:   []string{constant.EtcdIPAddr},
+		DialTimeout: 5 * time.Second,
+	})
+	if err != nil {
+		// handle error!
+		fmt.Printf("connect to etcd failed, err:%v\n", err)
+		return
+	}
+	fmt.Println("connect to etcd success")
+
+	defer cli.Close()
+	// put
+	ctx, _ := context.WithTimeout(context.Background(), time.Second)
+	_, err = cli.Put(ctx, key, value)
+	//cancel()
+	if err != nil {
+		fmt.Printf("put to etcd failed, err:%v\n", err)
+		return
+	}
+}
+
 func SyncPutTest(key string, input string) {
 	time.Sleep(time.Second * 3)
 	cli, err := clientv3.New(clientv3.Config{
@@ -187,41 +213,50 @@ func SyncPutTest(key string, input string) {
 		return
 	}
 }
+
 func SyncWatch(name string) {
-	cli, err := clientv3.New(clientv3.Config{
+	config := clientv3.Config{
 		Endpoints:   []string{"127.0.0.1:2379"},
 		DialTimeout: 5 * time.Second,
-	})
+	}
+	cli, err := clientv3.New(config)
 	if err != nil {
 		fmt.Printf("connect to etcd failed, err:%v\n", err)
 		return
 	}
 	fmt.Println("connect to etcd success")
 	defer cli.Close()
-	// watch key:q1mi change
-	rch := cli.Watch(context.Background(), name) // <-chan WatchResponse
-	for wresp := range rch {
+
+	watchRespChan := cli.Watch(context.Background(), name, clientv3.WithPrefix()) // <-chan WatchResponse
+	for watchResp := range watchRespChan {
 		mtx.Lock()
-		for _, ev := range wresp.Events {
-			fmt.Printf("Type: %s Key:%s Value:%s\n", ev.Type, ev.Kv.Key, ev.Kv.Value)
+		for _, event := range watchResp.Events {
+			fmt.Printf("Type: %s\t Key:%s \n", event.Type, event.Kv.Key)
+			switch event.Type {
+			case mvccpb2.PUT:
+				fmt.Println("修改为：", string(event.Kv.Value), "Revision:", event.Kv.CreateRevision, event.Kv.ModRevision)
+			case mvccpb2.DELETE:
+				fmt.Println("删除了：", "Revision:", event.Kv.ModRevision)
+			}
 			syncCount++
 
 			if name == "minik" {
 				var setArgs []string
-				setArgs = append(setArgs, string(ev.Kv.Value))
-				cmd.RootCmd.SetArgs(strings.Fields(string((ev.Kv.Value))))
+				setArgs = append(setArgs, string(event.Kv.Value))
+				cmd.RootCmd.SetArgs(strings.Fields(string(event.Kv.Value)))
 
 				err := cmd.RootCmd.Execute()
 				if err != nil {
 					fmt.Printf(err.Error())
 				}
 			}
-			fmt.Printf("syncCount = %v, and start sleeping\n", syncCount)
-			time.Sleep(time.Second * 2)
+			//fmt.Printf("syncCount = %v, and start sleeping\n", syncCount)
+			//time.Sleep(time.Second * 1)
 		}
 		mtx.Unlock()
 	}
 }
+
 func ServiceWatchSync() {
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   []string{"127.0.0.1:2379"},

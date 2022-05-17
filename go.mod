@@ -3,11 +3,13 @@ module minik8s
 go 1.18
 
 require (
+	github.com/coreos/etcd v3.3.17+incompatible
 	github.com/docker/docker v20.10.14+incompatible
 	github.com/docker/go-connections v0.4.0
 	github.com/micro/go-micro v1.18.0
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/cobra v1.4.0
+	go.etcd.io/etcd/api/v3 v3.5.4
 	go.etcd.io/etcd/client/v3 v3.5.4
 	golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4
 	gopkg.in/yaml.v2 v2.4.0
@@ -36,7 +38,6 @@ require (
 	github.com/opencontainers/image-spec v1.0.3-0.20211202183452-c5a74bcca799 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	go.etcd.io/etcd/api/v3 v3.5.4 // indirect
 	go.etcd.io/etcd/client/pkg/v3 v3.5.4 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
