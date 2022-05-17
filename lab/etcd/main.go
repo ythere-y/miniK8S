@@ -30,9 +30,9 @@ func LabMain() {
 	//WatchTest()
 	//
 	//go TestRemoteIp(ip, "hello", "world")
-	//go SyncWatch("minik")
-	go SyncWatch("t2")
-	go SyncWatch("t3")
+	//go Watch("minik")
+	go Watch("t2")
+	go Watch("t3")
 	//go SyncPutTest("minik", " --help")
 	//go SyncPutTest("minik", " pod -h")
 	//go SyncPutTest("minik", "pod -h")
@@ -44,7 +44,7 @@ func LabMain() {
 func TestRemoteIp(ip string, key string, input string) {
 	time.Sleep(time.Second * 3)
 	cli, err := clientv3.New(clientv3.Config{
-		Endpoints:   []string{ip},
+		Endpoints:   []string{constant.EtcdIPAddr},
 		DialTimeout: 5 * time.Second,
 	})
 	if err != nil {
@@ -66,7 +66,7 @@ func TestRemoteIp(ip string, key string, input string) {
 }
 func EasyPutGetTest() {
 	cli, err := clientv3.New(clientv3.Config{
-		Endpoints:   []string{"127.0.0.1:2379"},
+		Endpoints:   []string{constant.EtcdIPAddr},
 		DialTimeout: 5 * time.Second,
 	})
 	if err != nil {
@@ -164,9 +164,10 @@ func MessagingTest() {
 	}
 
 }
-
-func Put(prefix string, sourceType string, namespace string, name string, value string) {
-	key := "/" + prefix + "/" + sourceType + "/" + namespace + "/" + name
+func SyncPut(key string, value string) {
+	go Put(key, value)
+}
+func Put(key string, value string) {
 
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   []string{constant.EtcdIPAddr},
@@ -193,7 +194,7 @@ func Put(prefix string, sourceType string, namespace string, name string, value 
 func SyncPutTest(key string, input string) {
 	time.Sleep(time.Second * 3)
 	cli, err := clientv3.New(clientv3.Config{
-		Endpoints:   []string{"127.0.0.1:2379"},
+		Endpoints:   []string{constant.EtcdIPAddr},
 		DialTimeout: 5 * time.Second,
 	})
 	if err != nil {
@@ -215,8 +216,11 @@ func SyncPutTest(key string, input string) {
 }
 
 func SyncWatch(name string) {
+	go Watch(name)
+}
+func Watch(name string) {
 	config := clientv3.Config{
-		Endpoints:   []string{"127.0.0.1:2379"},
+		Endpoints:   []string{constant.EtcdIPAddr},
 		DialTimeout: 5 * time.Second,
 	}
 	cli, err := clientv3.New(config)
@@ -259,7 +263,7 @@ func SyncWatch(name string) {
 
 func ServiceWatchSync() {
 	cli, err := clientv3.New(clientv3.Config{
-		Endpoints:   []string{"127.0.0.1:2379"},
+		Endpoints:   []string{constant.EtcdIPAddr},
 		DialTimeout: 5 * time.Second,
 	})
 	if err != nil {

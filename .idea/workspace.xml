@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="etcd远程连接问题得到了解决，现在专注于apiserver的功能构建">
-      <change afterPath="$PROJECT_DIR$/apiserver/apimain.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/proccessUtils.go" afterDir="false" />
+    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="etcd的watch的完善，增加前缀监视、操作监视">
+      <change afterPath="$PROJECT_DIR$/lab/etcd/types.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/apimain.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/apimain.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +53,11 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/HC&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="go build minik8s" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="minik8s" />
@@ -111,25 +112,10 @@
     <MESSAGE value="etcd程序发送put已经OK，命令行解析还有问题" />
     <MESSAGE value="增加对命令行的传递、解析" />
     <MESSAGE value="etcd远程连接问题得到了解决，现在专注于apiserver的功能构建" />
-    <option name="LAST_COMMIT_MESSAGE" value="etcd远程连接问题得到了解决，现在专注于apiserver的功能构建" />
+    <MESSAGE value="etcd的watch的完善，增加前缀监视、操作监视" />
+    <option name="LAST_COMMIT_MESSAGE" value="etcd的watch的完善，增加前缀监视、操作监视" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/apiserver/apimain.go</url>
-          <line>18</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/apiserver/apimain.go</url>
-          <line>29</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
