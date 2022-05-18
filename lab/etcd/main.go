@@ -9,7 +9,6 @@ import (
 	clientv3 "go.etcd.io/etcd/client/v3"
 	recipe "go.etcd.io/etcd/client/v3/experimental/recipes"
 	"log"
-	"minik8s/cmd"
 	"minik8s/constant"
 	"minik8s/utils"
 	"os"
@@ -192,6 +191,7 @@ func Put(key string, value string) {
 		fmt.Printf("put to etcd failed, err:%v\n", err)
 		return
 	}
+	fmt.Printf("Put op : key = %v, val = %v\n", key, value)
 }
 
 func SyncPutTest(key string, input string) {
@@ -278,18 +278,6 @@ func Watch(name string, handler Handler) {
 			}
 			syncCount++
 
-			if name == "minik" {
-				var setArgs []string
-				setArgs = append(setArgs, string(event.Kv.Value))
-				cmd.RootCmd.SetArgs(strings.Fields(string(event.Kv.Value)))
-
-				err := cmd.RootCmd.Execute()
-				if err != nil {
-					fmt.Printf(err.Error())
-				}
-			}
-			//fmt.Printf("syncCount = %v, and start sleeping\n", syncCount)
-			//time.Sleep(time.Second * 1)
 		}
 		mtx.Unlock()
 	}

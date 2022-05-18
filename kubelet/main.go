@@ -4,21 +4,10 @@ import (
 	"fmt"
 	. "minik8s/lab/etcd"
 	"minik8s/utils"
-	"time"
 )
 
 func CreateKubelet(listen string) {
 	SyncWatch(listen, kubelethandler)
-}
-
-func reqeustPutTest() {
-	SyncPut(SetKey(
-		SetPrefix("registry"),
-		SetSourceType("pods"),
-		SetNameSpace("default"),
-		SetNodeName("node1"),
-		SetPodName("pod1")), "hello")
-
 }
 
 func KubeletMain() {
@@ -28,15 +17,10 @@ func KubeletMain() {
 		SetPrefix("registry"),
 		SetSourceType("pods"),
 		SetNameSpace("default"),
-		SetNodeName("node1"),
+		SetNodeName("node_1"),
 	)
 
 	CreateKubelet(watchName)
-
-	// sleep
-	time.Sleep(3 * time.Second)
-
-	reqeustPutTest()
 
 	utils.HoldPro()
 }

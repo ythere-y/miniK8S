@@ -10,8 +10,11 @@ type Options struct {
 }
 type Option func(*string)
 
-type Handler func(event *clientv3.Event)
+type Handler func(event *clientv3.Event) error
 
+func JustAppend(context string) Option {
+	return AppendName(context)
+}
 func SetPrefix(prefix string) Option {
 	return AppendName(prefix)
 }
