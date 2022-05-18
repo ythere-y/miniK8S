@@ -33,7 +33,5 @@ func Main() {
 
 	CreateControllerManager(watchName)
 
-	//reqeustPutTest()
-
 	utils.HoldPro()
 }

@@ -41,10 +41,9 @@ import (
 var rootName string
 
 func main() {
-	go controllerManager.Main()
-	go scheduler.Main()
-	go kubelet.KubeletMain()
-	//kubelet.KubeletMain() //关于 kubelet 的测试
+	go controllerManager.Main() // 启动controller manager
+	go scheduler.Main()         // 启动scheduler
+	go kubelet.Main()           // 启动kubelet
 	//apiserver.ApiServerMain() //关于apiserver的测试
 	//etcd.LabMain() //关于etcd的测试
 	time.Sleep(2 * time.Second)

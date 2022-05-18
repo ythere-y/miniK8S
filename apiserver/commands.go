@@ -7,6 +7,7 @@ import (
 	"minik8s/constant"
 	"minik8s/lab/etcd"
 	"minik8s/src/pod"
+	"minik8s/utils"
 	"strconv"
 )
 
@@ -24,32 +25,53 @@ func CreatePod(filename string) {
 	etcd.SyncPut(key, string(value))
 }
 
+func SavePodInfo(pod pod.Pod) error {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType("pods"),
+		etcd.SetPodName(pod.Meta.Name))
+	value, err := json.Marshal(pod)
+
+	utils.HandleError("marshal pod error", err)
+	etcd.Put(key, string(value))
+	return err
+}
 func PushPodToScheduler(pod pod.Pod) error {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.SchedulerPrefix),
-		etcd.JustAppend("pods"))
-	value, err := json.Marshal(pod)
-	if err != nil {
-		fmt.Printf("Marshal pod into json error -> :\n %v\n", err.Error())
-		return err
-	}
-	etcd.SyncPut(key, string(value))
-	return err
+		etcd.JustAppend("pods"),
+		etcd.SetName(pod.Meta.Name))
+
+	value := pod.Meta.Name
+	etcd.SyncPut(key, value)
+	return nil
 }
 
-func DistributePodtoNode(nodeName string, pod pod.Pod) error {
+func DistributePodtoNode(nodeName string, podName string) error {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.RegistryPrefix),
 		etcd.SetSourceType("pods"),
 		etcd.SetNameSpace("default"),
 		etcd.SetNodeName(nodeName),
-		etcd.SetPodName("pod_1"))
+		etcd.SetPodName(podName))
 
-	value, err := json.Marshal(pod)
-	if err != nil {
-		fmt.Printf("Marshal pod error ->:\n%v\n", err.Error())
-	}
-	etcd.SyncPut(key, string(value))
+	value := podName
+	etcd.SyncPut(key, value)
 
-	return err
+	return nil
+}
+
+func GetPodInfo(podName string) pod.Pod {
+	getRes, err := etcd.Get(etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType("pods"),
+		etcd.SetName(podName)))
+
+	utils.HandleError("get pod info error", err)
+
+	var podInfo pod.Pod
+	err = json.Unmarshal([]byte(getRes[0]), &podInfo)
+	utils.HandleError("unmarshal pod failed ", err)
+
+	return podInfo
 }

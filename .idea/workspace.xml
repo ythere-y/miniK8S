@@ -4,10 +4,16 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="结合etcd的从kubectl到kubelet的流程基本完成。&#10;还需要完成细节填充和其他功能拓展">
+    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="小修改pod里面的函数，全流程打通。pod里面的函数和目前的架构不太合适">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/commands.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/commands.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kubelet/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pod/Pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/pod/Pod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheduler/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler/handler.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +56,12 @@
     &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.mappings&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.highlight.symlinks&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.date&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.permissions&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowPanel.toolwindow.show.size&quot;: &quot;false&quot;,
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/HC&quot;
   }
@@ -72,8 +83,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build minik8s" />
-        <item itemvalue="Go Build.go build minik8s" />
+        <item itemvalue="Go 构建.go build minik8s" />
       </list>
     </recent_temporary>
   </component>
@@ -119,9 +129,36 @@
     <MESSAGE value="用类似回调函数的方式来解决循环调用问题" />
     <MESSAGE value="改进Handler结构函数，kubelet基本监听框架确定" />
     <MESSAGE value="结合etcd的从kubectl到kubelet的流程基本完成。&#10;还需要完成细节填充和其他功能拓展" />
-    <option name="LAST_COMMIT_MESSAGE" value="结合etcd的从kubectl到kubelet的流程基本完成。&#10;还需要完成细节填充和其他功能拓展" />
+    <MESSAGE value="小修改pod里面的函数，全流程打通。pod里面的函数和目前的架构不太合适" />
+    <option name="LAST_COMMIT_MESSAGE" value="小修改pod里面的函数，全流程打通。pod里面的函数和目前的架构不太合适" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/controllerManager/handler.go</url>
+          <line>21</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/scheduler/main.go</url>
+          <line>16</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/controllerManager/main.go</url>
+          <line>28</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/kubelet/main.go</url>
+          <line>13</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

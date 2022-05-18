@@ -7,6 +7,7 @@ import (
 	yaml "gopkg.in/yaml.v2"
 	"minik8s/apiserver"
 	"minik8s/src/pod"
+	"minik8s/utils"
 )
 
 func controllerManagerHandler(event *clientv3.Event) error {
@@ -19,10 +20,10 @@ func controllerManagerHandler(event *clientv3.Event) error {
 			fmt.Printf("yaml unmarshal error->:\n%v\n", err.Error())
 		}
 		podInfo := pod.YamlToPod(newPodYaml)
+		err = apiserver.SavePodInfo(podInfo)
+		utils.HandleError("save pod info error", err)
 		err = apiserver.PushPodToScheduler(podInfo)
-		if err != nil {
-			fmt.Printf("Push Pod to Scheduler error -> :\n%v\n", err.Error())
-		}
+		utils.HandleError("push pod to scheduler error", err)
 	}
 	return err
 }
