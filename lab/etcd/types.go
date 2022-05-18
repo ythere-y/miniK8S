@@ -1,5 +1,7 @@
 package etcd
 
+import clientv3 "go.etcd.io/etcd/client/v3"
+
 type Options struct {
 	Prefix     string
 	SourceType string
@@ -8,25 +10,29 @@ type Options struct {
 }
 type Option func(*string)
 
-type Handler func(key string, value string)
+type Handler func(event *clientv3.Event)
 
 func SetPrefix(prefix string) Option {
-	return func(this *string) {
-		*this = "/" + (*this) + prefix
-	}
+	return AppendName(prefix)
 }
 func SetSourceType(sourceType string) Option {
-	return func(this *string) {
-		*this = (*this) + "/" + sourceType
-	}
+	return AppendName(sourceType)
 }
 
 func SetNameSpace(nameSpace string) Option {
-	return func(this *string) {
-		*this = (*this) + "/" + nameSpace
-	}
+	return AppendName(nameSpace)
 }
 func SetName(name string) Option {
+	return AppendName(name)
+}
+func SetNodeName(nodeName string) Option {
+	return AppendName(nodeName)
+}
+func SetPodName(podName string) Option {
+	return AppendName(podName)
+}
+
+func AppendName(name string) Option {
 	return func(this *string) {
 		*this = (*this) + "/" + name
 	}

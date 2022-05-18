@@ -1,8 +1,6 @@
 package main
 
-import (
-	"minik8s/apiserver"
-)
+import "minik8s/kubelet"
 
 // func main() {
 // 	//service.SerMain()
@@ -37,7 +35,8 @@ import (
 var rootName string
 
 func main() {
-	apiserver.ApiServerMain() //关于apiserver的测试
+	kubelet.KubeletMain() //关于 kubelet 的测试
+	//apiserver.ApiServerMain() //关于apiserver的测试
 	//etcd.LabMain() //关于etcd的测试
 	//cmd.RootCmdRun() // 关于命令行的测试
 	//service.OutPutFmtTest() //关于格式化输出的测试

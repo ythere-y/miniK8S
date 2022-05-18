@@ -24,6 +24,9 @@ import (
 var syncCount = 0
 var ip = "localhost:2379"
 
+func defaultPutHander(key string, value string) {
+
+}
 func LabMain() {
 	EasyPutGetTest()
 	//MessagingTest()
@@ -243,7 +246,7 @@ func WatchWithFunc(name string, handler Handler) {
 			case mvccpb2.DELETE:
 				fmt.Println("删除了：", "Revision:", event.Kv.ModRevision)
 			}
-			handler(string(event.Kv.Key), string(event.Kv.Value))
+			handler(event)
 		}
 		mtx.Unlock()
 	}
