@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="etcd的watch的完善，增加前缀监视、操作监视">
-      <change afterPath="$PROJECT_DIR$/lab/etcd/types.go" afterDir="false" />
+    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="优化etcd的调用方式，引入可变参数。下一步解决etcd和apiserver之间的循环调用问题">
+      <change afterPath="$PROJECT_DIR$/apiserver/apiserverHandler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apiserver/apiserverWather.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kubelet/kubeletmain.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apiserver/apimain.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/apimain.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/etcd/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/types.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +38,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="28kEhQHJV1Q689lQq9jcpuzAa4I" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -113,7 +119,8 @@
     <MESSAGE value="增加对命令行的传递、解析" />
     <MESSAGE value="etcd远程连接问题得到了解决，现在专注于apiserver的功能构建" />
     <MESSAGE value="etcd的watch的完善，增加前缀监视、操作监视" />
-    <option name="LAST_COMMIT_MESSAGE" value="etcd的watch的完善，增加前缀监视、操作监视" />
+    <MESSAGE value="优化etcd的调用方式，引入可变参数。下一步解决etcd和apiserver之间的循环调用问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化etcd的调用方式，引入可变参数。下一步解决etcd和apiserver之间的循环调用问题" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

@@ -33,24 +33,15 @@ func sendOperation() {
 
 func ApiServerMain() {
 	fmt.Println("hello world! Api ServerMain started!")
-
-	etcd.SyncWatch("t1")
-	etcd.SyncWatch(etcd.SetKey(
-		etcd.SetPrefix("registry"),
-		etcd.SetSourceType("apiserver"),
-	))
-
-	etcd.SyncWatch(etcd.SetKey(
-		etcd.SetPrefix("registry"),
-		etcd.SetSourceType("test"),
-	))
+	watchName := etcd.SetKey(etcd.SetPrefix("registry"), etcd.SetSourceType("apiserver"))
+	etcd.SyncWatch(watchName, apiserverHandler)
 
 	// sleep
 	time.Sleep(3 * time.Second)
 
 	etcd.SyncPut(etcd.SetKey(
 		etcd.SetPrefix("registry"),
-		etcd.SetSourceType("test"),
+		etcd.SetSourceType("apiserver"),
 		etcd.SetNameSpace("default"),
 		etcd.SetName("nickname"),
 	), "abc")

@@ -31,8 +31,8 @@ func LabMain() {
 	//
 	//go TestRemoteIp(ip, "hello", "world")
 	//go Watch("minik")
-	go Watch("t2")
-	go Watch("t3")
+	//go Watch("t2")
+	//go Watch("t3")
 	//go SyncPutTest("minik", " --help")
 	//go SyncPutTest("minik", " pod -h")
 	//go SyncPutTest("minik", "pod -h")
@@ -215,10 +215,41 @@ func SyncPutTest(key string, input string) {
 	}
 }
 
-func SyncWatch(name string) {
-	go Watch(name)
+func SyncWatch(name string, handler Handler) {
+	go WatchWithFunc(name, handler)
 }
-func Watch(name string) {
+
+func WatchWithFunc(name string, handler Handler) {
+	config := clientv3.Config{
+		Endpoints:   []string{constant.EtcdIPAddr},
+		DialTimeout: 5 * time.Second,
+	}
+	cli, err := clientv3.New(config)
+	if err != nil {
+		fmt.Printf("connect to etcd failed, err:%v\n", err)
+		return
+	}
+	fmt.Println("connect to etcd success")
+	defer cli.Close()
+
+	watchRespChan := cli.Watch(context.Background(), name, clientv3.WithPrefix()) // <-chan WatchResponse
+	for watchResp := range watchRespChan {
+		mtx.Lock()
+		for _, event := range watchResp.Events {
+			fmt.Printf("Type: %s\t Key:%s \n", event.Type, event.Kv.Key)
+			switch event.Type {
+			case mvccpb2.PUT:
+				fmt.Println("修改为：", string(event.Kv.Value), "Revision:", event.Kv.CreateRevision, event.Kv.ModRevision)
+			case mvccpb2.DELETE:
+				fmt.Println("删除了：", "Revision:", event.Kv.ModRevision)
+			}
+			handler(string(event.Kv.Key), string(event.Kv.Value))
+		}
+		mtx.Unlock()
+	}
+}
+
+func Watch(name string, handler Handler) {
 	config := clientv3.Config{
 		Endpoints:   []string{constant.EtcdIPAddr},
 		DialTimeout: 5 * time.Second,

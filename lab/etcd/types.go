@@ -8,6 +8,8 @@ type Options struct {
 }
 type Option func(*string)
 
+type Handler func(key string, value string)
+
 func SetPrefix(prefix string) Option {
 	return func(this *string) {
 		*this = "/" + (*this) + prefix
