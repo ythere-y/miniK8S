@@ -25,7 +25,7 @@ func kubelethandler(event *clientv3.Event) error {
 		fmt.Println(podInfo)
 		output, _ := json.Marshal(podInfo)
 		fmt.Printf("%v\n", string(output))
-		pod.CreateAndRunPod(podInfo)
+		CreateAndRunPod(podInfo)
 	}
 	return err
 }
