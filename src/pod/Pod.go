@@ -12,6 +12,27 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
+func CreateAndRunPod(pod Pod) uint32 {
+	// currently, use local machine as client
+	cli, err := client.NewClientWithOpts(client.FromEnv)
+	if err != nil {
+		panic(err)
+	}
+	// create pod with local client
+
+	uid := CliCreatePodByPod(cli, pod)
+	for index, pod := range KPods {
+		if pod.Meta.Uid == uid {
+			// allocate cli
+			KPods[index].PodClient = cli
+		}
+	}
+	RunPod(uid)
+
+	return uid
+
+}
+
 /**
  * API: create pod using yaml file, use default client
  * file: yaml file specify pod structure
@@ -31,6 +52,34 @@ func CreatePod(file string) uint32 {
 		}
 	}
 	return uid
+}
+
+/**
+ * API: create pod in a specified client
+ * specify a docker client, using a yaml file to
+ * create a pod, and return its uid.
+**/
+func CliCreatePodByPod(cli *client.Client, pod Pod) uint32 {
+	// create meta datas
+	newPod := pod
+	// allocate client
+	newPod.PodClient = cli
+	// create containers
+	for index, cont := range newPod.Containers {
+		image := cont.ContainerImage
+		cmd := cont.Command
+		var resouce dksdk.Resource
+		resouce.CPUShares = cont.CpuNum
+		resouce.Memory = cont.Memory
+		name := cont.Name
+		volume := cont.Volumn
+		port := cont.Port
+		cid := dksdk.CreateContainer(cli, image, cmd,
+			resouce, name, volume, port, "")
+		// allocate container id
+		newPod.Containers[index].Id = cid
+	}
+	return newPod.Meta.Uid
 }
 
 /**

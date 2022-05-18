@@ -4,22 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="改进Handler结构函数，kubelet基本监听框架确定">
-      <change afterPath="$PROJECT_DIR$/apiserver/commands.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllerManager/handler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllerManager/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scheduler/handler.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scheduler/main.go" afterDir="false" />
+    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="结合etcd的从kubectl到kubelet的流程基本完成。&#10;还需要完成细节填充和其他功能拓展">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiserver/apiserverHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/apiserverHandler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/pod.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubelet/kubeletHandler.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubelet/kubeletmain.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/etcd/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/types.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/stringUtils.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/stringUtils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pod/Pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/pod/Pod.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +118,8 @@
     <MESSAGE value="优化etcd的调用方式，引入可变参数。下一步解决etcd和apiserver之间的循环调用问题" />
     <MESSAGE value="用类似回调函数的方式来解决循环调用问题" />
     <MESSAGE value="改进Handler结构函数，kubelet基本监听框架确定" />
-    <option name="LAST_COMMIT_MESSAGE" value="改进Handler结构函数，kubelet基本监听框架确定" />
+    <MESSAGE value="结合etcd的从kubectl到kubelet的流程基本完成。&#10;还需要完成细节填充和其他功能拓展" />
+    <option name="LAST_COMMIT_MESSAGE" value="结合etcd的从kubectl到kubelet的流程基本完成。&#10;还需要完成细节填充和其他功能拓展" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
