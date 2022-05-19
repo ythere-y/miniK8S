@@ -15,7 +15,7 @@ func Main() {
 
 	watchName := SetKey(
 		SetPrefix("registry"),
-		SetSourceType("pods"),
+		SetSourceType("nodes"),
 		SetNameSpace("default"),
 		SetNodeName("node_1"),
 	)

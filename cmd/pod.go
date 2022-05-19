@@ -42,6 +42,7 @@ var poddelete = &cobra.Command{
 	},
 }
 
+// minik pod create file.yaml
 var podcreate = &cobra.Command{
 	Use:   "create",
 	Short: "创建pod",

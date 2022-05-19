@@ -6,8 +6,6 @@ import (
 	"minik8s/pod"
 	"minik8s/replicaset"
 
-	"minik8s/apiserver"
-	"minik8s/pod"
 	"minik8s/utils"
 
 	"go.etcd.io/etcd/api/v3/mvccpb"

@@ -37,7 +37,7 @@ func LabMain() {
 	//go SyncPutTest("minik", " --help")
 	//go SyncPutTest("minik", " pod -h")
 	//go SyncPutTest("minik", "pod -h")
-	go SyncPutTest("t2", "pod -h")
+	//go SyncPutTest("t2", "pod -h")
 
 	utils.HoldPro()
 }
@@ -65,6 +65,52 @@ func TestRemoteIp(ip string, key string, input string) {
 		return
 	}
 }
+
+func GetWithPrefix(key string) (*clientv3.GetResponse, error) {
+	var (
+		err    error
+		cli    *clientv3.Client
+		getRsp *clientv3.GetResponse
+		ctx    context.Context
+		cancel context.CancelFunc
+	)
+	cli, err = clientv3.New(clientv3.Config{
+		Endpoints:   []string{constant.EtcdIPAddr},
+		DialTimeout: 5 * time.Second,
+	})
+
+	utils.HandleError("connect to etcd failed", err)
+	defer cli.Close()
+	// get
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
+	getRsp, err = cli.Get(ctx, key, clientv3.WithPrefix())
+	cancel()
+
+	return getRsp, err
+}
+func GetNormal(key string) (*clientv3.GetResponse, error) {
+	var (
+		err    error
+		cli    *clientv3.Client
+		getRsp *clientv3.GetResponse
+		ctx    context.Context
+		cancel context.CancelFunc
+	)
+	cli, err = clientv3.New(clientv3.Config{
+		Endpoints:   []string{constant.EtcdIPAddr},
+		DialTimeout: 5 * time.Second,
+	})
+
+	utils.HandleError("connect to etcd failed", err)
+	defer cli.Close()
+	// get
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
+	getRsp, err = cli.Get(ctx, key)
+	cancel()
+
+	return getRsp, err
+}
+
 func Get(key string) ([]string, error) {
 	var (
 		//kv     clientv3.KV
@@ -122,44 +168,44 @@ func EasyPutGetTest() {
 		return
 	}
 	fmt.Println("connect to etcd success")
-	/*
-		kv := clientv3.NewKV(cli)
-		fmt.Println("Put part")
-		kv.Put(context.TODO(), "demo/A/B1", "BB", clientv3.WithPrevKV())
-		kv.Put(context.TODO(), "demo/A/B2", "CCC", clientv3.WithPrevKV())
-		kv.Put(context.TODO(), "demo/A/B3", "DDDD", clientv3.WithPrevKV())
-
-		fmt.Println("Get part")
-
-		getRsp, err := kv.Get(context.TODO(), "/demo/A", clientv3.WithPrefix())
-		if err != nil {
-			fmt.Println(err)
-		}
-		fmt.Println(getRsp.Kvs, getRsp.Count)
-		for _, resp := range getRsp.Kvs {
-			fmt.Printf("key: %s, value:%s\n", string(resp.Key), string(resp.Value))
-		}
-	*/
-
 	defer cli.Close()
 	// put
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	_, err = cli.Put(ctx, "hh", "helloworld")
+	_, err = cli.Put(ctx, "/test/a", "a-hello world")
+	_, err = cli.Put(ctx, "/test/b", "b-hello world")
+	_, err = cli.Put(ctx, "/test", "no-hello world")
+	_, err = cli.Put(ctx, "/test/a/in_a", "in_a -hello world")
+	_, err = cli.Put(ctx, "/test/a/in a", "in block a -hello world")
+	_, err = cli.Put(ctx, "test/a", "head no hello")
 	cancel()
 	if err != nil {
 		fmt.Printf("put to etcd failed, err:%v\n", err)
 		return
 	}
+
 	// get
+	fmt.Println("test 1 ,prefix key = /test")
 	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
-	resp, err := cli.Get(ctx, "hh")
+	resp, err := cli.Get(ctx, "/test", clientv3.WithPrefix())
 	cancel()
 	if err != nil {
 		fmt.Printf("get from etcd failed, err:%v\n", err)
 		return
 	}
 	for _, ev := range resp.Kvs {
-		fmt.Printf("%s:%s\n", ev.Key, ev.Value)
+		fmt.Printf("[key] %s :[value] %s\n", ev.Key, ev.Value)
+	}
+
+	fmt.Println("test 2, prefix key = /test/")
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
+	resp, err = cli.Get(ctx, "/test/", clientv3.WithPrefix())
+	cancel()
+	if err != nil {
+		fmt.Printf("get from etcd failed, err:%v\n", err)
+		return
+	}
+	for _, ev := range resp.Kvs {
+		fmt.Printf("[key] %s :[value] %s\n", ev.Key, ev.Value)
 	}
 }
 

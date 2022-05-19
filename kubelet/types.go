@@ -1,6 +1,6 @@
 package kubelet
 
-import "minik8s/src/pod"
+import "minik8s/pod"
 
 const (
 	POD_PENDING   pod.PodStatusType = "PENDING"
