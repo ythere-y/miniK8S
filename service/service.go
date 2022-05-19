@@ -2,13 +2,14 @@ package service
 
 import (
 	"fmt"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"minik8s/meta"
-	"minik8s/src/pod"
+	"minik8s/pod"
 	"minik8s/utils"
 	"strconv"
 	"time"
+
+	"gopkg.in/yaml.v2"
 )
 
 // Container meta data in yaml

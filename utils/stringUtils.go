@@ -1,6 +1,9 @@
 package utils
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 func FirstWord(str string) string {
 	//存放单词的切片
@@ -13,4 +16,9 @@ func FirstWord(str string) string {
 func CutFirst(str string, rootname string) string {
 	str = strings.Replace(str, rootname, " ", 1)
 	return str
+}
+func HandleError(words string, err error) {
+	if err != nil {
+		fmt.Printf("%v ->: \n%v\n", words, err.Error())
+	}
 }
