@@ -1,0 +1,24 @@
+kind: ReplicaSet
+metadata:
+  name: rs-test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rsapp
+  template:
+    metadata:
+      name: rspod
+      labels:
+        app: rsapp
+    spec:
+      containers:
+      - name: rscont
+        image: bfirsh/reticulate-splines
+        command: 
+        cpu: 2
+        memory: 8000000000
+        volumn: 
+          path: {}
+        port: 
+          10081/tcp: {}
