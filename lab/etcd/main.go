@@ -200,8 +200,8 @@ func Put(key string, value string) {
 
 	// put
 	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
-	cancel()
 	_, err = cli.Put(ctx, key, value)
+	cancel()
 	//cancel()
 	if err != nil {
 		fmt.Printf("put to etcd failed, err:%v\n", err)

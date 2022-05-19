@@ -71,19 +71,21 @@ func DistributePodtoNode(nodeName string, podName string) error {
  根据podName，从/registry/pods/目录下寻找对应的pod
 并组建成Pod返回
 */
-func GetPodInfo(podName string) pod.Pod {
+func GetPodInfo(podName string) *pod.Pod {
 	getRes, err := etcd.Get(etcd.SetKey(
 		etcd.SetPrefix(constant.RegistryPrefix),
 		etcd.SetSourceType("pods"),
 		etcd.SetName(podName)))
 
 	utils.HandleError("get pod info error", err)
-
+	if len(getRes) == 0 {
+		return nil
+	}
 	var podInfo pod.Pod
 	err = json.Unmarshal([]byte(getRes[0]), &podInfo)
 	utils.HandleError("unmarshal pod failed ", err)
 
-	return podInfo
+	return &podInfo
 }
 
 //GetChildNum
@@ -130,6 +132,18 @@ func SyncWatch(name string, handler etcd.Handler) {
 	go etcd.WatchWithFunc(name, handler)
 }
 
+//SetPodsStatus
+/*
+修改Pods状态
+*/
+func SetPodsStatus(podName string, targetPod pod.Pod) {
+	key := etcd.SetKey(etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetPodName(podName))
+	value, _ := json.Marshal(targetPod)
+	etcd.Put(key, string(value))
+}
+
 //SyncPut
 /*
 向etcd中put一个k-v对
@@ -144,4 +158,43 @@ func SyncPut(key string, value string) {
 */
 func SyncPutList(key []string, value []string) {
 	go etcd.PutList(key, value)
+}
+
+//DisplayAllPodsInfo
+/*
+展示所有Pods的信息（以表格形式打印主要信息）
+*/
+func DisplayAllPodsInfo() {
+	var (
+		num    uint32 = 0
+		getRsp *clientv3.GetResponse
+		err    error
+	)
+	getRsp, err = etcd.GetWithPrefix(
+		etcd.SetKey(
+			etcd.SetPrefix(constant.RegistryPrefix),
+			etcd.SetSourceType(constant.PodSourceName)))
+	utils.HandleError("get with prefix error[from get child num]", err)
+	num = uint32(len(getRsp.Kvs))
+	if num == 0 {
+		fmt.Println("cannot find any pods")
+		return
+	}
+	pod.PodPreDisplay()
+	for _, event := range getRsp.Kvs {
+		tmpValue := event.Value
+		var tmpPod pod.Pod
+		err = json.Unmarshal(tmpValue, &tmpPod)
+		utils.HandleError("unmarshal pod error", err)
+		tmpPod.Display()
+	}
+}
+
+//DisplayPodsInfo
+/*
+按照podName查找Pods的信息（以表格形式打印主要信息）
+*/
+func DisplayPodsInfo(name string) {
+	tmpPod := GetPodInfo(name)
+	tmpPod.Display()
 }

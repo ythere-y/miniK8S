@@ -19,7 +19,7 @@ func kubelethandler(event *clientv3.Event) error {
 	case mvccpb.PUT:
 		// 增加/修改 一个pod的操作
 		pod_name := string(event.Kv.Value)
-		var podInfo pod.Pod
+		var podInfo *pod.Pod
 		podInfo = apiserver.GetPodInfo(pod_name)
 		//err = json.Unmarshal(event.Kv.Value, &podInfo)
 		//utils.HandleError("unmarshal pod error", err)

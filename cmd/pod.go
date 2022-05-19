@@ -22,11 +22,14 @@ var podget = &cobra.Command{
 	Use:   "get",
 	Short: "获取pod的信息",
 	Long:  "打印pod的各种信息",
-	Args:  cobra.ExactArgs(1),
+	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("获取并打印pod信息")
-		pod.PodPreDisplay()
-		pod.GetPodInfoByName(args[0])
+		if len(args) == 0 {
+			apiserver.DisplayAllPodsInfo()
+		} else {
+
+		}
 	},
 }
 
