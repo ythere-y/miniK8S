@@ -2,10 +2,11 @@ package scheduler
 
 import (
 	"encoding/json"
-	clientv3 "go.etcd.io/etcd/client/v3"
 	"minik8s/apiserver"
-	"minik8s/src/pod"
+	"minik8s/pod"
 	"minik8s/utils"
+
+	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
 func schedulerHandler(event *clientv3.Event) error {

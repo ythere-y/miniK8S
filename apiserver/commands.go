@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"minik8s/constant"
 	"minik8s/lab/etcd"
-	"minik8s/src/pod"
+	"minik8s/pod"
 	"strconv"
 )
 

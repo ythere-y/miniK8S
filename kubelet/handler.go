@@ -3,10 +3,11 @@ package kubelet
 import (
 	"encoding/json"
 	"fmt"
+	"minik8s/pod"
+	"minik8s/utils"
+
 	"go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
-	"minik8s/src/pod"
-	"minik8s/utils"
 )
 
 func kubelethandler(event *clientv3.Event) error {

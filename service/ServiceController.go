@@ -2,11 +2,12 @@ package service
 
 import (
 	"fmt"
-	"k8s.io/apimachinery/pkg/util/intstr"
 	"minik8s/K8SClient"
 	"minik8s/apimachinery/pkg/apis/core"
 	"minik8s/apimachinery/pkg/apis/meta"
-	"minik8s/src/pod"
+	"minik8s/pod"
+
+	"k8s.io/apimachinery/pkg/util/intstr"
 )
 
 var serviceController1 = ServiceController{}

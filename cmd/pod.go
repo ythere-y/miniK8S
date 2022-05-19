@@ -2,10 +2,11 @@ package cmd
 
 import (
 	"fmt"
+	"minik8s/apiserver"
+	"minik8s/pod"
+
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	"minik8s/apiserver"
-	"minik8s/src/pod"
 )
 
 var PodCmd = &cobra.Command{

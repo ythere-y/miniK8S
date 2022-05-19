@@ -2,11 +2,12 @@ package controllerManager
 
 import (
 	"fmt"
+	"minik8s/apiserver"
+	"minik8s/pod"
+
 	"go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	yaml "gopkg.in/yaml.v2"
-	"minik8s/apiserver"
-	"minik8s/src/pod"
 )
 
 func controllerManagerHandler(event *clientv3.Event) error {
