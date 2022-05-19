@@ -10,7 +10,7 @@ func CreateKubelet(listen string) {
 	SyncWatch(listen, kubelethandler)
 }
 
-func KubeletMain() {
+func Main() {
 	fmt.Println("hello world! Kubelet Main started!")
 
 	watchName := SetKey(

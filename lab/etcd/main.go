@@ -1,18 +1,13 @@
 package etcd
 
 import (
-	"bufio"
 	"context"
 	"flag"
 	"fmt"
 	mvccpb2 "go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
-	recipe "go.etcd.io/etcd/client/v3/experimental/recipes"
-	"log"
 	"minik8s/constant"
 	"minik8s/utils"
-	"os"
-	"strings"
 	"sync"
 	"time"
 )
@@ -20,8 +15,12 @@ import (
 // etcd client put/get demo
 // use etcd/clientv3
 
-var syncCount = 0
-var ip = "localhost:2379"
+var (
+	syncCount = 0
+	addr      = flag.String("addr", "http://127.0.0.1:2379", "etcd address")
+	queueName = flag.String("name", "my-test-queue", "queue name")
+	mtx       sync.Mutex
+)
 
 func defaultPutHander(key string, value string) {
 
@@ -66,6 +65,52 @@ func TestRemoteIp(ip string, key string, input string) {
 		return
 	}
 }
+func Get(key string) ([]string, error) {
+	var (
+		//kv     clientv3.KV
+		res    []string
+		err    error
+		cli    *clientv3.Client
+		getRsp *clientv3.GetResponse
+		ctx    context.Context
+		cancel context.CancelFunc
+	)
+	cli, err = clientv3.New(clientv3.Config{
+		Endpoints:   []string{constant.EtcdIPAddr},
+		DialTimeout: 5 * time.Second,
+	})
+
+	utils.HandleError("connect to etcd failed", err)
+
+	fmt.Println("connect to etcd success")
+	/* 另一种方式
+	kv = clientv3.NewKV(cli)
+
+	getRsp, err = kv.Get(context.TODO(), "/demo/A", clientv3.WithPrefix())
+
+	utils.HandleError("get error", err)
+
+	for _, resp := range getRsp.Kvs {
+		fmt.Printf("key: %s, value:%s\n", string(resp.Key), string(resp.Value))
+	}
+	*/
+
+	defer cli.Close()
+	// get
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
+	getRsp, err = cli.Get(ctx, key)
+	cancel()
+
+	utils.HandleError("get operation error", err)
+	// 遍历得到的所有结果
+	for _, ev := range getRsp.Kvs {
+		fmt.Printf("%s:%s\n", ev.Key, ev.Value)
+		res = append(res, string(ev.Value))
+	}
+
+	return res, err
+}
+
 func EasyPutGetTest() {
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   []string{constant.EtcdIPAddr},
@@ -120,52 +165,6 @@ func EasyPutGetTest() {
 
 //etcd 实现分布式队列
 
-var (
-	addr      = flag.String("addr", "http://127.0.0.1:2379", "etcd address")
-	queueName = flag.String("name", "my-test-queue", "queue name")
-	mtx       sync.Mutex
-)
-
-func MessagingTest() {
-	flag.Parse()
-
-	endpoints := strings.Split(*addr, ",")
-
-	cli, err := clientv3.New(clientv3.Config{Endpoints: endpoints})
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer cli.Close()
-
-	//创建获取队列
-	q := recipe.NewQueue(cli, *queueName)
-
-	//从命令行读取命令
-	consol := bufio.NewScanner(os.Stdin)
-	for consol.Scan() {
-		action := consol.Text()
-		items := strings.Split(action, " ")
-		switch items[0] {
-		case "push":
-			if len(items) != 2 {
-				fmt.Println("must set value to push")
-				continue
-			}
-			q.Enqueue(items[1]) //入队
-		case "pop":
-			v, err := q.Dequeue() //出队
-			if err != nil {
-				log.Fatal(err)
-			}
-			fmt.Println(v) //输出出队元素
-		case "quit", "exit":
-			return
-		default:
-			fmt.Println("unknow action")
-		}
-	}
-
-}
 func SyncPut(key string, value string) {
 	go Put(key, value)
 }
