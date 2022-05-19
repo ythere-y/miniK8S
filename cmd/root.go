@@ -3,10 +3,11 @@ package cmd
 import (
 	"bufio"
 	"fmt"
-	"github.com/spf13/cobra"
 	"minik8s/utils"
 	"os"
 	"strings"
+
+	"github.com/spf13/cobra"
 )
 
 var RootCmd = &cobra.Command{
@@ -22,6 +23,7 @@ func init() {
 	RootCmd.AddCommand(addCmd)
 	RootCmd.AddCommand(ServiceCmd)
 	RootCmd.AddCommand(PodCmd)
+	RootCmd.AddCommand(RsCmd)
 }
 
 var rootName string

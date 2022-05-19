@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"minik8s/apiserver"
 	"minik8s/pod"
+	"minik8s/replicaset"
 
 	"minik8s/apiserver"
 	"minik8s/pod"
@@ -14,7 +15,7 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
-func controllerManagerHandler(event *clientv3.Event) error {
+func podControllerManagerHandler(event *clientv3.Event) error {
 	var err error
 	switch event.Type {
 	case mvccpb.PUT:
@@ -30,4 +31,21 @@ func controllerManagerHandler(event *clientv3.Event) error {
 		utils.HandleError("push pod to scheduler error", err)
 	}
 	return err
+}
+
+func rsControllerManagerHandler(event *clientv3.Event) error {
+	var err error
+	switch event.Type {
+	case mvccpb.PUT:
+		var newRsYaml replicaset.RSyaml
+		err = yaml.Unmarshal(event.Kv.Value, &newRsYaml)
+		if err != nil {
+			fmt.Printf("yaml unmarshal error->:\n%v\n", err.Error())
+		}
+		rsInfo := replicaset.YamlToRS(newRsYaml)
+		err = apiserver.SaveRsInfo(rsInfo)
+		utils.HandleError("save replicaset info error", err)
+		// TODO: deal with pod replicas, create pod in some nodes
+
+	}
 }

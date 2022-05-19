@@ -53,6 +53,12 @@ func YamlToRS(rsyaml RSyaml) ReplicaSet {
 	return newRS
 }
 
+// parse podtemplate in replicaset structure to create a actual pod instance
+func CreatePodByRsPodTemplate(rs ReplicaSet) pod.Pod {
+	podTemplate := rs.PodTemplate
+
+}
+
 /*
  * API use: parse a yaml file to replicaset structure
  * input: rs yaml file

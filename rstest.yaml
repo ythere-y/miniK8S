@@ -17,7 +17,7 @@ spec:
         image: bfirsh/reticulate-splines
         command: 
         cpu: 2
-        memory: 8000000000
+        memory: 800000000
         volumn: 
           path: {}
         port: 

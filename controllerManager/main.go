@@ -26,12 +26,19 @@ func reqeustPutTest() {
 func Main() {
 	fmt.Println("Controller Manager Main started!")
 
+	// pod watcher
 	watchName := SetKey(
 		SetPrefix(constant.ControllerPrefix),
 		SetSourceType("pods"),
 	)
-
 	CreateControllerManager(watchName)
+
+	// replicaset watcher
+	rsWatchName := SetKey(
+		SetPrefix(constant.ControllerPrefix),
+		SetSourceType("replicaset"),
+	)
+	CreateControllerManager(rsWatchName)
 
 	utils.HoldPro()
 }

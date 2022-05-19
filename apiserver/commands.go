@@ -7,6 +7,7 @@ import (
 	"minik8s/constant"
 	"minik8s/lab/etcd"
 	"minik8s/pod"
+	"minik8s/replicaset"
 	"minik8s/utils"
 	"strconv"
 )
@@ -74,4 +75,33 @@ func GetPodInfo(podName string) pod.Pod {
 	utils.HandleError("unmarshal pod failed ", err)
 
 	return podInfo
+}
+
+// Replicaset related functions
+/*
+ * create a replicaset
+ * input: yaml file
+ */
+func CreateRs(file string) {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.ControllerPrefix),
+		etcd.JustAppend("replicaset"),
+		etcd.JustAppend("id_"+strconv.Itoa(command_id)))
+	value, err := ioutil.ReadFile(file)
+	if err != nil {
+		fmt.Printf("file %v read error!\n", file)
+	}
+	etcd.SyncPut(key, string(value))
+}
+
+func SaveRsInfo(rs replicaset.ReplicaSet) error {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType("replicaset"),
+		etcd.SetPodName(rs.RSmeta.Name))
+	value, err := json.Marshal(rs)
+
+	utils.HandleError("marshal pod error", err)
+	etcd.Put(key, string(value))
+	return err
 }
