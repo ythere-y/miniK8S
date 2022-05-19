@@ -15,8 +15,8 @@ import (
 func CreatePod(filename string) {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.ControllerPrefix),
-		etcd.JustAppend("pods"),
-		etcd.JustAppend("create"),
+		etcd.JustAppend(constant.CREATE),
+		etcd.JustAppend(constant.PodSourceName),
 		etcd.JustAppend(time.Now().String()))
 	value, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -66,72 +66,6 @@ func DistributePodtoNode(nodeName string, podName string) error {
 	return nil
 }
 
-//GetPodInfo
-/*
- 根据podName，从/registry/pods/目录下寻找对应的pod
-并组建成Pod返回
-*/
-func GetPodInfo(podName string) *pod.Pod {
-	getRes, err := etcd.Get(etcd.SetKey(
-		etcd.SetPrefix(constant.RegistryPrefix),
-		etcd.SetSourceType("pods"),
-		etcd.SetName(podName)))
-
-	utils.HandleError("get pod info error", err)
-	if len(getRes) == 0 {
-		return nil
-	}
-	var podInfo pod.Pod
-	err = json.Unmarshal([]byte(getRes[0]), &podInfo)
-	utils.HandleError("unmarshal pod failed ", err)
-
-	return &podInfo
-}
-
-//GetChildNum
-/*
-根据key值，使用前缀查找，统计查询到的结果数量并返回
-*/
-func GetChildNum(key string) uint32 {
-	var (
-		num    uint32 = 0
-		getRsp *clientv3.GetResponse
-		err    error
-	)
-	num = 1
-	getRsp, err = etcd.GetWithPrefix(key)
-	utils.HandleError("get with prefix error[from get child num]", err)
-	num = uint32(len(getRsp.Kvs))
-
-	return num
-}
-
-//CheckIfExist
-/*
-根据key值，使用准确查找，检查某个key值是否存在
-*/
-func CheckIfExist(key string) bool {
-	var (
-		exist  bool = false
-		getRsp *clientv3.GetResponse
-		err    error
-	)
-	getRsp, err = etcd.GetNormal(key)
-	utils.HandleError("get with prefix error[from get child num]", err)
-	exist = len(getRsp.Kvs) == 1
-	return exist
-
-}
-
-//SyncWatch
-/*
-启动watch name，使用前缀watch
-有变动之后使用handler函数处理
-*/
-func SyncWatch(name string, handler etcd.Handler) {
-	go etcd.WatchWithFunc(name, handler)
-}
-
 //SetPodsStatus
 /*
 修改Pods状态
@@ -142,22 +76,6 @@ func SetPodsStatus(podName string, targetPod pod.Pod) {
 		etcd.SetPodName(podName))
 	value, _ := json.Marshal(targetPod)
 	etcd.Put(key, string(value))
-}
-
-//SyncPut
-/*
-向etcd中put一个k-v对
-*/
-func SyncPut(key string, value string) {
-	go etcd.Put(key, value)
-}
-
-//SyncPutList
-/*
-向etcd中put一连串的k-v对
-*/
-func SyncPutList(key []string, value []string) {
-	go etcd.PutList(key, value)
 }
 
 //DisplayAllPodsInfo
@@ -196,5 +114,51 @@ func DisplayAllPodsInfo() {
 */
 func DisplayPodsInfo(name string) {
 	tmpPod := GetPodInfo(name)
-	tmpPod.Display()
+	if tmpPod == nil {
+		fmt.Println("cannot find any pods")
+	} else {
+		pod.PodPreDisplay()
+		tmpPod.Display()
+	}
+}
+
+//DeletePod
+/*
+按照podName删除一个pod
+主要流程是先找到，然后stop，然后delete
+*/
+func DeletePod(names []string) {
+	var nameSet []string
+	for index, name := range names {
+		// 删除重名的
+		haveTheSame := false
+		for i := 0; i < index; i++ {
+			if name == names[index] {
+				haveTheSame = true
+				break
+			}
+		}
+		if haveTheSame == true {
+			continue
+		}
+		nameSet = append(nameSet, name)
+		targetPod := GetPodInfo(name)
+		if targetPod == nil {
+			fmt.Println("cannot find pod [" + name + "] !")
+			return
+		}
+
+	}
+	names = nameSet
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.ControllerPrefix),
+		etcd.JustAppend(constant.DELETE),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.JustAppend(time.Now().String()))
+	value, err := json.Marshal(names)
+	if err != nil {
+		panic(err)
+		return
+	}
+	SyncPut(key, string(value))
 }

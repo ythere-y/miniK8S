@@ -6,6 +6,11 @@ import (
 	"strings"
 )
 
+func GetLastWord(str string) string {
+	strLice := strings.Split(str, "/")
+	return strLice[len(strLice)-1]
+}
+
 func FirstWord(str string) string {
 	//存放单词的切片
 	var strSlice []string

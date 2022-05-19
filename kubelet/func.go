@@ -14,6 +14,45 @@ var (
 	PodsInfo map[string]pod.Pod
 )
 
+//StopPod
+/**
+ * API: stop pod
+ * cli: docker client; podId: pod id specified to stop
+**/
+func StopPod(name string) {
+	for index, pod := range KPods {
+		if pod.Meta.Name == name {
+			// get its client
+			cli := pod.PodClient
+			for _, cont := range pod.Containers {
+				dksdk.StopContainer(cont.Id, cli)
+			}
+			// stop manually, failed
+			KPods[index].Stats.Status = POD_FAILED
+		}
+	}
+}
+
+//RemovePod
+/**
+ * API: remove pod
+ * cli: docker client; podId: pod to remove
+**/
+func RemovePod(name string) {
+	for index, pod := range KPods {
+		if pod.Meta.Name == name {
+			// get its client
+			cli := pod.PodClient
+			// remove containers first
+			for _, cont := range pod.Containers {
+				dksdk.RemoveContainer(cont.Id, cli)
+			}
+			// delete pod info from global list
+			KPods = append(KPods[:index], KPods[index+1:]...)
+		}
+	}
+}
+
 func CreateAndRunPod(pod *pod.Pod) uint32 {
 	KPods = append(KPods, *pod)
 	// currently, use local machine as client

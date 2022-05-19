@@ -4,17 +4,21 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="改善apiserver和etcd部分的功能分解">
-      <change afterPath="$PROJECT_DIR$/cmd/test.go" afterDir="false" />
+    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="查询pod信息的功能基本完成。pod的存储和运行部分尝试使用map存储，但是遇到指针问题搞不清楚。">
+      <change afterPath="$PROJECT_DIR$/lab/etcd/handler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/apiserverWather.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/basicOperation.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apiserver/commands.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/commands.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/replicasetHandler.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/pod.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kubelet/func.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/func.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kubelet/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/handler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pod/Pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/pod/Pod.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/stringUtils.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/stringUtils.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,7 +37,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="replicas" />
+        <entry key="$PROJECT_DIR$" value="etcd" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -143,7 +147,8 @@
     <MESSAGE value="移动pod合并完成" />
     <MESSAGE value="完成etcd的前缀数量查询、存在查询两个功能函数（可调用apiserver）" />
     <MESSAGE value="改善apiserver和etcd部分的功能分解" />
-    <option name="LAST_COMMIT_MESSAGE" value="改善apiserver和etcd部分的功能分解" />
+    <MESSAGE value="查询pod信息的功能基本完成。pod的存储和运行部分尝试使用map存储，但是遇到指针问题搞不清楚。" />
+    <option name="LAST_COMMIT_MESSAGE" value="查询pod信息的功能基本完成。pod的存储和运行部分尝试使用map存储，但是遇到指针问题搞不清楚。" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
@@ -153,7 +158,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/controllerManager/main.go</url>
-          <line>29</line>
+          <line>13</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
@@ -163,7 +168,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/kubelet/func.go</url>
-          <line>44</line>
+          <line>83</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>

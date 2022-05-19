@@ -19,19 +19,11 @@ var (
 	mtx       sync.Mutex
 )
 
-func defaultHandler(event *clientv3.Event) error {
-	switch event.Type {
-	case mvccpb2.PUT:
-		fmt.Println("修改为：", string(event.Kv.Value), "Revision:", event.Kv.CreateRevision, event.Kv.ModRevision)
-	case mvccpb2.DELETE:
-		fmt.Println("删除了：", "Revision:", event.Kv.ModRevision)
-	}
-	return nil
-}
-
 func LabMain() {
-	EasyPutGetTest()
+	//EasyPutGetTest()
+	DeleteWatchTest()
 	utils.HoldPro()
+
 }
 
 func GetWithPrefix(key string) (*clientv3.GetResponse, error) {
@@ -108,6 +100,22 @@ func Get(key string) ([]string, error) {
 	}
 
 	return res, err
+}
+
+//DeleteWatchTest
+/*
+测试函数
+*/
+func DeleteWatchTest() {
+	go WatchWithFunc("/test/", defaultHandler)
+	time.Sleep(2 * time.Second)
+	Put("/test/h_1", "1__")
+	Put("/test/h_2", "2__")
+	Put("/test/h_3", "3__")
+	Put("/test/h_4", "4")
+
+	Delete("/test/h_1")
+	utils.HoldPro()
 }
 
 //EasyPutGetTest
@@ -237,6 +245,101 @@ func PutList(key []string, value []string) {
 		}
 		fmt.Printf("Put operation : key = %v, val = %v\n", key, value)
 	}
+}
+
+//Delete
+/*
+在etcd中删除一个key
+*/
+func Delete(key string) {
+	var (
+		cli    *clientv3.Client
+		err    error
+		cancel context.CancelFunc
+		ctx    context.Context
+	)
+	cli = connectEtcd()
+	defer func(cli *clientv3.Client) {
+		err := cli.Close()
+		if err != nil {
+
+		}
+	}(cli)
+
+	// put
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
+	_, err = cli.Delete(ctx, key)
+	cancel()
+	//cancel()
+	if err != nil {
+		fmt.Printf("delete [key = %v] in etcd failed, err:%v\n", key, err)
+		return
+	}
+	fmt.Printf("Delete operation : [key = %v] \n", key)
+}
+
+//DeleteList
+/*
+在etcd中删除一连串的key
+*/
+func DeleteList(key []string) {
+	var (
+		cli    *clientv3.Client
+		err    error
+		cancel context.CancelFunc
+		ctx    context.Context
+	)
+	cli = connectEtcd()
+	defer func(cli *clientv3.Client) {
+		err := cli.Close()
+		if err != nil {
+
+		}
+	}(cli)
+
+	// del
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
+	for _, innerKey := range key {
+		_, err = cli.Delete(ctx, innerKey)
+		if err != nil {
+			fmt.Printf("delete [key = %v] in etcd failed, err:%v\n", innerKey, err)
+			cancel()
+			return
+		}
+		fmt.Printf("Delete operation : [key = %v] \n", innerKey)
+	}
+	cancel()
+}
+
+//DeleteWithPrefix
+/*
+在etcd中删除一个key,使用前缀搜索
+*/
+func DeleteWithPrefix(key string) {
+	var (
+		cli    *clientv3.Client
+		err    error
+		cancel context.CancelFunc
+		ctx    context.Context
+	)
+	cli = connectEtcd()
+	defer func(cli *clientv3.Client) {
+		err := cli.Close()
+		if err != nil {
+
+		}
+	}(cli)
+
+	// put
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
+	_, err = cli.Delete(ctx, key, clientv3.WithPrefix())
+	cancel()
+	//cancel()
+	if err != nil {
+		fmt.Printf("delete [key = %v] in etcd failed, err:%v\n", key, err)
+		return
+	}
+	fmt.Printf("Delete operation : [key = %v] \n", key)
 }
 
 //WatchWithFunc

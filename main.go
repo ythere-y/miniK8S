@@ -5,6 +5,7 @@ import (
 	"minik8s/controllerManager"
 	"minik8s/kubelet"
 	"minik8s/scheduler"
+	"minik8s/utils"
 	"time"
 )
 
@@ -55,7 +56,7 @@ func main() {
 	//service.SerReadTest() // 关于读取yamle文件建立service的测试
 
 	//circle.CircleTest() // 关于循环import的测试
-	//utils.HoldPro() // 阻塞进程防止运行结束
+	utils.HoldPro() // 阻塞进程防止运行结束
 	return
 
 }

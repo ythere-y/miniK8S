@@ -9,15 +9,29 @@ import (
 	"time"
 )
 
-func CreateControllerManager(listen string) {
-	apiserver.SyncWatch(listen, controllerManagerHandler)
+func CreateControllerManager() {
+	var watchName string
+	watchName = SetKey(
+		SetPrefix(constant.ControllerPrefix),
+		JustAppend(constant.CREATE),
+		SetSourceType(constant.PodSourceName),
+	)
+	apiserver.SyncWatch(watchName, createPod)
+
+	watchName = SetKey(
+		SetPrefix(constant.ControllerPrefix),
+		JustAppend(constant.DELETE),
+		SetSourceType(constant.PodSourceName),
+	)
+	apiserver.SyncWatch(watchName, deletePod)
+
 }
 
 func reqeustPutTest() {
 	// sleep
 	time.Sleep(3 * time.Second)
 	apiserver.SyncPut(SetKey(
-		SetPrefix("controller"),
+		SetPrefix(constant.ControllerPrefix),
 		SetSourceType("pods"),
 		SetNameSpace("id_1")),
 		"pod_yaml")
@@ -27,12 +41,7 @@ func reqeustPutTest() {
 func Main() {
 	fmt.Println("Controller Manager Main started!")
 
-	watchName := SetKey(
-		SetPrefix(constant.ControllerPrefix),
-		SetSourceType("pods"),
-	)
-
-	CreateControllerManager(watchName)
+	CreateControllerManager()
 
 	utils.HoldPro()
 }

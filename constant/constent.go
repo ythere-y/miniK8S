@@ -1,9 +1,19 @@
 package constant
 
-var EtcdIPAddr = "localhost:2379"
-var ControllerPrefix = "controller"
-var RegistryPrefix = "registry"
-var SchedulerPrefix = "Scheduler"
-var PodSourceName = "pods"
-var NodeSourceName = "nodes"
-var ServiceSourceName = "services"
+const (
+	EtcdIPAddr string = "localhost:2379"
+
+	ControllerPrefix string = "controller"
+	RegistryPrefix   string = "registry"
+	SchedulerPrefix  string = "Scheduler"
+
+	PodSourceName     string = "pods"
+	NodeSourceName    string = "nodes"
+	ServiceSourceName string = "services"
+
+	DefaultNameSpace string = "default"
+
+	CREATE string = "create"
+	DELETE string = "delete"
+	UPDATE string = "update"
+)

@@ -2,11 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"minik8s/apiserver"
-	"minik8s/pod"
-
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
+	"minik8s/apiserver"
 )
 
 var PodCmd = &cobra.Command{
@@ -28,7 +26,7 @@ var podget = &cobra.Command{
 		if len(args) == 0 {
 			apiserver.DisplayAllPodsInfo()
 		} else {
-
+			apiserver.DisplayPodsInfo(args[0])
 		}
 	},
 }
@@ -37,11 +35,10 @@ var poddelete = &cobra.Command{
 	Use:   "delete",
 	Short: "删除pod",
 	Long:  "可以删除pod",
-	Args:  cobra.ExactArgs(1),
+	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("delete pod by name %v\n", args[0])
-		pod.StopPodByName(args[0])
-		pod.RemovePodByName(args[0])
+		apiserver.DeletePod(args)
 	},
 }
 
