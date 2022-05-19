@@ -5,11 +5,9 @@ import (
 	"fmt"
 	"minik8s/pod"
 
-	"minik8s/apiserver"
-	"minik8s/pod"
-
 	"go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
+	"minik8s/apiserver"
 )
 
 func kubelethandler(event *clientv3.Event) error {

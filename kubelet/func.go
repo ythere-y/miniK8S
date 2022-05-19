@@ -3,7 +3,7 @@ package kubelet
 import (
 	"github.com/docker/docker/client"
 	"minik8s/lab/dksdk"
-	"minik8s/src/pod"
+	"minik8s/pod"
 )
 
 var (
