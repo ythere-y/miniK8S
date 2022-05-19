@@ -2,12 +2,13 @@ package kubelet
 
 import (
 	"fmt"
+	"minik8s/apiserver"
 	. "minik8s/lab/etcd"
 	"minik8s/utils"
 )
 
 func CreateKubelet(listen string) {
-	SyncWatch(listen, kubelethandler)
+	apiserver.SyncWatch(listen, kubelethandler)
 }
 
 func Main() {

@@ -2,6 +2,7 @@ package controllerManager
 
 import (
 	"fmt"
+	"minik8s/apiserver"
 	"minik8s/constant"
 	. "minik8s/lab/etcd"
 	"minik8s/utils"
@@ -9,13 +10,13 @@ import (
 )
 
 func CreateControllerManager(listen string) {
-	SyncWatch(listen, controllerManagerHandler)
+	apiserver.SyncWatch(listen, controllerManagerHandler)
 }
 
 func reqeustPutTest() {
 	// sleep
 	time.Sleep(3 * time.Second)
-	SyncPut(SetKey(
+	apiserver.SyncPut(SetKey(
 		SetPrefix("controller"),
 		SetSourceType("pods"),
 		SetNameSpace("id_1")),

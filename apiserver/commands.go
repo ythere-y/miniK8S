@@ -9,21 +9,20 @@ import (
 	"minik8s/lab/etcd"
 	"minik8s/pod"
 	"minik8s/utils"
-	"strconv"
+	"time"
 )
-
-var command_id = 1
 
 func CreatePod(filename string) {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.ControllerPrefix),
 		etcd.JustAppend("pods"),
-		etcd.JustAppend("id_"+strconv.Itoa(command_id)))
+		etcd.JustAppend("create"),
+		etcd.JustAppend(time.Now().String()))
 	value, err := ioutil.ReadFile(filename)
 	if err != nil {
 		fmt.Printf("file %v read error!\n", filename)
 	}
-	etcd.SyncPut(key, string(value))
+	SyncPut(key, string(value))
 }
 
 func SavePodInfo(pod pod.Pod) error {
@@ -44,10 +43,15 @@ func PushPodToScheduler(pod pod.Pod) error {
 		etcd.SetName(pod.Meta.Name))
 
 	value := pod.Meta.Name
-	etcd.SyncPut(key, value)
+	SyncPut(key, value)
 	return nil
 }
 
+//DistributePodtoNode
+/*
+将一个pod分配给一个node（两者使用name来识别）
+此为执行操作，将分配结果写入etcd
+*/
 func DistributePodtoNode(nodeName string, podName string) error {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.RegistryPrefix),
@@ -57,7 +61,7 @@ func DistributePodtoNode(nodeName string, podName string) error {
 		etcd.SetPodName(podName))
 
 	value := podName
-	etcd.SyncPut(key, value)
+	SyncPut(key, value)
 
 	return nil
 }
@@ -115,4 +119,29 @@ func CheckIfExist(key string) bool {
 	exist = len(getRsp.Kvs) == 1
 	return exist
 
+}
+
+//SyncWatch
+/*
+启动watch name，使用前缀watch
+有变动之后使用handler函数处理
+*/
+func SyncWatch(name string, handler etcd.Handler) {
+	go etcd.WatchWithFunc(name, handler)
+}
+
+//SyncPut
+/*
+向etcd中put一个k-v对
+*/
+func SyncPut(key string, value string) {
+	go etcd.Put(key, value)
+}
+
+//SyncPutList
+/*
+向etcd中put一连串的k-v对
+*/
+func SyncPutList(key []string, value []string) {
+	go etcd.PutList(key, value)
 }
