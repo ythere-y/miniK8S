@@ -15,8 +15,8 @@ import (
 func CreatePod(filename string) {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.ControllerPrefix),
-		etcd.JustAppend(constant.CREATE),
 		etcd.JustAppend(constant.PodSourceName),
+		etcd.JustAppend(constant.CREATE),
 		etcd.JustAppend(time.Now().String()))
 	value, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -166,8 +166,8 @@ func DeletePod(names []string) {
 
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.ControllerPrefix),
-		etcd.JustAppend(constant.DELETE),
 		etcd.SetSourceType(constant.PodSourceName),
+		etcd.JustAppend(constant.DELETE),
 		etcd.JustAppend(time.Now().String()))
 	value, err := json.Marshal(names)
 	if err != nil {
@@ -194,8 +194,8 @@ func StopPod(names []string) {
 
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.ControllerPrefix),
-		etcd.JustAppend(constant.STOP),
 		etcd.SetSourceType(constant.PodSourceName),
+		etcd.JustAppend(constant.STOP),
 		etcd.JustAppend(time.Now().String()))
 	value, err := json.Marshal(names)
 	if err != nil {

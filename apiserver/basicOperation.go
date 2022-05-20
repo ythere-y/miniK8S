@@ -59,7 +59,6 @@ func CheckPodIfExist(podName string) bool {
 	key = etcd.SetKey(
 		etcd.SetPrefix(constant.RegistryPrefix),
 		etcd.SetSourceType(constant.PodSourceName),
-		etcd.SetNameSpace(constant.DefaultNameSpace),
 		etcd.SetPodName(podName))
 	getRsp, err = etcd.GetNormal(key)
 	utils.HandleError("get with prefix error[from get child num]", err)

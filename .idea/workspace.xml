@@ -4,17 +4,16 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="完成了delete pod的流程，可以按照名字（可以输入多个名字）删除pod">
+    <list default="true" id="0162b9a0-9ec2-4453-a66a-457fe72ec50d" name="Changes" comment="增加stop pod命令。移除namespace层级">
+      <change afterPath="$PROJECT_DIR$/lab/etcd/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apiserver/basicOperation.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/basicOperation.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apiserver/commands.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/commands.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/pod.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllerManager/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handler.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllerManager/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kubelet/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubelet/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,25 +47,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.highlight.mappings&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.highlight.symlinks&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.show.date&quot;: &quot;false&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.show.permissions&quot;: &quot;false&quot;,
-    &quot;WebServerToolWindowPanel.toolwindow.show.size&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/HC&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
+    "WebServerToolWindowFactoryState": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.mappings": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.symlinks": "true",
+    "WebServerToolWindowPanel.toolwindow.show.date": "false",
+    "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
+    "WebServerToolWindowPanel.toolwindow.show.size": "false",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "C:/Users/HC",
+    "nodejs_package_manager_path": "npm"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s" />
@@ -144,7 +144,8 @@
     <MESSAGE value="改善apiserver和etcd部分的功能分解" />
     <MESSAGE value="查询pod信息的功能基本完成。pod的存储和运行部分尝试使用map存储，但是遇到指针问题搞不清楚。" />
     <MESSAGE value="完成了delete pod的流程，可以按照名字（可以输入多个名字）删除pod" />
-    <option name="LAST_COMMIT_MESSAGE" value="完成了delete pod的流程，可以按照名字（可以输入多个名字）删除pod" />
+    <MESSAGE value="增加stop pod命令。移除namespace层级" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加stop pod命令。移除namespace层级" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

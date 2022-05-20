@@ -87,4 +87,5 @@ func init() {
 	PodCmd.AddCommand(podget)
 	PodCmd.AddCommand(podupdate)
 	PodCmd.AddCommand(poddelete)
+	PodCmd.AddCommand(podstop)
 }

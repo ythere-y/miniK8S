@@ -103,7 +103,7 @@ func stopPod(event *clientv3.Event) error {
 		for _, key := range keys {
 			buildKey := etcd.SetKey(
 				etcd.SetPrefix(constant.RegistryPrefix),
-				etcd.SetSourceType(constant.PodSourceName),
+				etcd.SetSourceType(constant.NodeSourceName),
 				//TODO:需要一种能找到该pod归属于哪个node的机制
 				etcd.SetNodeName("node_1"),
 				etcd.SetPodName(key),

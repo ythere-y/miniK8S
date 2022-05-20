@@ -25,8 +25,8 @@ func kubelethandler(event *clientv3.Event) error {
 		fmt.Printf("kubelet handling key = %v, value = %v\n", string(event.Kv.Key), string(event.Kv.Value))
 		// 增加/修改 一个pod的操作
 		podName := utils.GetLastWord(string(event.Kv.Key))
-		opertion := string(event.Kv.Value)
-		switch opertion {
+		operation := string(event.Kv.Value)
+		switch operation {
 		case podName:
 			// 是创建操作
 			var podInfo *pod.Pod
@@ -39,6 +39,8 @@ func kubelethandler(event *clientv3.Event) error {
 			// 是删除命令
 			StopPod(podName)
 			RemovePod(podName)
+		default:
+			fmt.Printf("op = %v, it not in any!\n", operation)
 		}
 	}
 	return err

@@ -235,16 +235,17 @@ func PutList(key []string, value []string) {
 
 	// put
 	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
-	cancel()
 	for i := 0; i < listLen; i++ {
 		_, err = cli.Put(ctx, key[i], value[i])
 		//cancel()
 		if err != nil {
 			fmt.Printf("put to etcd failed, err:%v\n", err)
+			cancel()
 			return
 		}
 		fmt.Printf("Put operation : key = %v, val = %v\n", key, value)
 	}
+	cancel()
 }
 
 //Delete

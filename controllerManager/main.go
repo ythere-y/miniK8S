@@ -13,22 +13,22 @@ func CreateControllerManager() {
 	var watchName string
 	watchName = SetKey(
 		SetPrefix(constant.ControllerPrefix),
-		JustAppend(constant.CREATE),
 		SetSourceType(constant.PodSourceName),
+		JustAppend(constant.CREATE),
 	)
 	apiserver.SyncWatch(watchName, createPod)
 
 	watchName = SetKey(
 		SetPrefix(constant.ControllerPrefix),
-		JustAppend(constant.DELETE),
 		SetSourceType(constant.PodSourceName),
+		JustAppend(constant.DELETE),
 	)
 	apiserver.SyncWatch(watchName, deletePod)
 
 	watchName = SetKey(
 		SetPrefix(constant.ControllerPrefix),
-		JustAppend(constant.STOP),
 		SetSourceType(constant.PodSourceName),
+		JustAppend(constant.STOP),
 	)
 	apiserver.SyncWatch(watchName, stopPod)
 
