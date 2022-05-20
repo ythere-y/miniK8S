@@ -28,7 +28,7 @@ func CreatePod(filename string) {
 func SavePodInfo(pod pod.Pod) error {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.RegistryPrefix),
-		etcd.SetSourceType("pods"),
+		etcd.SetSourceType(constant.PodSourceName),
 		etcd.SetPodName(pod.Meta.Name))
 	value, err := json.Marshal(pod)
 
@@ -39,7 +39,8 @@ func SavePodInfo(pod pod.Pod) error {
 func PushPodToScheduler(pod pod.Pod) error {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.SchedulerPrefix),
-		etcd.JustAppend("pods"),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.JustAppend(constant.PodSourceName),
 		etcd.SetName(pod.Meta.Name))
 
 	value := pod.Meta.Name
@@ -55,8 +56,7 @@ func PushPodToScheduler(pod pod.Pod) error {
 func DistributePodtoNode(nodeName string, podName string) error {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.RegistryPrefix),
-		etcd.SetSourceType("nodes"),
-		etcd.SetNameSpace("default"),
+		etcd.SetSourceType(constant.NodeSourceName),
 		etcd.SetNodeName(nodeName),
 		etcd.SetPodName(podName))
 
@@ -71,7 +71,8 @@ func DistributePodtoNode(nodeName string, podName string) error {
 修改Pods状态
 */
 func SetPodsStatus(podName string, targetPod pod.Pod) {
-	key := etcd.SetKey(etcd.SetPrefix(constant.RegistryPrefix),
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
 		etcd.SetSourceType(constant.PodSourceName),
 		etcd.SetPodName(podName))
 	value, _ := json.Marshal(targetPod)
@@ -122,15 +123,13 @@ func DisplayPodsInfo(name string) {
 	}
 }
 
-//DeletePod
+//parseNames
 /*
-按照podName删除一个pod
-主要流程是先找到，然后stop，然后delete
+解析多个名字，去除其中的重复内容
 */
-func DeletePod(names []string) {
+func parseNames(names []string) []string {
 	var nameSet []string
 	for index, name := range names {
-		// 删除重名的
 		haveTheSame := false
 		for i := 0; i < index; i++ {
 			if name == names[index] {
@@ -142,17 +141,60 @@ func DeletePod(names []string) {
 			continue
 		}
 		nameSet = append(nameSet, name)
-		targetPod := GetPodInfo(name)
-		if targetPod == nil {
+	}
+	return nameSet
+}
+
+//DeletePod
+/*
+按照podName删除一个pod
+主要流程是先找到，然后stop，然后delete
+*/
+func DeletePod(names []string) {
+	nameSet := parseNames(names)
+	for _, name := range nameSet {
+		path := etcd.SetKey(
+			etcd.SetPrefix(constant.RegistryPrefix),
+			etcd.SetSourceType(constant.PodSourceName),
+			etcd.SetPodName(name))
+		if CheckIfExist(path) == false {
 			fmt.Println("cannot find pod [" + name + "] !")
 			return
 		}
-
 	}
 	names = nameSet
+
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.ControllerPrefix),
 		etcd.JustAppend(constant.DELETE),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.JustAppend(time.Now().String()))
+	value, err := json.Marshal(names)
+	if err != nil {
+		panic(err)
+		return
+	}
+	SyncPut(key, string(value))
+}
+
+//StopPod
+/*
+按照podName让pod停止运行（container的状态变为stopped）
+主要流程是先找到，然后stop，然后delete
+*/
+func StopPod(names []string) {
+	nameSet := parseNames(names)
+	for _, name := range nameSet {
+		if CheckPodIfExist(name) == false {
+			fmt.Println("cannot find pod [" + name + "] !")
+			return
+		}
+	}
+	names = nameSet
+
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.ControllerPrefix),
+		etcd.JustAppend(constant.STOP),
 		etcd.SetSourceType(constant.PodSourceName),
 		etcd.JustAppend(time.Now().String()))
 	value, err := json.Marshal(names)

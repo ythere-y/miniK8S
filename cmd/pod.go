@@ -41,6 +41,16 @@ var poddelete = &cobra.Command{
 		apiserver.DeletePod(args)
 	},
 }
+var podstop = &cobra.Command{
+	Use:   "stop",
+	Short: "停止pod",
+	Long:  "可以停止pod的运行，但是pod仍然属于对应的node。只是将pod管理下的所有container状态设置为stopped",
+	Args:  cobra.MinimumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf("stop pod by name %v\n", args[0])
+		apiserver.StopPod(args)
+	},
+}
 
 // minik pod create file.yaml
 var podcreate = &cobra.Command{

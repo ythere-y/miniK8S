@@ -25,6 +25,13 @@ func CreateControllerManager() {
 	)
 	apiserver.SyncWatch(watchName, deletePod)
 
+	watchName = SetKey(
+		SetPrefix(constant.ControllerPrefix),
+		JustAppend(constant.STOP),
+		SetSourceType(constant.PodSourceName),
+	)
+	apiserver.SyncWatch(watchName, stopPod)
+
 }
 
 func reqeustPutTest() {

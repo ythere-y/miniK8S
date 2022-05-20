@@ -1,8 +1,8 @@
 package kubelet
 
 import (
-	"encoding/json"
 	"fmt"
+	"minik8s/constant"
 	"minik8s/pod"
 	"minik8s/utils"
 
@@ -24,15 +24,22 @@ func kubelethandler(event *clientv3.Event) error {
 	case mvccpb.PUT:
 		fmt.Printf("kubelet handling key = %v, value = %v\n", string(event.Kv.Key), string(event.Kv.Value))
 		// 增加/修改 一个pod的操作
-		pod_name := string(event.Kv.Value)
-		var podInfo *pod.Pod
-		podInfo = apiserver.GetPodInfo(pod_name)
-		//err = json.Unmarshal(event.Kv.Value, &podInfo)
-		//utils.HandleError("unmarshal pod error", err)
-		fmt.Println(podInfo)
-		output, _ := json.Marshal(podInfo)
-		fmt.Printf("%v\n", string(output))
-		CreateAndRunPod(podInfo)
+		podName := utils.GetLastWord(string(event.Kv.Key))
+		opertion := string(event.Kv.Value)
+		switch opertion {
+		case podName:
+			// 是创建操作
+			var podInfo *pod.Pod
+			podInfo = apiserver.GetPodInfo(podName)
+			CreateAndRunPod(podInfo)
+		case constant.StopFlag:
+			// 是停止命令
+			StopPod(podName)
+		case constant.RemoveFlag:
+			// 是删除命令
+			StopPod(podName)
+			RemovePod(podName)
+		}
 	}
 	return err
 }

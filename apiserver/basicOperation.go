@@ -49,6 +49,25 @@ func GetChildNum(key string) uint32 {
 	return num
 }
 
+func CheckPodIfExist(podName string) bool {
+	var (
+		exist  bool = false
+		getRsp *clientv3.GetResponse
+		err    error
+		key    string
+	)
+	key = etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetNameSpace(constant.DefaultNameSpace),
+		etcd.SetPodName(podName))
+	getRsp, err = etcd.GetNormal(key)
+	utils.HandleError("get with prefix error[from get child num]", err)
+	exist = len(getRsp.Kvs) == 1
+	return exist
+
+}
+
 //CheckIfExist
 /*
 根据key值，使用准确查找，检查某个key值是否存在

@@ -51,6 +51,7 @@ func createPod(event *clientv3.Event) error {
 	return err
 
 }
+
 func deletePod(event *clientv3.Event) error {
 	var err error
 	switch event.Type {
@@ -66,7 +67,6 @@ func deletePod(event *clientv3.Event) error {
 			buildKey := etcd.SetKey(
 				etcd.SetPrefix(constant.RegistryPrefix),
 				etcd.SetSourceType(constant.NodeSourceName),
-				etcd.SetNameSpace(constant.DefaultNameSpace),
 				//TODO:需要一种能找到该pod归属于哪个node的机制
 				etcd.SetNodeName("node_1"),
 				etcd.SetPodName(key),
@@ -84,6 +84,37 @@ func deletePod(event *clientv3.Event) error {
 		}
 		apiserver.SyncDel(deletargets)
 
+	}
+	return err
+}
+
+func stopPod(event *clientv3.Event) error {
+	var err error
+	switch event.Type {
+	case mvccpb.PUT:
+		var keys []string
+		var stopTargets []string
+		var values []string
+		err = json.Unmarshal(event.Kv.Value, &keys)
+		if err != nil {
+			return err
+		}
+
+		for _, key := range keys {
+			buildKey := etcd.SetKey(
+				etcd.SetPrefix(constant.RegistryPrefix),
+				etcd.SetSourceType(constant.PodSourceName),
+				//TODO:需要一种能找到该pod归属于哪个node的机制
+				etcd.SetNodeName("node_1"),
+				etcd.SetPodName(key),
+			)
+			stopTargets = append(stopTargets, buildKey)
+			values = append(values, constant.StopFlag)
+		}
+		for _, deletarget := range stopTargets {
+			fmt.Printf("stop [key = %v]\n", deletarget)
+		}
+		apiserver.SyncPutList(stopTargets, values)
 	}
 	return err
 }

@@ -11,9 +11,11 @@ const (
 	NodeSourceName    string = "nodes"
 	ServiceSourceName string = "services"
 
-	DefaultNameSpace string = "default"
-
 	CREATE string = "create"
 	DELETE string = "delete"
 	UPDATE string = "update"
+	STOP   string = "stop"
+
+	StopFlag   string = "__stop__"
+	RemoveFlag string = "__remove__"
 )

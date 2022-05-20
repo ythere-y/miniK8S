@@ -17,7 +17,7 @@ func Main() {
 
 	watchName := SetKey(
 		SetPrefix(constant.SchedulerPrefix),
-		SetSourceType("pods"),
+		SetSourceType(constant.PodSourceName),
 	)
 
 	CreateSchedulerManager(watchName)
