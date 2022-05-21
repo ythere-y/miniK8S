@@ -3,7 +3,6 @@ package apiserver
 import (
 	"encoding/json"
 	"fmt"
-	clientv3 "go.etcd.io/etcd/client/v3"
 	"io/ioutil"
 	"minik8s/constant"
 	"minik8s/lab/etcd"
@@ -11,6 +10,8 @@ import (
 	"minik8s/replicaset"
 	"minik8s/utils"
 	"strconv"
+
+	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
 var command_id = 1
@@ -38,6 +39,7 @@ func SavePodInfo(pod pod.Pod) error {
 	etcd.Put(key, string(value))
 	return err
 }
+
 func PushPodToScheduler(pod pod.Pod) error {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.SchedulerPrefix),
@@ -83,33 +85,6 @@ func GetPodInfo(podName string) pod.Pod {
 	return podInfo
 }
 
-// Replicaset related functions
-/*
- * create a replicaset
- * input: yaml file
- */
-func CreateRs(file string) {
-	key := etcd.SetKey(
-		etcd.SetPrefix(constant.ControllerPrefix),
-		etcd.JustAppend("replicaset"),
-		etcd.JustAppend("id_"+strconv.Itoa(command_id)))
-	value, err := ioutil.ReadFile(file)
-	if err != nil {
-		fmt.Printf("file %v read error!\n", file)
-	}
-	etcd.SyncPut(key, string(value))
-}
-
-func SaveRsInfo(rs replicaset.ReplicaSet) error {
-	key := etcd.SetKey(
-		etcd.SetPrefix(constant.RegistryPrefix),
-		etcd.SetSourceType("replicaset"),
-		etcd.SetPodName(rs.RSmeta.Name))
-	value, err := json.Marshal(rs)
-
-	utils.HandleError("marshal pod error", err)
-	etcd.Put(key, string(value))
-	return err
 //GetChildNum
 /*
 根据key值，使用前缀查找，统计查询到的结果数量并返回
@@ -143,4 +118,50 @@ func CheckIfExist(key string) bool {
 	exist = len(getRsp.Kvs) == 1
 	return exist
 
+}
+
+// Replicaset related functions
+/*
+ * create a replicaset
+ * input: yaml file
+ */
+func CreateRs(file string) {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.ControllerPrefix),
+		etcd.JustAppend("replicaset"),
+		etcd.JustAppend("id_"+strconv.Itoa(command_id)))
+	value, err := ioutil.ReadFile(file)
+	if err != nil {
+		fmt.Printf("file %v read error!\n", file)
+	}
+	etcd.SyncPut(key, string(value))
+}
+
+func SaveRsInfo(rs replicaset.ReplicaSet) error {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType("replicaset"),
+		etcd.SetPodName(rs.RSmeta.Name))
+	value, err := json.Marshal(rs)
+
+	utils.HandleError("marshal pod error", err)
+	etcd.Put(key, string(value))
+	return err
+}
+
+/*
+ * pods managed by replicaset should be put into a new key
+ * in etcd, which is /registry/rspods/[rs_name]/[pod_name]
+ */
+func SaveRsPodInfo(rs replicaset.ReplicaSet, pod pod.Pod) error {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType("rspods"),
+		etcd.JustAppend(rs.RSmeta.Name),
+		etcd.JustAppend(pod.Meta.Name),
+	)
+	value, err := json.Marshal(pod)
+	utils.HandleError("marshal rspod error", err)
+	etcd.Put(key, string(value))
+	return err
 }

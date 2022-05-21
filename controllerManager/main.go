@@ -9,7 +9,7 @@ import (
 )
 
 func CreateControllerManager(listen string) {
-	SyncWatch(listen, controllerManagerHandler)
+	SyncWatch(listen, podControllerManagerHandler)
 }
 
 func reqeustPutTest() {

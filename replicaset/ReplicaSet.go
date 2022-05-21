@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"minik8s/pod"
 	"minik8s/utils"
+	"strconv"
 
 	yaml "gopkg.in/yaml.v2"
 )
@@ -34,6 +35,7 @@ func YamlToRS(rsyaml RSyaml) ReplicaSet {
 	newRS.RSmeta.Uid = utils.HashToUid(newRS.RSmeta.Name)
 	newRS.RSspec.Replicas = rsyaml.Spec.Replicas
 	newRS.RSspec.SelectorLabels = rsyaml.Spec.Selector.MatchLabels
+	newRS.PodTemplate.Meta.Kind = "Pod"
 	newRS.PodTemplate.Meta.Name = rsyaml.Spec.Template.Metadata.Name
 	newRS.PodTemplate.Meta.Labels = rsyaml.Spec.Template.Metadata.Labels
 
@@ -53,12 +55,6 @@ func YamlToRS(rsyaml RSyaml) ReplicaSet {
 	return newRS
 }
 
-// parse podtemplate in replicaset structure to create a actual pod instance
-func CreatePodByRsPodTemplate(rs ReplicaSet) pod.Pod {
-	podTemplate := rs.PodTemplate
-
-}
-
 /*
  * API use: parse a yaml file to replicaset structure
  * input: rs yaml file
@@ -68,4 +64,40 @@ func ParseYamlToRS(file string) ReplicaSet {
 	rsyaml := ParseRSYaml(file)
 	newRS := YamlToRS(rsyaml)
 	return newRS
+}
+
+/*
+ * Create pod instances, whose pod number is same as
+ * replicas difined in replicaset.
+ */
+func CreatePodInstances(rs ReplicaSet, replicas int) []pod.Pod {
+	var podInstances []pod.Pod
+	for i := 1; i <= replicas; i++ {
+		podtemp := CreateOnePodInstance(rs, i)
+		podInstances = append(podInstances, podtemp)
+	}
+	return podInstances
+}
+
+/*
+ * Used in CreatePodInstances(...)
+ * Create one pod instance with specified numtag
+ *
+ * Extracting pod template in replicaset structure
+ * to an actual pod instance,
+ * and tag it with the numtag.
+ * Fot instance, pod name in template is rspod,
+ * and numtag is 1, then the pod name in the
+ * extracted instance is rspod-1
+ */
+func CreateOnePodInstance(rs ReplicaSet, numtag int) pod.Pod {
+	podInstance := rs.PodTemplate
+	podtempname := podInstance.Meta.Name
+	// update name with numtag
+	newName := podtempname + "-" + strconv.Itoa(numtag)
+	// calc uid by new name
+	uid := utils.HashToUid(newName)
+	podInstance.Meta.Uid = uid
+	podInstance.Meta.Name = newName
+	return podInstance
 }
