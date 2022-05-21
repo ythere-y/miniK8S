@@ -245,7 +245,7 @@ func SaveRsInfo(rs replicaset.ReplicaSet) error {
 func SaveRsPodInfo(rs replicaset.ReplicaSet, pod pod.Pod) error {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.RegistryPrefix),
-		etcd.SetSourceType("rspods"),
+		etcd.SetSourceType(constant.RsPodSourceName),
 		etcd.JustAppend(rs.RSmeta.Name),
 		etcd.JustAppend(pod.Meta.Name),
 	)
