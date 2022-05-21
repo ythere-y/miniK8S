@@ -2,21 +2,54 @@ package controllerManager
 
 import (
 	"fmt"
+	"minik8s/apiserver"
 	"minik8s/constant"
 	. "minik8s/lab/etcd"
 	"minik8s/utils"
 	"time"
 )
 
-func CreateControllerManager(listen string) {
-	SyncWatch(listen, podControllerManagerHandler)
+func CreateControllerManager() {
+	var watchName string
+	// create pod handler
+	watchName = SetKey(
+		SetPrefix(constant.ControllerPrefix),
+		SetSourceType(constant.PodSourceName),
+		JustAppend(constant.CREATE),
+	)
+	apiserver.SyncWatch(watchName, createPod)
+
+	// delete pod handler
+	watchName = SetKey(
+		SetPrefix(constant.ControllerPrefix),
+		SetSourceType(constant.PodSourceName),
+		JustAppend(constant.DELETE),
+	)
+	apiserver.SyncWatch(watchName, deletePod)
+
+	// stop pod handler
+	watchName = SetKey(
+		SetPrefix(constant.ControllerPrefix),
+		SetSourceType(constant.PodSourceName),
+		JustAppend(constant.STOP),
+	)
+	apiserver.SyncWatch(watchName, stopPod)
+
+	// create replicaset handler
+	watchName = SetKey(
+		SetPrefix(constant.ControllerPrefix),
+		SetSourceType(constant.ReplicaSourceName),
+		JustAppend(constant.CREATE),
+	)
+	apiserver.SyncWatch(watchName, createReplicaset)
+
 }
 
 func reqeustPutTest() {
 	// sleep
 	time.Sleep(3 * time.Second)
-	SyncPut(SetKey(
-		SetPrefix("controller"),
+	apiserver.SyncPut(SetKey(
+		SetPrefix(constant.ControllerPrefix),
 		SetSourceType("pods"),
 		SetNameSpace("id_1")),
 		"pod_yaml")
@@ -26,19 +59,7 @@ func reqeustPutTest() {
 func Main() {
 	fmt.Println("Controller Manager Main started!")
 
-	// pod watcher
-	watchName := SetKey(
-		SetPrefix(constant.ControllerPrefix),
-		SetSourceType("pods"),
-	)
-	CreateControllerManager(watchName)
-
-	// replicaset watcher
-	rsWatchName := SetKey(
-		SetPrefix(constant.ControllerPrefix),
-		SetSourceType("replicaset"),
-	)
-	CreateControllerManager(rsWatchName)
+	CreateControllerManager()
 
 	utils.HoldPro()
 }

@@ -203,25 +203,6 @@ func StopPod(podId uint32) {
  * API: remove pod
  * cli: docker client; podId: pod to remove
 **/
-func RemovePodByName(name string) {
-	for index, pod := range KPods {
-		if pod.Meta.Name == name {
-			// get its client
-			cli := pod.PodClient
-			// remove containers first
-			for _, cont := range pod.Containers {
-				dksdk.RemoveContainer(cont.Id, cli)
-			}
-			// delete pod info from global list
-			KPods = append(KPods[:index], KPods[index+1:]...)
-		}
-	}
-}
-
-/**
- * API: remove pod
- * cli: docker client; podId: pod to remove
-**/
 func RemovePod(podId uint32) {
 	for index, pod := range KPods {
 		if pod.Meta.Uid == podId {

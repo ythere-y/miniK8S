@@ -24,12 +24,12 @@ func ApiServerTest() {
 func ApiServerMain() {
 	fmt.Println("hello world! Api ServerMain started!")
 	watchName := etcd.SetKey(etcd.SetPrefix("registry"), etcd.SetSourceType("apiserver"))
-	etcd.SyncWatch(watchName, apiserverHandler)
+	SyncWatch(watchName, apiserverHandler)
 
 	// sleep
 	time.Sleep(3 * time.Second)
 
-	etcd.SyncPut(etcd.SetKey(
+	SyncPut(etcd.SetKey(
 		etcd.SetPrefix("registry"),
 		etcd.SetSourceType("apiserver"),
 		etcd.SetNameSpace("default"),
