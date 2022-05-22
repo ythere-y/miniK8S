@@ -4,23 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="增加pod的信息的update功能">
-      <change afterPath="$PROJECT_DIR$/config/conf.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kubernetes/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab/etcd/preperation.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node/NodeMeta.go" afterDir="false" />
+    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="修改etcd的结构。增加node的属性，增加relation部分。开始考虑master的启动过程。">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiserver/apimain.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/apimain.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiserver/basicOperation.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/basicOperation.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiserver/commands.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/commands.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllerManager/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllerManager/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubelet/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheduler/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/etcd/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +81,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="切换分支看了一下之后配置怎么又没了" />
     <MESSAGE value="增加pod的信息的update功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加pod的信息的update功能" />
+    <MESSAGE value="修改etcd的结构。增加node的属性，增加relation部分。开始考虑master的启动过程。" />
+    <option name="LAST_COMMIT_MESSAGE" value="修改etcd的结构。增加node的属性，增加relation部分。开始考虑master的启动过程。" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
