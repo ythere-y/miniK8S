@@ -5,6 +5,7 @@ import (
 	"fmt"
 	mvccpb2 "go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
+	"minik8s/config"
 	"minik8s/constant"
 	"minik8s/utils"
 	"sync"
@@ -42,6 +43,26 @@ func GetWithPrefix(key string) (*clientv3.GetResponse, error) {
 	cancel()
 
 	return getRsp, err
+}
+
+func GetValue(key string) (string, error) {
+	var (
+		err    error
+		cli    *clientv3.Client
+		getRsp *clientv3.GetResponse
+		ctx    context.Context
+		cancel context.CancelFunc
+	)
+	cli = connectEtcd()
+	defer cli.Close()
+	// get
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
+	getRsp, err = cli.Get(ctx, key)
+	cancel()
+	if getRsp.Count == 0 {
+		return "", err
+	}
+	return string(getRsp.Kvs[0].Value), err
 }
 
 func GetNormal(key string) (*clientv3.GetResponse, error) {
@@ -175,8 +196,11 @@ func EasyPutGetTest() {
 }
 
 func connectEtcd() *clientv3.Client {
+	if Endpoints == nil {
+		Endpoints = []string{config.Configs.EtcdIp}
+	}
 	cli, err := clientv3.New(clientv3.Config{
-		Endpoints:   []string{constant.EtcdIPAddr},
+		Endpoints:   Endpoints,
 		DialTimeout: 5 * time.Second,
 	})
 	if err != nil {

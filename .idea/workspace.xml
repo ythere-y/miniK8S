@@ -4,15 +4,21 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="切换分支看了一下之后配置怎么又没了">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="增加pod的信息的update功能">
+      <change afterPath="$PROJECT_DIR$/config/conf.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kubernetes/main.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lab/etcd/preperation.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node/NodeMeta.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/apimain.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/apimain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/basicOperation.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/basicOperation.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apiserver/commands.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/commands.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/pod.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllerManager/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubelet/func.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/func.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubelet/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scheduler/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/scheduler/main.go" afterDir="false" />
     </list>
@@ -20,6 +26,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
   </component>
   <component name="GOROOT" url="file://C:/Program Files/Go" />
   <component name="Git.Settings">
@@ -33,19 +46,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/HC&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "C:/Users/HC",
+    "nodejs_package_manager_path": "npm"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="go build minik8s" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="minik8s" />
@@ -79,7 +94,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="切换分支看了一下之后配置怎么又没了" />
-    <option name="LAST_COMMIT_MESSAGE" value="切换分支看了一下之后配置怎么又没了" />
+    <MESSAGE value="增加pod的信息的update功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加pod的信息的update功能" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

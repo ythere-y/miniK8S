@@ -7,10 +7,21 @@ import (
 	"io/ioutil"
 	"minik8s/constant"
 	"minik8s/lab/etcd"
+	"minik8s/node"
 	"minik8s/pod"
 	"minik8s/utils"
 	"time"
 )
+
+func CreateNode(status node.NodeStatus) {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType(constant.NodeSourceName),
+		etcd.SetNodeName(status.Name))
+	value, err := json.Marshal(status)
+	utils.HandleError("marshal node status error", err)
+	SyncPut(key, string(value))
+}
 
 func CreatePod(filename string) {
 	key := etcd.SetKey(
@@ -19,6 +30,7 @@ func CreatePod(filename string) {
 		etcd.JustAppend(constant.CREATE),
 		etcd.JustAppend(time.Now().String()))
 	value, err := ioutil.ReadFile(filename)
+
 	if err != nil {
 		fmt.Printf("file %v read error!\n", filename)
 	}
@@ -37,6 +49,7 @@ func SavePodInfo(pod pod.Pod) error {
 	return err
 }
 func PushPodToScheduler(pod pod.Pod) error {
+
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.SchedulerPrefix),
 		etcd.SetSourceType(constant.PodSourceName),
@@ -44,12 +57,13 @@ func PushPodToScheduler(pod pod.Pod) error {
 
 	value := pod.Meta.Name
 	SyncPut(key, value)
+
 	return nil
 }
 
 func UpdatePodToKubelet(podName string) error {
 	key := etcd.SetKey(
-		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetPrefix(constant.RelationPrefix),
 		etcd.SetSourceType(constant.NodeSourceName),
 		etcd.SetPodName(podName),
 	)
@@ -64,14 +78,32 @@ func UpdatePodToKubelet(podName string) error {
 此为执行操作，将分配结果写入etcd
 */
 func DistributePodtoNode(nodeName string, podName string) error {
-	key := etcd.SetKey(
-		etcd.SetPrefix(constant.RegistryPrefix),
+	var (
+		key    string
+		value  string
+		keys   []string
+		values []string
+	)
+
+	key = etcd.SetKey(
+		etcd.SetPrefix(constant.RelationPrefix),
 		etcd.SetSourceType(constant.NodeSourceName),
 		etcd.SetNodeName(nodeName),
 		etcd.SetPodName(podName))
+	value = podName
+	keys = append(keys, key)
+	values = append(values, value)
 
-	value := podName
-	SyncPut(key, value)
+	key = etcd.SetKey(
+		etcd.SetPrefix(constant.RelationPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetNodeName(podName),
+		etcd.SetPodName(nodeName))
+	value = nodeName
+	keys = append(keys, key)
+	values = append(values, value)
+
+	SyncPutList(keys, values)
 
 	return nil
 }
@@ -164,7 +196,7 @@ func DeletePod(names []string) {
 	nameSet := parseNames(names)
 	for _, name := range nameSet {
 		path := etcd.SetKey(
-			etcd.SetPrefix(constant.RegistryPrefix),
+			etcd.SetPrefix(constant.RelationPrefix),
 			etcd.SetSourceType(constant.PodSourceName),
 			etcd.SetPodName(name))
 		if CheckIfExist(path) == false {

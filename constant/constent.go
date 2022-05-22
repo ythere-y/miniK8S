@@ -5,7 +5,8 @@ const (
 
 	ControllerPrefix string = "controller"
 	RegistryPrefix   string = "registry"
-	SchedulerPrefix  string = "Scheduler"
+	SchedulerPrefix  string = "scheduler"
+	RelationPrefix   string = "relation"
 
 	PodSourceName     string = "pods"
 	NodeSourceName    string = "nodes"

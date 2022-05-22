@@ -5,9 +5,17 @@ import (
 	"minik8s/apiserver"
 	"minik8s/constant"
 	. "minik8s/lab/etcd"
+	"minik8s/node"
 	"minik8s/utils"
 	"time"
 )
+
+var KNodes []node.NodeStatus
+
+func AddNode(status node.NodeStatus) {
+	KNodes = append(KNodes, status)
+
+}
 
 func CreateControllerManager() {
 	var watchName string
@@ -46,7 +54,7 @@ func reqeustPutTest() {
 }
 
 func Main() {
-	fmt.Println("Controller Manager Main started!")
+	fmt.Println("[Controller Manager] Main started!")
 
 	CreateControllerManager()
 

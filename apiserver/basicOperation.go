@@ -2,6 +2,7 @@ package apiserver
 
 import (
 	"encoding/json"
+	"fmt"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"minik8s/constant"
 	"minik8s/lab/etcd"
@@ -107,6 +108,69 @@ func SyncPut(key string, value string) {
 */
 func SyncPutList(key []string, value []string) {
 	go etcd.PutList(key, value)
+}
+
+func StopPods(podsNames []string) {
+
+	var deleteTargets []string
+	var values []string
+
+	for _, key := range podsNames {
+		buildKey := etcd.SetKey(
+			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetSourceType(constant.PodSourceName),
+			etcd.SetPodName(key))
+		nodeName, err := etcd.GetValue(buildKey)
+		utils.HandleError("get value error", err)
+
+		buildKey = etcd.SetKey(
+			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetSourceType(constant.NodeSourceName),
+			etcd.SetNodeName(nodeName),
+			etcd.SetPodName(key),
+		)
+		deleteTargets = append(deleteTargets, buildKey)
+		values = append(values, constant.StopFlag)
+	}
+	for _, del := range deleteTargets {
+		fmt.Printf("stop [key = %v]\n", del)
+	}
+	SyncPutList(deleteTargets, values)
+}
+
+func DeletePods(podsNames []string) {
+	var deleteTargets []string
+	for _, key := range podsNames {
+
+		// 先查询relations找到
+		buildKey := etcd.SetKey(
+			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetSourceType(constant.PodSourceName),
+			etcd.SetPodName(key))
+		nodeName, err := etcd.GetValue(buildKey)
+		utils.HandleError("get value error", err)
+
+		deleteTargets = append(deleteTargets, buildKey)
+		buildKey = etcd.SetKey(
+			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetSourceType(constant.NodeSourceName),
+			//TODO:需要一种能找到该pod归属于哪个node的机制
+			etcd.SetNodeName(nodeName),
+			etcd.SetPodName(key),
+		)
+		deleteTargets = append(deleteTargets, buildKey)
+
+		buildKey = etcd.SetKey(
+			etcd.SetPrefix(constant.RegistryPrefix),
+			etcd.SetSourceType(constant.PodSourceName),
+			etcd.SetPodName(key))
+		deleteTargets = append(deleteTargets, buildKey)
+
+	}
+	for _, del := range deleteTargets {
+		fmt.Printf("del [key = %v]\n", del)
+	}
+	SyncDel(deleteTargets)
 }
 
 //SyncDel

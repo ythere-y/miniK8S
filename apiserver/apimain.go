@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"minik8s/lab/etcd"
 	"minik8s/utils"
-	"time"
 )
 
 func ApiServerTest() {
@@ -21,20 +20,9 @@ func ApiServerTest() {
 	fmt.Printf("check 2 = /test/a, %v\n", exist)
 }
 
-func ApiServerMain() {
-	fmt.Println("hello world! Api ServerMain started!")
-	watchName := etcd.SetKey(etcd.SetPrefix("registry"), etcd.SetSourceType("apiserver"))
-	SyncWatch(watchName, apiserverHandler)
-
-	// sleep
-	time.Sleep(3 * time.Second)
-
-	SyncPut(etcd.SetKey(
-		etcd.SetPrefix("registry"),
-		etcd.SetSourceType("apiserver"),
-		etcd.SetNameSpace("default"),
-		etcd.SetName("nickname"),
-	), "abc")
+func Main() {
+	fmt.Println("[Api Server] Main started!")
+	etcd.TestConnect()
 
 	utils.HoldPro()
 }

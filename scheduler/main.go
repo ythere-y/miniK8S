@@ -13,7 +13,7 @@ func CreateSchedulerManager(listen string) {
 }
 
 func Main() {
-	fmt.Println("Scheduler Main started!")
+	fmt.Println("[Scheduler] Main started!")
 
 	watchName := SetKey(
 		SetPrefix(constant.SchedulerPrefix),
