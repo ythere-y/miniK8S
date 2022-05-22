@@ -77,8 +77,7 @@ var podupdate = &cobra.Command{
 	Short: "更新pod的信息",
 	Long:  "更新pod的各种信息",
 	Run: func(cmd *cobra.Command, args []string) {
-		//TODO:需要接上正确的接口
-		fmt.Println("update fixing")
+		apiserver.CreatePod(args[0])
 	},
 }
 

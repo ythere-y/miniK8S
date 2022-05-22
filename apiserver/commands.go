@@ -40,10 +40,20 @@ func PushPodToScheduler(pod pod.Pod) error {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.SchedulerPrefix),
 		etcd.SetSourceType(constant.PodSourceName),
-		etcd.JustAppend(constant.PodSourceName),
 		etcd.SetName(pod.Meta.Name))
 
 	value := pod.Meta.Name
+	SyncPut(key, value)
+	return nil
+}
+
+func UpdatePodToKubelet(podName string) error {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType(constant.NodeSourceName),
+		etcd.SetPodName(podName),
+	)
+	value := constant.UpdateFlag
 	SyncPut(key, value)
 	return nil
 }

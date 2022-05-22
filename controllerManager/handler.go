@@ -43,10 +43,17 @@ func createPod(event *clientv3.Event) error {
 			fmt.Printf("yaml unmarshal error->:\n%v\n", err.Error())
 		}
 		podInfo := pod.YamlToPod(newPodYaml)
+		podName := podInfo.Meta.Name
 		err = apiserver.SavePodInfo(podInfo)
 		utils.HandleError("save pod info error", err)
-		err = apiserver.PushPodToScheduler(podInfo)
-		utils.HandleError("push pod to scheduler error", err)
+		if apiserver.CheckPodIfExist(podName) {
+			// pod存在，换为更新操作
+			err = apiserver.UpdatePodToKubelet(podName)
+			utils.HandleError("update pod to kubelet error", err)
+		} else {
+			err = apiserver.PushPodToScheduler(podInfo)
+			utils.HandleError("push pod to scheduler error", err)
+		}
 	}
 	return err
 
@@ -83,7 +90,6 @@ func deletePod(event *clientv3.Event) error {
 			fmt.Printf("del [key = %v]\n", deletarget)
 		}
 		apiserver.SyncDel(deletargets)
-
 	}
 	return err
 }
