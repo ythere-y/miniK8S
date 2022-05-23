@@ -9,6 +9,7 @@ import (
 	"minik8s/pod"
 	"minik8s/replicaset"
 	"reflect"
+	"strconv"
 
 	"minik8s/apiserver"
 	"minik8s/pod"
@@ -173,10 +174,47 @@ func createReplicaset(event *clientv3.Event) error {
 			replicas := rsInfo.RSspec.Replicas
 			pods := replicaset.CreatePodInstances(rsInfo, replicas)
 			for _, pod := range pods {
-				apiserver.SaveRsPodInfo(rsInfo, pod)
-				apiserver.PushPodToScheduler(pod)
+				// apiserver.SaveRsPodInfo(rsInfo, pod)
+				err = apiserver.SavePodInfo(pod)
+				utils.HandleError("rs save pod info error", err)
+				err = apiserver.PushPodToScheduler(pod)
+				utils.HandleError("rs push pod to scheduler error", err)
 			}
 		}
+	}
+	return err
+}
+
+func deleteReplicaset(event *clientv3.Event) error {
+	var err error
+	switch event.Type {
+	case mvccpb.PUT:
+		var names []string
+		var rsDelTar []string
+		var podDelTar []string
+		err = json.Unmarshal(event.Kv.Value, &names)
+		for _, rsname := range names {
+			// set rs key to be deleted
+			rskey := etcd.SetKey(
+				etcd.SetPrefix(constant.RegistryPrefix),
+				etcd.SetSourceType(constant.ReplicaSourceName),
+				etcd.JustAppend(rsname))
+			rsDelTar = append(rsDelTar, rskey)
+
+			// set pod key to be deleted
+			rsInfo := apiserver.GetRsInfo(rsname)
+			replicas := rsInfo.RSspec.Replicas
+			podname := rsInfo.PodTemplate.Meta.Name
+			for i := 1; i <= replicas; i++ {
+				rspodname := podname + "-" + strconv.Itoa(i)
+				// 之后会交给deletePod处理
+				podDelTar = append(podDelTar, rspodname)
+			}
+		}
+		// delete rs info
+		apiserver.SyncDel(rsDelTar)
+		// delete pods in these rs
+		apiserver.DeletePod(podDelTar)
 	}
 	return err
 }

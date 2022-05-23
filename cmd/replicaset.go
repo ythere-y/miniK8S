@@ -22,8 +22,34 @@ var rscreate = &cobra.Command{
 	Long:  "根据参数创建replicaset, 创建对应数量的Pod",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("create pod by file %v\n", args[0])
+		fmt.Printf("create replicaset by file %v\n", args[0])
 		apiserver.CreateRs(args[0])
+	},
+}
+
+var rsdelete = &cobra.Command{
+	Use:   "delete",
+	Short: "删除replicaset",
+	Long:  "根据指定的replicaset名字, 删除对应的replicaset",
+	Args:  cobra.ExactArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf("delete replicaset by name %v\n", args[0])
+		apiserver.DeleteRs(args[0])
+	},
+}
+
+var rsget = &cobra.Command{
+	Use:   "get",
+	Short: "获取replicaset的信息",
+	Long:  "打印replicaset内的pod的各种信息",
+	Args:  cobra.MaximumNArgs(1),
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("获取并打印replicaset内的pod信息")
+		if len(args) == 0 {
+			apiserver.DisplayAllRsInfo()
+		} else {
+			apiserver.DisplayRsInfo(args[0])
+		}
 	},
 }
 
@@ -36,4 +62,6 @@ func args(cmd *cobra.Command, args []string) error {
 
 func init() {
 	RsCmd.AddCommand(rscreate)
+	RsCmd.AddCommand(rsdelete)
+	RsCmd.AddCommand(rsget)
 }

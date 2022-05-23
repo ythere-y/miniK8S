@@ -2,11 +2,13 @@ package apiserver
 
 import (
 	"encoding/json"
-	clientv3 "go.etcd.io/etcd/client/v3"
 	"minik8s/constant"
 	"minik8s/lab/etcd"
 	"minik8s/pod"
+	"minik8s/replicaset"
 	"minik8s/utils"
+
+	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
 //GetPodInfo
@@ -17,7 +19,7 @@ import (
 func GetPodInfo(podName string) *pod.Pod {
 	getRes, err := etcd.Get(etcd.SetKey(
 		etcd.SetPrefix(constant.RegistryPrefix),
-		etcd.SetSourceType("pods"),
+		etcd.SetSourceType(constant.PodSourceName),
 		etcd.SetName(podName)))
 
 	utils.HandleError("get pod info error", err)
@@ -29,6 +31,25 @@ func GetPodInfo(podName string) *pod.Pod {
 	utils.HandleError("unmarshal pod failed ", err)
 
 	return &podInfo
+}
+
+//GetRsInfo
+/*
+根据name，获取存储的replicaset
+*/
+func GetRsInfo(rsName string) *replicaset.ReplicaSet {
+	var rsInfo replicaset.ReplicaSet
+	getRes, err := etcd.Get(etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType(constant.ReplicaSourceName),
+		etcd.JustAppend(rsName)))
+	utils.HandleError("get rs info error", err)
+	if len(getRes) == 0 {
+		return nil
+	}
+	err = json.Unmarshal([]byte(getRes[0]), &rsInfo)
+	utils.HandleError("unmarshal rs info failed", err)
+	return &rsInfo
 }
 
 //GetChildNum
