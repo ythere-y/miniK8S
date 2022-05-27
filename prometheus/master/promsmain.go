@@ -29,19 +29,15 @@ func prometheusMasterMain() {
 			"percent",
 		})
 	)
-	if err := prometheus.Register(MyTestCounter); err != nil {
-
+	err := prometheus.Register(MyTestGauge)
+	if err != nil {
+		fmt.Println("register test gauge error")
 	}
-	if err := prometheus.Register(MyTestGauge); err != nil {
-
-	}
-	if err := prometheus.Register(memGauge); err != nil {
-
-	}
+	err = prometheus.Register(memGauge)
 	ticker := time.NewTicker(500 * time.Millisecond)
 	for {
 		select {
-		case t := <- ticker.C
+		case <-ticker.C:
 			MyTestCounter.Add(100)
 
 			totalPercent, _ := cpu.Percent(time.Second*1, false)
