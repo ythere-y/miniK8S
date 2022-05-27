@@ -48,7 +48,6 @@ func main() {
 
 	//circle.CircleTest() // 关于循环import的测试
 	// utils.HoldPro() // 阻塞进程防止运行结束
-	go master.prometheusMasterMain()
 	return
 
 }

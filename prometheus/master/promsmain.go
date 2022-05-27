@@ -9,7 +9,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/mem"
-	"github.com/shirou/gopsutil/tick"
 )
 
 func prometheusMasterMain() {
@@ -39,10 +38,10 @@ func prometheusMasterMain() {
 	if err := prometheus.Register(memGauge); err != nil {
 
 	}
-
+	ticker := time.NewTicker(500 * time.Millisecond)
 	for {
 		select {
-		case <-tick.C:
+		case t := <- ticker.C
 			MyTestCounter.Add(100)
 
 			totalPercent, _ := cpu.Percent(time.Second*1, false)
