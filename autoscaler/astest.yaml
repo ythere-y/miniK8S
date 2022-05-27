@@ -1,0 +1,9 @@
+kind: HorizontalPodAutoscaler
+name: astest
+workload: ReplicaSet
+spec:
+  minreplicas: 1
+  maxreplicas: 5
+  metrics:
+    cpu: 
+    memory:

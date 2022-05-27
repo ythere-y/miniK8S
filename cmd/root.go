@@ -25,6 +25,7 @@ func init() {
 	RootCmd.AddCommand(PodCmd)
 	RootCmd.AddCommand(RsCmd)
 	RootCmd.AddCommand(TestCmd)
+	RootCmd.AddCommand(AutoScalerCmd)
 }
 
 var rootName string
