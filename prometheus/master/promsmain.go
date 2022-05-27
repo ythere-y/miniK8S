@@ -34,6 +34,9 @@ func prometheusMasterMain() {
 		fmt.Println("register test gauge error")
 	}
 	err = prometheus.Register(memGauge)
+	if err != nil {
+		fmt.Println("register mem gauge error")
+	}
 	ticker := time.NewTicker(500 * time.Millisecond)
 	for {
 		select {
@@ -52,6 +55,9 @@ func prometheusMasterMain() {
 		}
 	}
 
+}
+
+func listen() {
 	http.Handle("/metrics", promhttp.Handler())
 	http.ListenAndServe("0.0.0.0:5050", nil)
 }
