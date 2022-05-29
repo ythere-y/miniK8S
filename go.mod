@@ -3,6 +3,7 @@ module minik8s
 go 1.18
 
 require (
+	github.com/containerd/go-cni v1.1.5
 	github.com/docker/docker v20.10.16+incompatible
 	github.com/docker/go-connections v0.4.0
 	github.com/pkg/errors v0.9.1
@@ -16,6 +17,7 @@ require (
 
 require (
 	github.com/Microsoft/go-winio v0.5.2 // indirect
+	github.com/containernetworking/cni v1.1.0 // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect
 	github.com/coreos/go-systemd/v22 v22.3.2 // indirect
 	github.com/docker/distribution v2.8.1+incompatible // indirect
