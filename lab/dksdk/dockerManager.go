@@ -18,7 +18,7 @@ import (
 	"github.com/docker/go-connections/nat"
 )
 
-func CreateContainer(cli *client.Client, image string, cmd []string, resource Resource, name string, volumn map[string]struct{}, exports nat.PortSet, network string) string {
+func CreateContainer(cli *client.Client, image string, cmd []string, resource Resource, name string, volumn map[string]struct{}, exports nat.PortSet, hostport string, network string) string {
 
 	ctx := context.Background()
 	reader, err := cli.ImagePull(ctx, "docker.io/"+image, types.ImagePullOptions{})
@@ -38,12 +38,23 @@ func CreateContainer(cli *client.Client, image string, cmd []string, resource Re
 		hostconfig.NetworkMode = container.NetworkMode("container:" + network)
 	}
 
+	hostconfig.PortBindings = nat.PortMap{
+		nat.Port(fmt.Sprintf("80/tcp")): []nat.PortBinding{
+			{
+				HostIP:   "0.0.0.0",
+				HostPort: hostport,
+			},
+		},
+	}
+
 	resp, err := cli.ContainerCreate(ctx, &container.Config{
-		Image:        image,
-		Cmd:          cmd,
-		Tty:          true,
-		Volumes:      volumn,
-		ExposedPorts: exports,
+		Image:   image,
+		Cmd:     cmd,
+		Tty:     true,
+		Volumes: volumn,
+		ExposedPorts: nat.PortSet{
+			"80/tcp": {},
+		},
 	}, hostconfig, nil, nil, name)
 	if err != nil {
 		panic(err)

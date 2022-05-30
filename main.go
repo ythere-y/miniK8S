@@ -1,7 +1,8 @@
 package main
 
 import (
-	"minik8s/cmd"
+	"github.com/docker/docker/client"
+	"minik8s/lab/dksdk"
 )
 
 // func main() {
@@ -37,7 +38,25 @@ import (
 var rootName string
 
 func main() {
-	cmd.RootCmdRun() // 关于命令行的测试
+	//cmd.RootCmdRun() // 关于命令行的测试
+
+	//utils.CopyandRun()
+	//slurm := utils.ParseYaml(utils.Dir + "test.yaml")
+	//fmt.Print(slurm)
+	//utils.Slu2File(slurm)
+	//utils.Submit(utils.Dir+"test.yaml", utils.Dir+"test002.cu")
+	cli, err := client.NewClientWithOpts(client.WithVersion("1.38"))
+	if err != nil {
+		panic(err)
+	}
+	source := dksdk.Resource{
+		CPUShares: 2,
+		Memory:    128000000,
+	}
+	id := dksdk.CreateContainer(cli, "nginx", nil, source, "name", nil, nil, "8089", "")
+	dksdk.StartContainer(id, cli)
+	//fmt.Println(err.Error())
+
 	//service.OutPutFmtTest() //关于格式化输出的测试
 	//service.SerReadTest() // 关于读取yamle文件建立service的测试
 
