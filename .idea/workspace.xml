@@ -5,20 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="加入cni部分的配置文件、go语言调用文件。但是需要外部环境同时运行ctcd和flannel。">
-      <change afterPath="$PROJECT_DIR$/default.etcd/member/snap/db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/default.etcd/member/wal.tmp/0000000000000000-0000000000000000.wal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shellScripts/basicCmd.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shellScripts/envSetUp.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shellScripts/shellTest.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shellScripts/startEtcd.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shellScripts/startEtcd1.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shellScripts/test.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubernetes/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/cni/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/cni/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="CNI" />
+        <entry key="$PROJECT_DIR$" value="GPU" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -81,6 +69,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go 构建.go build minik8s" />
         <item itemvalue="Go 构建.go build minik8s" />
       </list>
     </recent_temporary>
