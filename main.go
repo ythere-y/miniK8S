@@ -53,7 +53,8 @@ func main() {
 		CPUShares: 2,
 		Memory:    128000000,
 	}
-	id := dksdk.CreateContainer(cli, "nginx", nil, source, "name", nil, nil, "8089", "")
+	binds := []string{"D:\\Schoolwork\\2022_spring\\CloudComputing\\labs\\Minik8s\\data:/data"}
+	id := dksdk.CreateContainer(cli, "nginx", nil, source, "name1", binds, nil, "", "")
 	dksdk.StartContainer(id, cli)
 	//fmt.Println(err.Error())
 

@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="629f1e9d-4cfd-4825-a5cc-e6f2f1a66433" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/cuda/test002.cu" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/sshUtils.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/minik8s.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/minik8s.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab/dksdk/dockerManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/dksdk/dockerManager.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
