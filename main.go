@@ -4,6 +4,7 @@ var rootName string
 
 func main() {
 	//log.Println("hello world")
+	//shellScripts.Main()
 	//go kubernetes.Main() // kubernetes的测试部分
 	//go cni.Main() // 测试CNI插件功能部分
 	//go environment.Main() //测试启动前的环境准备

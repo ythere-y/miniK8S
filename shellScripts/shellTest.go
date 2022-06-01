@@ -1,1 +1,5 @@
 package shellScripts
+
+func Main() {
+
+}
