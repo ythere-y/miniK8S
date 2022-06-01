@@ -1,0 +1,12 @@
+kind: Slurm
+metadata:
+  name: test002
+  partition: dgx2
+spec:
+  n: 1
+  task-per-node: 1
+  cpu-per-task: 6
+  gres:
+    gpu: 1
+  output: '%j.out'
+  error: '%j.out'

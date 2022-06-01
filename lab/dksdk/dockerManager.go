@@ -36,7 +36,7 @@ func check(name string) string {
 
 func RunRootContainer(name string) string {
 
-	runCmd := "docker run -d --name " + name + " busybox /bin/sh -c \"while true; do echo hello world; sleep 1; done\"\n"
+	runCmd := "docker run -d --name " + name + " busybox /bin/sh -c \"while true; do echo hello world; sleep 1; done\" \n"
 
 	var (
 		err error
