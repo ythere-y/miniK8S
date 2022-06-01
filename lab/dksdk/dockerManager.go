@@ -6,10 +6,13 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/bitfield/script"
+	"strings"
 
 	//"github.com/docker/docker/pkg/stdcopy"
 	"io"
 	"os"
+	"os/exec"
 	"time"
 
 	"github.com/docker/docker/api/types"
@@ -18,8 +21,58 @@ import (
 	"github.com/docker/go-connections/nat"
 )
 
-func RunRootContainer(image string, cmd []string, resource Resource, name string, volumn map[string]struct{}) string {
-	return ""
+func check(name string) string {
+	goExecPath, err := exec.LookPath(name)
+
+	if err != nil {
+		fmt.Println("Error: ", err)
+	} else {
+		fmt.Println("Go Executable: ", goExecPath)
+	}
+
+	return goExecPath
+
+}
+
+func RunRootContainer(name string) string {
+
+	runCmd := "docker run -d --name " + name + " busybox /bin/sh -c \"while true; do echo hello world; sleep 1; done\"\n"
+
+	var (
+		err error
+		get string
+	)
+
+	_, err = script.Echo(runCmd).WriteFile("./lab/dksdk/run.sh")
+
+	if err != nil {
+		panic(err)
+	}
+
+	get, err = script.File("./shellScripts/startEtcd.sh").String()
+
+	fmt.Printf("check the file :\n %v", get)
+
+	Path := check("bash")
+
+	cmdGoVer := &exec.Cmd{
+		Path: Path,
+		Args: []string{Path, "./lab/dksdk/run.sh"},
+		//Stdout: os.Stdout,
+		Stderr: os.Stderr,
+	}
+	///fmt.Println("OUT", cmdGoVer.String())
+
+	out, err := cmdGoVer.Output()
+
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+
+	//fmt.Println(string(out))
+	str := strings.Replace(string(out), "\n", "", -1)
+
+	return str
 }
 
 func CreateContainer(cli *client.Client, image string, cmd []string, resource Resource, name string, binds []string, exports nat.PortSet, hostport string, network string) string {
@@ -53,16 +106,20 @@ func CreateContainer(cli *client.Client, image string, cmd []string, resource Re
 			},
 		}
 	}
-
-	resp, err := cli.ContainerCreate(ctx, &container.Config{
+	config := &container.Config{
 		Image: image,
 		Cmd:   cmd,
 		Tty:   true,
-		ExposedPorts: nat.PortSet{
-			"80/tcp": {},
-		},
 		//Shell: []string{"cmd.exe", "/c", "-P"},
-	}, hostconfig, nil, nil, name)
+	}
+
+	if hostport != "" {
+		config.ExposedPorts = nat.PortSet{
+			"80/tcp": {},
+		}
+	}
+
+	resp, err := cli.ContainerCreate(ctx, config, hostconfig, nil, nil, name)
 	if err != nil {
 		panic(err)
 	}

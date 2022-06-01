@@ -1,8 +1,7 @@
 package main
 
 import (
-	"github.com/docker/docker/client"
-	"minik8s/lab/dksdk"
+	"minik8s/lab/rootContainer"
 )
 
 // func main() {
@@ -45,17 +44,8 @@ func main() {
 	//fmt.Print(slurm)
 	//utils.Slu2File(slurm)
 	//utils.Submit(utils.Dir+"test.yaml", utils.Dir+"test002.cu")
-	cli, err := client.NewClientWithOpts(client.WithVersion("1.38"))
-	if err != nil {
-		panic(err)
-	}
-	source := dksdk.Resource{
-		CPUShares: 2,
-		Memory:    128000000,
-	}
-	binds := []string{"D:\\Schoolwork\\2022_spring\\CloudComputing\\labs\\Minik8s\\data:/data"}
-	id := dksdk.CreateContainer(cli, "nginx", nil, source, "name1", binds, nil, "", "")
-	dksdk.StartContainer(id, cli)
+
+	rootContainer.Test()
 	//fmt.Println(err.Error())
 
 	//service.OutPutFmtTest() //关于格式化输出的测试
