@@ -6,6 +6,7 @@ import (
 	"minik8s/constant"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 //readSubnetEnv
@@ -61,6 +62,7 @@ func readSubnetEnv() (string, string, error) {
 	fmt.Printf("get IP = %v\n", getIP)
 	fmt.Printf("get MTU = %v\n", getMTU)
 
+	getIP = strings.Replace(getIP, "\n", "", -1)
 	return getIP, getMTU, nil
 }
 
