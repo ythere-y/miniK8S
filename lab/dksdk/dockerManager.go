@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/bitfield/script"
+	"minik8s/shellScripts"
 	"strings"
 
 	//"github.com/docker/docker/pkg/stdcopy"
@@ -35,13 +36,18 @@ func check(name string) string {
 }
 
 func RunRootContainer(name string) string {
-
-	runCmd := "docker run -d --name " + name + " busybox /bin/sh -c \"while true; do echo hello world; sleep 1; done\" \n"
-
 	var (
-		err error
-		get string
+		err    error
+		get    string
+		follow string
 	)
+
+	follow, err = shellScripts.BuildDockerCommandFix()
+	if err != nil {
+		panic(err)
+	}
+
+	runCmd := "docker run -d --name " + name + " busybox /bin/sh -c \"while true; do echo hello world; sleep 1; done\" " + follow + "\n"
 
 	_, err = script.Echo(runCmd).WriteFile("./lab/dksdk/run.sh")
 
@@ -49,7 +55,7 @@ func RunRootContainer(name string) string {
 		panic(err)
 	}
 
-	get, err = script.File("./shellScripts/startEtcd.sh").String()
+	get, err = script.File("./lab/dksdk/run.sh").String()
 
 	fmt.Printf("check the file :\n %v", get)
 
