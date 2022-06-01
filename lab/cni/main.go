@@ -15,7 +15,7 @@ import (
 var (
 	idF = flag.Int("id", 2, "")
 	//confFF = flag.String("conf", "/etc/cni/net.d/11-flannel.conf", "")
-	confFF = flag.String("conf", "./etc/cni/net.d/11-flannel.conf", "")
+	confFF = flag.String("conf", "/etc/cni/net.d/11-flannel.conf", "")
 )
 
 func init() {
@@ -30,7 +30,7 @@ func Main() {
 
 	l, err := gocni.New(
 		gocni.WithMinNetworkCount(2),
-		gocni.WithPluginDir([]string{"./etc/cni/bin"}),
+		gocni.WithPluginDir([]string{"/opt/cni/bin"}),
 		gocni.WithInterfacePrefix("eth"))
 	if err != nil {
 		log.Fatalf("failed to initialize cni library: %v", err)

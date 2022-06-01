@@ -4,20 +4,21 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="修改etcd的结构。增加node的属性，增加relation部分。开始考虑master的启动过程。">
-      <change afterPath="$PROJECT_DIR$/etc/cni/bin/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/etc/cni/bin/flannel-v0.18.0-windows-amd64.tar.gz" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/etc/cni/bin/flannel-v0.18.0-windows-amd64/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/etc/cni/bin/flannel-v0.18.0-windows-amd64/flanneld.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/etc/cni/bin/flannel-v0.18.0-windows-amd64/mk-docker-opts.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/etc/cni/bin/flanneld.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/etc/cni/bin/mk-docker-opts.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/etc/cni/net.d/11-flannel.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab/cni/main.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab/cni/types.go" afterDir="false" />
+    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="加入cni部分的配置文件、go语言调用文件。但是需要外部环境同时运行ctcd和flannel。">
+      <change afterPath="$PROJECT_DIR$/default.etcd/member/snap/db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/default.etcd/member/wal.tmp/0000000000000000-0000000000000000.wal" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shellScripts/basicCmd.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shellScripts/envSetUp.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shellScripts/shellTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shellScripts/startEtcd.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shellScripts/startEtcd1.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shellScripts/test.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/cni/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/cni/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,7 +37,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="podCommands" />
+        <entry key="$PROJECT_DIR$" value="CNI" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -69,14 +70,6 @@
   }
 }</component>
   <component name="RunManager">
-    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
-      <module name="minik8s" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
     <configuration name="go build minik8s" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="minik8s" />
       <working_directory value="$PROJECT_DIR$" />
@@ -84,15 +77,6 @@
       <package value="minik8s" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$/main.go" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
-      <module name="minik8s" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="DIRECTORY" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -110,7 +94,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="podCommands" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -121,7 +117,8 @@
     <MESSAGE value="切换分支看了一下之后配置怎么又没了" />
     <MESSAGE value="增加pod的信息的update功能" />
     <MESSAGE value="修改etcd的结构。增加node的属性，增加relation部分。开始考虑master的启动过程。" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改etcd的结构。增加node的属性，增加relation部分。开始考虑master的启动过程。" />
+    <MESSAGE value="加入cni部分的配置文件、go语言调用文件。但是需要外部环境同时运行ctcd和flannel。" />
+    <option name="LAST_COMMIT_MESSAGE" value="加入cni部分的配置文件、go语言调用文件。但是需要外部环境同时运行ctcd和flannel。" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

@@ -20,4 +20,7 @@ const (
 	StopFlag   string = "__stop__"
 	RemoveFlag string = "__remove__"
 	UpdateFlag string = "__update__"
+
+	EtcdSh        string = "./Scripts/etcdSh"
+	EnvironmentSh string = "./Scripts/envStartUp.sh"
 )
