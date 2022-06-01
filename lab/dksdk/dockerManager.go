@@ -6,10 +6,14 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/bitfield/script"
+	"minik8s/shellScripts"
+	"strings"
 
 	//"github.com/docker/docker/pkg/stdcopy"
 	"io"
 	"os"
+	"os/exec"
 	"time"
 
 	"github.com/docker/docker/api/types"
@@ -18,7 +22,66 @@ import (
 	"github.com/docker/go-connections/nat"
 )
 
-func CreateContainer(cli *client.Client, image string, cmd []string, resource Resource, name string, volumn map[string]struct{}, exports nat.PortSet, network string) string {
+func check(name string) string {
+	goExecPath, err := exec.LookPath(name)
+
+	if err != nil {
+		fmt.Println("Error: ", err)
+	} else {
+		fmt.Println("Go Executable: ", goExecPath)
+	}
+
+	return goExecPath
+
+}
+
+func RunRootContainer(name string) string {
+	var (
+		err    error
+		get    string
+		follow string
+	)
+
+	follow, err = shellScripts.BuildDockerCommandFix()
+	if err != nil {
+		panic(err)
+	}
+
+	runCmd := "docker run -d --name " + name + " busybox /bin/sh -c \"while true; do echo hello world; sleep 1; done\" " + follow + "\n"
+
+	_, err = script.Echo(runCmd).WriteFile("./lab/dksdk/run.sh")
+
+	if err != nil {
+		panic(err)
+	}
+
+	get, err = script.File("./lab/dksdk/run.sh").String()
+
+	fmt.Printf("check the file :\n %v", get)
+
+	Path := check("bash")
+
+	cmdGoVer := &exec.Cmd{
+		Path: Path,
+		Args: []string{Path, "./lab/dksdk/run.sh"},
+		//Stdout: os.Stdout,
+		Stderr: os.Stderr,
+	}
+	///fmt.Println("OUT", cmdGoVer.String())
+
+	out, err := cmdGoVer.Output()
+
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
+
+	//fmt.Println(string(out))
+	str := strings.Replace(string(out), "\n", "", -1)
+
+	return str
+}
+
+func CreateContainer(cli *client.Client, image string, cmd []string, resource Resource, name string, binds []string, exports nat.PortSet, hostport string, network string) string {
 
 	ctx := context.Background()
 	reader, err := cli.ImagePull(ctx, "docker.io/"+image, types.ImagePullOptions{})
@@ -33,18 +96,36 @@ func CreateContainer(cli *client.Client, image string, cmd []string, resource Re
 	}
 	hostconfig := &container.HostConfig{
 		Resources: resources,
+		Binds:     binds,
 	}
 	if network != "" {
 		hostconfig.NetworkMode = container.NetworkMode("container:" + network)
 	}
 
-	resp, err := cli.ContainerCreate(ctx, &container.Config{
-		Image:        image,
-		Cmd:          cmd,
-		Tty:          true,
-		Volumes:      volumn,
-		ExposedPorts: exports,
-	}, hostconfig, nil, nil, name)
+	if hostport != "" {
+		hostconfig.PortBindings = nat.PortMap{
+			nat.Port(fmt.Sprintf("80/tcp")): []nat.PortBinding{
+				{
+					HostIP:   "0.0.0.0",
+					HostPort: hostport,
+				},
+			},
+		}
+	}
+	config := &container.Config{
+		Image: image,
+		Cmd:   cmd,
+		Tty:   true,
+		//Shell: []string{"cmd.exe", "/c", "-P"},
+	}
+
+	if hostport != "" {
+		config.ExposedPorts = nat.PortSet{
+			"80/tcp": {},
+		}
+	}
+
+	resp, err := cli.ContainerCreate(ctx, config, hostconfig, nil, nil, name)
 	if err != nil {
 		panic(err)
 	}

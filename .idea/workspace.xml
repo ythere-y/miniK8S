@@ -4,11 +4,22 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="初步设计slave和master的环境建立">
-      <change afterPath="$PROJECT_DIR$/shellScripts/infoGet.go" afterDir="false" />
+    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="加入cni部分的配置文件、go语言调用文件。但是需要外部环境同时运行ctcd和flannel。">
+      <change afterPath="$PROJECT_DIR$/default.etcd/member/snap/db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/default.etcd/member/wal.tmp/0000000000000000-0000000000000000.wal" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shellScripts/basicCmd.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shellScripts/envSetUp.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shellScripts/shellTest.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shellScripts/startEtcd.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shellScripts/startEtcd1.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shellScripts/test.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/cni/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/cni/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shellScripts/shellTest.go" beforeDir="false" afterPath="$PROJECT_DIR$/shellScripts/shellTest.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,25 +53,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "DefaultGoTemplateProperty": "Go File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "configurable..is.expanded": "false",
-    "configurable.GoLibrariesConfigurable.is.expanded": "true",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "C:/Users/HC",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "go.sdk"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/HC&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="go build minik8s" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="minik8s" />
@@ -110,8 +118,7 @@
     <MESSAGE value="增加pod的信息的update功能" />
     <MESSAGE value="修改etcd的结构。增加node的属性，增加relation部分。开始考虑master的启动过程。" />
     <MESSAGE value="加入cni部分的配置文件、go语言调用文件。但是需要外部环境同时运行ctcd和flannel。" />
-    <MESSAGE value="初步设计slave和master的环境建立" />
-    <option name="LAST_COMMIT_MESSAGE" value="初步设计slave和master的环境建立" />
+    <option name="LAST_COMMIT_MESSAGE" value="加入cni部分的配置文件、go语言调用文件。但是需要外部环境同时运行ctcd和flannel。" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
