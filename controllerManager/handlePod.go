@@ -62,8 +62,11 @@ func createPod(event *clientv3.Event) error {
 		AddPod(podInfo)
 		err = apiserver.SavePodInfo(podInfo)
 		utils.HandleError("save pod info error", err)
-		err = apiserver.PushPodToScheduler(podInfo)
-		utils.HandleError("push pod to scheduler error", err)
+
+		// 这里取消了scheduler的数据转发层，直接把scheduler作为controller内部的一个分支
+		err = DisPodtoNode(podName)
+		//err = apiserver.PushPodToScheduler(podInfo)
+		//utils.HandleError("push pod to scheduler error", err)
 	}
 	return err
 }
