@@ -2,11 +2,12 @@ package kubelet
 
 import (
 	"fmt"
-	"github.com/docker/docker/client"
 	"minik8s/apiserver"
 	"minik8s/lab/dksdk"
 	"minik8s/registry/pod"
 	"minik8s/utils"
+
+	"github.com/docker/docker/client"
 )
 
 var (
@@ -62,7 +63,10 @@ func CreateAndRunPod(pod *pod.Pod) uint32 {
 	}
 	// create pod with local client
 
-	uid := CliCreatePodByPod(cli, *pod)
+	// TODO: add root container(pause container)
+	network := dksdk.RunRootContainer(pod.Meta.Name + "-pause")
+	uid := CliCreatePodByPod(cli, *pod, network)
+	// uid := CliCreatePodByPod(cli, *pod)
 	utils.CheckNil("podsInfo", PodsInfo)
 	utils.DebugTanInfo()
 	PodsInfo[pod.Meta.Name] = *pod
@@ -79,7 +83,7 @@ func CreateAndRunPod(pod *pod.Pod) uint32 {
 
 }
 
-func CliCreatePodByPod(cli *client.Client, pod pod.Pod) uint32 {
+func CliCreatePodByPod(cli *client.Client, pod pod.Pod, net string) uint32 {
 	// create meta datas
 	newPod := pod
 	// allocate client
@@ -92,15 +96,39 @@ func CliCreatePodByPod(cli *client.Client, pod pod.Pod) uint32 {
 		resource.CPUShares = cont.CpuNum
 		resource.Memory = cont.Memory
 		name := cont.Name
-		volume := cont.Volumn
+		volumn := cont.Volumn
 		port := cont.Port
+		hostport := cont.HostPort
 		cid := dksdk.CreateContainer(cli, image, cmd,
-			resource, name, volume, port, "")
+			resource, name, volumn, port, hostport, net)
 		// allocate container id
 		newPod.Containers[index].Id = cid
 	}
 	return newPod.Meta.Uid
 }
+
+// func CliCreatePodByPod(cli *client.Client, pod pod.Pod) uint32 {
+// 	// create meta datas
+// 	newPod := pod
+// 	// allocate client
+// 	newPod.PodClient = cli
+// 	// create containers
+// 	for index, cont := range newPod.Containers {
+// 		image := cont.ContainerImage
+// 		cmd := cont.Command
+// 		var resource dksdk.Resource
+// 		resource.CPUShares = cont.CpuNum
+// 		resource.Memory = cont.Memory
+// 		name := cont.Name
+// 		volume := cont.Volumn
+// 		port := cont.Port
+// 		cid := dksdk.CreateContainer(cli, image, cmd,
+// 			resource, name, volume, port, "")
+// 		// allocate container id
+// 		newPod.Containers[index].Id = cid
+// 	}
+// 	return newPod.Meta.Uid
+// }
 func RunPod(podId uint32) {
 	for index, ipod := range KPods {
 		// get specified pod

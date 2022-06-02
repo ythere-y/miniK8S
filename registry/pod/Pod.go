@@ -8,107 +8,106 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/docker/docker/client"
 	yaml "gopkg.in/yaml.v2"
 )
 
-func CreateAndRunPod(pod Pod) uint32 {
-	// currently, use local machine as client
-	cli, err := client.NewClientWithOpts(client.FromEnv)
-	if err != nil {
-		panic(err)
-	}
-	// create pod with local client
+// func CreateAndRunPod(pod Pod) uint32 {
+// 	// currently, use local machine as client
+// 	cli, err := client.NewClientWithOpts(client.FromEnv)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	// create pod with local client
 
-	uid := CliCreatePodByPod(cli, pod)
-	for index, pod := range KPods {
-		if pod.Meta.Uid == uid {
-			// allocate cli
-			KPods[index].PodClient = cli
-		}
-	}
-	RunPod(uid)
+// 	uid := CliCreatePodByPod(cli, pod)
+// 	for index, pod := range KPods {
+// 		if pod.Meta.Uid == uid {
+// 			// allocate cli
+// 			KPods[index].PodClient = cli
+// 		}
+// 	}
+// 	RunPod(uid)
 
-	return uid
+// 	return uid
 
-}
+// }
 
 /**
  * API: create pod using yaml file, use default client
  * file: yaml file specify pod structure
 **/
-func CreatePod(file string) uint32 {
-	// currently, use local machine as client
-	cli, err := client.NewClientWithOpts(client.FromEnv)
-	if err != nil {
-		panic(err)
-	}
-	// create pod with local client
-	uid := CliCreatePod(cli, file)
-	for index, pod := range KPods {
-		if pod.Meta.Uid == uid {
-			// allocate cli
-			KPods[index].PodClient = cli
-		}
-	}
-	return uid
-}
+// func CreatePod(file string) uint32 {
+// 	// currently, use local machine as client
+// 	cli, err := client.NewClientWithOpts(client.FromEnv)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	// create pod with local client
+// 	uid := CliCreatePod(cli, file)
+// 	for index, pod := range KPods {
+// 		if pod.Meta.Uid == uid {
+// 			// allocate cli
+// 			KPods[index].PodClient = cli
+// 		}
+// 	}
+// 	return uid
+// }
 
 /**
  * API: create pod in a specified client
  * specify a docker client, using a yaml file to
  * create a pod, and return its uid.
 **/
-func CliCreatePodByPod(cli *client.Client, pod Pod) uint32 {
-	// create meta datas
-	newPod := pod
-	// allocate client
-	newPod.PodClient = cli
-	// create containers
-	for index, cont := range newPod.Containers {
-		image := cont.ContainerImage
-		cmd := cont.Command
-		var resouce dksdk.Resource
-		resouce.CPUShares = cont.CpuNum
-		resouce.Memory = cont.Memory
-		name := cont.Name
-		volume := cont.Volumn
-		port := cont.Port
-		cid := dksdk.CreateContainer(cli, image, cmd,
-			resouce, name, volume, port, "")
-		// allocate container id
-		newPod.Containers[index].Id = cid
-	}
-	return newPod.Meta.Uid
-}
+// func CliCreatePodByPod(cli *client.Client, pod Pod) uint32 {
+// 	// create meta datas
+// 	newPod := pod
+// 	// allocate client
+// 	newPod.PodClient = cli
+// 	// create containers
+// 	for index, cont := range newPod.Containers {
+// 		image := cont.ContainerImage
+// 		cmd := cont.Command
+// 		var resouce dksdk.Resource
+// 		resouce.CPUShares = cont.CpuNum
+// 		resouce.Memory = cont.Memory
+// 		name := cont.Name
+// 		volume := cont.Volumn
+// 		port := cont.Port
+// 		cid := dksdk.CreateContainer(cli, image, cmd,
+// 			resouce, name, volume, port, "")
+// 		// allocate container id
+// 		newPod.Containers[index].Id = cid
+// 	}
+// 	return newPod.Meta.Uid
+// }
 
 /**
  * API: create pod in a specified client
  * specify a docker client, using a yaml file to
  * create a pod, and return its uid.
 **/
-func CliCreatePod(cli *client.Client, file string) uint32 {
-	// create meta datas
-	newPod := ForeHeadCreatePod(file)
-	// allocate client
-	newPod.PodClient = cli
-	// create containers
-	for index, cont := range newPod.Containers {
-		image := cont.ContainerImage
-		cmd := cont.Command
-		var resouce dksdk.Resource
-		resouce.CPUShares = cont.CpuNum
-		resouce.Memory = cont.Memory
-		name := cont.Name
-		volume := cont.Volumn
-		port := cont.Port
-		cid := dksdk.CreateContainer(cli, image, cmd,
-			resouce, name, volume, port, "")
-		// allocate container id
-		newPod.Containers[index].Id = cid
-	}
-	return newPod.Meta.Uid
-}
+// func CliCreatePod(cli *client.Client, file string) uint32 {
+// 	// create meta datas
+// 	newPod := ForeHeadCreatePod(file)
+// 	// allocate client
+// 	newPod.PodClient = cli
+// 	// create containers
+// 	for index, cont := range newPod.Containers {
+// 		image := cont.ContainerImage
+// 		cmd := cont.Command
+// 		var resouce dksdk.Resource
+// 		resouce.CPUShares = cont.CpuNum
+// 		resouce.Memory = cont.Memory
+// 		name := cont.Name
+// 		volume := cont.Volumn
+// 		port := cont.Port
+// 		cid := dksdk.CreateContainer(cli, image, cmd,
+// 			resouce, name, volume, port, "")
+// 		// allocate container id
+// 		newPod.Containers[index].Id = cid
+// 	}
+// 	return newPod.Meta.Uid
+// }
 
 /**
  * API: run pod on specified client
@@ -335,6 +334,7 @@ func YamlToPod(podYaml PodYaml) Pod {
 		tmpContainer.Memory = value.Memory
 		tmpContainer.Volumn = value.Volumn
 		tmpContainer.Port = value.Port
+		tmpContainer.HostPort = value.HostPort
 		// append it to pod
 		newPod.Containers = append(newPod.Containers, tmpContainer)
 	}
