@@ -14,7 +14,7 @@ import (
 
 // region 增
 
-func CreatePod(filename string) {
+func CmdCreatePod(filename string) {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.ControllerPrefix),
 		etcd.JustAppend(constant.PodSourceName),
@@ -27,17 +27,56 @@ func CreatePod(filename string) {
 	}
 	SyncPut(key, string(value))
 }
+func SavePodInfo(pod pod2.Pod) error {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetPodName(pod.Meta.Name))
+	value, err := json.Marshal(pod)
+
+	utils.HandleError("marshal pod error", err)
+	etcd.Put(key, string(value))
+	return err
+}
 
 // endregion
 
 // region 删
 
-//StopPod
+func ActStopPods(podsNames []string) {
+
+	var deleteTargets []string
+	var values []string
+
+	for _, key := range podsNames {
+		buildKey := etcd.SetKey(
+			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetSourceType(constant.PodSourceName),
+			etcd.SetPodName(key))
+		nodeName, err := etcd.GetValue(buildKey)
+		utils.HandleError("get value error", err)
+
+		buildKey = etcd.SetKey(
+			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetSourceType(constant.NodeSourceName),
+			etcd.SetNodeName(nodeName),
+			etcd.SetPodName(key),
+		)
+		deleteTargets = append(deleteTargets, buildKey)
+		values = append(values, constant.StopFlag)
+	}
+	for _, del := range deleteTargets {
+		fmt.Printf("stop [key = %v]\n", del)
+	}
+	SyncPutList(deleteTargets, values)
+}
+
+//CmdStopPods
 /*
 按照podName让pod停止运行（container的状态变为stopped）
 主要流程是先找到，然后stop，然后delete
 */
-func StopPod(names []string) {
+func CmdStopPods(names []string) {
 	nameSet := utils.ParseNames(names)
 	for _, name := range nameSet {
 		if CheckPodIfExist(name) == false {
@@ -60,12 +99,12 @@ func StopPod(names []string) {
 	SyncPut(key, string(value))
 }
 
-//DeletePod
+//CmdDeletePod
 /*
 按照podName删除一个pod
 主要流程是先找到，然后stop，然后delete
 */
-func DeletePod(names []string) {
+func CmdDeletePod(names []string) {
 	// 检查是否存在在relation关系中
 	nameSet := utils.ParseNames(names)
 	for _, name := range nameSet {
@@ -93,6 +132,72 @@ func DeletePod(names []string) {
 	SyncPut(key, string(value))
 }
 
+func ActDeletePods(podsNames []string) {
+	var (
+		deleteTargets []string
+		buildKey      string
+		err           error
+		nodeName      string
+		serviceName   string
+	)
+	for _, key := range podsNames {
+
+		// 先查询relations找到所属的node
+		buildKey = etcd.SetKey(
+			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetSourceType(constant.PodSourceName),
+			etcd.SetPodName(key),
+			etcd.SetSourceType(constant.NodeSourceName))
+		nodeName, err = etcd.GetValue(buildKey)
+		utils.HandleError("get value error", err)
+		deleteTargets = append(deleteTargets, buildKey)
+		if nodeName != "" {
+			buildKey = etcd.SetKey(
+				etcd.SetPrefix(constant.RelationPrefix),
+				etcd.SetSourceType(constant.NodeSourceName),
+				etcd.SetNodeName(nodeName),
+				etcd.SetPodName(key),
+			)
+			deleteTargets = append(deleteTargets, buildKey)
+		}
+
+		// 先查询relations找到对应的service
+		buildKey = etcd.SetKey(
+			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetSourceType(constant.PodSourceName),
+			etcd.SetPodName(key),
+			etcd.SetSourceType(constant.ServiceSourceName))
+		serviceName, err = etcd.GetValue(buildKey)
+		utils.HandleError("get value error", err)
+		deleteTargets = append(deleteTargets, buildKey)
+		if serviceName != "" {
+			buildKey = etcd.SetKey(
+				etcd.SetPrefix(constant.RelationPrefix),
+				etcd.SetSourceType(constant.ServiceSourceName),
+				etcd.SetNodeName(serviceName),
+				etcd.SetPodName(key),
+			)
+			deleteTargets = append(deleteTargets, buildKey)
+		}
+		buildKey = etcd.SetKey(
+			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetSourceType(constant.PodSourceName),
+			etcd.SetPodName(key))
+		deleteTargets = append(deleteTargets, buildKey)
+
+		buildKey = etcd.SetKey(
+			etcd.SetPrefix(constant.RegistryPrefix),
+			etcd.SetSourceType(constant.PodSourceName),
+			etcd.SetPodName(key))
+		deleteTargets = append(deleteTargets, buildKey)
+
+	}
+	for _, del := range deleteTargets {
+		fmt.Printf("del [key = %v]\n", del)
+	}
+	SyncDel(deleteTargets)
+}
+
 // endregion
 
 // region 改
@@ -106,17 +211,6 @@ func UpdatePodToKubelet(podName string) error {
 	value := constant.UpdateFlag
 	SyncPut(key, value)
 	return nil
-}
-func SavePodInfo(pod pod2.Pod) error {
-	key := etcd.SetKey(
-		etcd.SetPrefix(constant.RegistryPrefix),
-		etcd.SetSourceType(constant.PodSourceName),
-		etcd.SetPodName(pod.Meta.Name))
-	value, err := json.Marshal(pod)
-
-	utils.HandleError("marshal pod error", err)
-	etcd.Put(key, string(value))
-	return err
 }
 
 //SetPodsStatus

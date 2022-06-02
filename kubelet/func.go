@@ -53,14 +53,6 @@ func RemovePod(name string) {
 	}
 }
 
-//UpdatePod
-/*
-根据podName以及pod的信息更新pod的实际运行状态
-*/
-func UpdatePod(podName string) {
-	//TODO:还没想好pod的更新如何处理
-}
-
 func CreateAndRunPod(pod *pod.Pod) uint32 {
 	KPods = append(KPods, *pod)
 	// currently, use local machine as client

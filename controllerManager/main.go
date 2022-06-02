@@ -2,61 +2,25 @@ package controllerManager
 
 import (
 	"fmt"
-	"minik8s/apiserver"
-	"minik8s/constant"
-	. "minik8s/lab/etcd"
 	"minik8s/registry/node"
+	"minik8s/registry/pod"
+	"minik8s/registry/service"
 	"minik8s/utils"
-	"time"
 )
 
-var KNodes []node.Node
-
-func AddNode(status node.Node) {
-	KNodes = append(KNodes, status)
-
-}
-
-func CreateControllerManager() {
-	var watchName string
-	watchName = SetKey(
-		SetPrefix(constant.ControllerPrefix),
-		SetSourceType(constant.PodSourceName),
-		JustAppend(constant.CREATE),
-	)
-	apiserver.SyncWatch(watchName, createPod)
-
-	watchName = SetKey(
-		SetPrefix(constant.ControllerPrefix),
-		SetSourceType(constant.PodSourceName),
-		JustAppend(constant.DELETE),
-	)
-	apiserver.SyncWatch(watchName, deletePod)
-
-	watchName = SetKey(
-		SetPrefix(constant.ControllerPrefix),
-		SetSourceType(constant.PodSourceName),
-		JustAppend(constant.STOP),
-	)
-	apiserver.SyncWatch(watchName, stopPod)
-
-}
-
-func reqeustPutTest() {
-	// sleep
-	time.Sleep(3 * time.Second)
-	apiserver.SyncPut(SetKey(
-		SetPrefix(constant.ControllerPrefix),
-		SetSourceType("pods"),
-		SetNameSpace("id_1")),
-		"pod_yaml")
-
-}
+var MemNodes []node.Node
+var MemPods []pod.Pod
+var MemServices []service.Service
+var relations Relation
 
 func Main() {
 	fmt.Println("[Controller Manager] Main started!")
 
-	CreateControllerManager()
-
 	utils.HoldPro()
+}
+
+func init() {
+	relations.PodstoNodeRela = make(map[string]string)
+	relations.NodetoPodRela = make(map[string][]string)
+	relations.ServicetoPodRela = make(map[string][]string)
 }

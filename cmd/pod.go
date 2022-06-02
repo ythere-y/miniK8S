@@ -38,7 +38,7 @@ var poddelete = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("delete pod by name %v\n", args[0])
-		apiserver.DeletePod(args)
+		apiserver.CmdDeletePod(args)
 	},
 }
 var podstop = &cobra.Command{
@@ -48,7 +48,7 @@ var podstop = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("stop pod by name %v\n", args[0])
-		apiserver.StopPod(args)
+		apiserver.CmdStopPods(args)
 	},
 }
 
@@ -60,7 +60,7 @@ var podcreate = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("create pod by file %v\n", args[0])
-		apiserver.CreatePod(args[0])
+		apiserver.CmdCreatePod(args[0])
 	},
 }
 
@@ -77,7 +77,7 @@ var podupdate = &cobra.Command{
 	Short: "更新pod的信息",
 	Long:  "更新pod的各种信息",
 	Run: func(cmd *cobra.Command, args []string) {
-		apiserver.CreatePod(args[0])
+		apiserver.CmdCreatePod(args[0])
 	},
 }
 

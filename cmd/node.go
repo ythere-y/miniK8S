@@ -37,7 +37,7 @@ var nodedelete = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("delete node by name %v\n", args[0])
-		apiserver.DeleteNode(args)
+		apiserver.CmdDeleteNode(args)
 	},
 }
 

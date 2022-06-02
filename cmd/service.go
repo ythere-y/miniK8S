@@ -35,7 +35,7 @@ var servicedelete = &cobra.Command{
 	Long:  "可以删除service, delete name1 name2 ...",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		apiserver.DeleteService(args)
+		apiserver.CmdDeleteService(args)
 	},
 }
 

@@ -13,7 +13,7 @@ import (
 
 // region 增
 
-func CreateNode(status node.Node) {
+func CmdCreateNode(status node.Node) {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.RegistryPrefix),
 		etcd.SetSourceType(constant.NodeSourceName),
@@ -23,11 +23,59 @@ func CreateNode(status node.Node) {
 	SyncPut(key, string(value))
 }
 
+func SaveNodeInfo(node node.Node) error {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetPodName(node.Name))
+	value, err := json.Marshal(node)
+
+	utils.HandleError("marshal pod error", err)
+	etcd.Put(key, string(value))
+	return err
+}
+
 // endregion
 
 // region 删
 
-func DeleteNode(names []string) {
+// TODO: 实现是移动pod的内容，是有问题的，还需要考量
+func ActDeleteNode(names []string) {
+	var deleteTargets []string
+	for _, key := range names {
+
+		// 先查询relations找到
+		buildKey := etcd.SetKey(
+			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetSourceType(constant.PodSourceName),
+			etcd.SetPodName(key))
+		nodeName, err := etcd.GetValue(buildKey)
+		utils.HandleError("get value error", err)
+
+		deleteTargets = append(deleteTargets, buildKey)
+		buildKey = etcd.SetKey(
+			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetSourceType(constant.NodeSourceName),
+			//TODO:需要一种能找到该pod归属于哪个node的机制
+			etcd.SetNodeName(nodeName),
+			etcd.SetPodName(key),
+		)
+		deleteTargets = append(deleteTargets, buildKey)
+
+		buildKey = etcd.SetKey(
+			etcd.SetPrefix(constant.RegistryPrefix),
+			etcd.SetSourceType(constant.PodSourceName),
+			etcd.SetPodName(key))
+		deleteTargets = append(deleteTargets, buildKey)
+
+	}
+	for _, del := range deleteTargets {
+		fmt.Printf("del [key = %v]\n", del)
+	}
+	SyncDel(deleteTargets)
+}
+
+func CmdDeleteNode(names []string) {
 	// 检查是否存在在relation关系中
 	nameSet := utils.ParseNames(names)
 	for _, name := range nameSet {

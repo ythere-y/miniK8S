@@ -15,6 +15,18 @@ import (
 
 // region 增
 
+func SaveServiceInfo(service service.Service) error {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetPodName(service.Name))
+	value, err := json.Marshal(service)
+
+	utils.HandleError("marshal service error", err)
+	etcd.Put(key, string(value))
+	return err
+}
+
 func CreateServiceByFile(filename string) {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.ControllerPrefix),
@@ -43,7 +55,32 @@ func CreateService(status service.Service) {
 
 // region 删
 
-func DeleteService(names []string) {
+func ActDeleteService(names []string) {
+	// 1. 删除relations中的此service的目录
+	// 2. 删除registry中次service的目录
+	var deleteTargets []string
+	for _, key := range names {
+		// 先查询relations找到
+		buildKey := etcd.SetKey(
+			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetSourceType(constant.ServiceSourceName),
+			etcd.SetPodName(key))
+		deleteTargets = append(deleteTargets, buildKey)
+
+		buildKey = etcd.SetKey(
+			etcd.SetPrefix(constant.RegistryPrefix),
+			etcd.SetSourceType(constant.ServiceSourceName),
+			etcd.SetPodName(key))
+		deleteTargets = append(deleteTargets, buildKey)
+
+	}
+	for _, del := range deleteTargets {
+		fmt.Printf("del [key = %v]\n", del)
+	}
+	SyncDel(deleteTargets)
+}
+
+func CmdDeleteService(names []string) {
 	// 检查是否存在在relation关系中
 	nameSet := utils.ParseNames(names)
 	for _, name := range nameSet {

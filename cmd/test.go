@@ -11,6 +11,6 @@ var TestCmd = &cobra.Command{
 	Short: `test 相关的命令`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("create pod by file %v\n", "podtest.yaml")
-		apiserver.CreatePod("podtest.yaml")
+		apiserver.CmdCreatePod("podtest.yaml")
 	},
 }

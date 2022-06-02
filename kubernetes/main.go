@@ -51,7 +51,7 @@ func CreateMasterNode() {
 	var nodest node.Node
 	nodest.Name = config.Configs.MasterNodeName
 	controllerManager.AddNode(nodest)
-	apiserver.CreateNode(nodest)
+	apiserver.CmdCreateNode(nodest)
 	go kubelet.Main()
 }
 

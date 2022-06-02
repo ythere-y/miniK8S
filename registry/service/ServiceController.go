@@ -51,6 +51,7 @@ func CreateServcieByFile(filename string) {
 	BuildService(filename)
 }
 
+// BuildService
 // 打开一个yaml文件构建service并放到servicecontroller的记录中
 func BuildService(file string) {
 	serviceYaml := ParseServiceYaml(file)

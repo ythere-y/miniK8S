@@ -54,7 +54,7 @@ func DebugTanInfo() {
 	}
 }
 
-//parseNames
+// ParseNames
 /*
 解析多个名字，去除其中的重复内容
 */
@@ -74,4 +74,17 @@ func ParseNames(names []string) []string {
 		nameSet = append(nameSet, name)
 	}
 	return nameSet
+}
+
+// LabelMatch
+// 判断selector与labels是否有匹配项
+func LabelMatch(selector map[string]string, labels map[string]string) bool {
+	for lab_key, lab_val := range labels {
+		for sel_key, sel_val := range selector {
+			if lab_key == sel_key && lab_val == sel_val {
+				return true
+			}
+		}
+	}
+	return false
 }

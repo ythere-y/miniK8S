@@ -4,34 +4,29 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="修复binds问题">
-      <change afterPath="$PROJECT_DIR$/apiserver/handleNode.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apiserver/handlePod.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apiserver/handleService.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cmd/node.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllerManager/handleNode.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllerManager/handlePod.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllerManager/handleService.go" afterDir="false" />
+    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="cmd-apiserver层完成">
+      <change afterPath="$PROJECT_DIR$/controllerManager/global.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllerManager/types.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apiserver/basicOperation.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/basicOperation.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiserver/commands.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/commands.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/handleNode.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/handleNode.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/handlePod.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/handlePod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/handleService.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/handleService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/node.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/node.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/pod.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/service.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllerManager/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/handleNode.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handleNode.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/handlePod.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handlePod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/handleService.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handleService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/handler.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/controllerManager/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kubelet/func.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/func.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kubelet/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubelet/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/types.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kubernetes/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node/NodeMeta.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/node/NodeMeta.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pod/DockerManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/pod/DockerManager.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pod/Pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/pod/Pod.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pod/PodMeta.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/pod/PodMeta.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/replicaset/ReplicaSet.go" beforeDir="false" afterPath="$PROJECT_DIR$/replicaset/ReplicaSet.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/replicaset/rsMeta.go" beforeDir="false" afterPath="$PROJECT_DIR$/replicaset/rsMeta.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/ServiceController.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/service/ServiceController.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/dksdktest.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/service/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/registry/node/NodeMeta.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/node/NodeMeta.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/registry/pod/PodMeta.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/pod/PodMeta.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/registry/service/ServiceController.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/service/ServiceController.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/stringUtils.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/stringUtils.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -161,7 +156,8 @@
     <MESSAGE value="first_try" />
     <MESSAGE value="修正换行符号错误" />
     <MESSAGE value="修复binds问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复binds问题" />
+    <MESSAGE value="cmd-apiserver层完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="cmd-apiserver层完成" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
