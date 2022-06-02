@@ -5,7 +5,7 @@ import (
 	"minik8s/K8SClient"
 	"minik8s/apimachinery/pkg/apis/core"
 	"minik8s/apimachinery/pkg/apis/meta"
-	"minik8s/pod"
+	"minik8s/registry/pod"
 
 	"k8s.io/apimachinery/pkg/util/intstr"
 )
@@ -13,7 +13,7 @@ import (
 var serviceController1 = ServiceController{}
 
 type ServiceController struct {
-	ServiceList []MiniService
+	ServiceList []Service
 }
 
 func (s ServiceController) CreateService() {

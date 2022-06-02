@@ -1,36 +1,12 @@
 package apiserver
 
 import (
-	"encoding/json"
 	"fmt"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"minik8s/constant"
 	"minik8s/lab/etcd"
-	"minik8s/pod"
 	"minik8s/utils"
 )
-
-//GetPodInfo
-/*
- 根据podName，从/registry/pods/目录下寻找对应的pod
-并组建成Pod返回
-*/
-func GetPodInfo(podName string) *pod.Pod {
-	getRes, err := etcd.Get(etcd.SetKey(
-		etcd.SetPrefix(constant.RegistryPrefix),
-		etcd.SetSourceType("pods"),
-		etcd.SetName(podName)))
-
-	utils.HandleError("get pod info error", err)
-	if len(getRes) == 0 {
-		return nil
-	}
-	var podInfo pod.Pod
-	err = json.Unmarshal([]byte(getRes[0]), &podInfo)
-	utils.HandleError("unmarshal pod failed ", err)
-
-	return &podInfo
-}
 
 //GetChildNum
 /*

@@ -53,3 +53,25 @@ func DebugTanInfo() {
 		fmt.Printf("file: %s, line: %d\n", file, line)
 	}
 }
+
+//parseNames
+/*
+解析多个名字，去除其中的重复内容
+*/
+func ParseNames(names []string) []string {
+	var nameSet []string
+	for index, name := range names {
+		haveTheSame := false
+		for i := 0; i < index; i++ {
+			if name == names[index] {
+				haveTheSame = true
+				break
+			}
+		}
+		if haveTheSame == true {
+			continue
+		}
+		nameSet = append(nameSet, name)
+	}
+	return nameSet
+}

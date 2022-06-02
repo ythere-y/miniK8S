@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"minik8s/apiserver"
-	"minik8s/pod"
+	pod2 "minik8s/registry/pod"
 
 	"minik8s/utils"
 
@@ -17,12 +17,12 @@ func createPod(event *clientv3.Event) error {
 	var err error
 	switch event.Type {
 	case mvccpb.PUT:
-		var newPodYaml pod.PodYaml
+		var newPodYaml pod2.PodYaml
 		err = yaml.Unmarshal(event.Kv.Value, &newPodYaml)
 		if err != nil {
 			fmt.Printf("yaml unmarshal error->:\n%v\n", err.Error())
 		}
-		podInfo := pod.YamlToPod(newPodYaml)
+		podInfo := pod2.YamlToPod(newPodYaml)
 		podName := podInfo.Meta.Name
 		err = apiserver.SavePodInfo(podInfo)
 		utils.HandleError("save pod info error", err)

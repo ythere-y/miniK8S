@@ -5,14 +5,14 @@ import (
 	"minik8s/apiserver"
 	"minik8s/constant"
 	. "minik8s/lab/etcd"
-	"minik8s/node"
+	"minik8s/registry/node"
 	"minik8s/utils"
 	"time"
 )
 
-var KNodes []node.NodeStatus
+var KNodes []node.Node
 
-func AddNode(status node.NodeStatus) {
+func AddNode(status node.Node) {
 	KNodes = append(KNodes, status)
 
 }

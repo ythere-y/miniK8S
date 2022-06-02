@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"minik8s/meta"
-	"minik8s/pod"
+	pod2 "minik8s/registry/pod"
 	"minik8s/utils"
 	"strconv"
 	"time"
@@ -35,18 +35,18 @@ type ServiceYaml struct {
 	TargetPort int `yaml:"targetPort"`
 }
 
-type MiniService struct {
+type Service struct {
 	meta.TypeMeta
 	meta.ObjectMeat
 
 	Selector   map[string]string
-	Pods       []pod.Pod
+	Pods       []pod2.Pod
 	Port       int
 	TargetPort int
 	Type       ServiceType
 }
 
-func (mini *MiniService) Build(yaml ServiceYaml) {
+func (mini *Service) Build(yaml ServiceYaml) {
 	mini.Kind = yaml.Kind
 	mini.Name = yaml.MetaData.Name
 	mini.UID = utils.HashToUid(mini.Name)
@@ -58,7 +58,7 @@ func (mini *MiniService) Build(yaml ServiceYaml) {
 	mini.Selector = yaml.Selector
 
 	mini.Type = ServiceTypeClusterIP
-	for _, pod := range pod.KPods {
+	for _, pod := range pod2.KPods {
 		mini.Pods = append(mini.Pods, pod)
 	}
 }
@@ -81,7 +81,7 @@ func ServicePreDisplay() {
 	fmt.Println()
 }
 
-func (mini MiniService) Display() {
+func (mini Service) Display() {
 	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", mini.Name)
 	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", mini.Type)
 	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", mini.Port)
@@ -120,14 +120,14 @@ func ParseServiceYaml(file string) ServiceYaml {
 	return newPodYaml
 }
 
-func ServiceYamlToService(serviceyaml ServiceYaml) MiniService {
-	var newservice MiniService
+func ServiceYamlToService(serviceyaml ServiceYaml) Service {
+	var newservice Service
 	newservice.Build(serviceyaml)
 	return newservice
 }
 
-func (mini MiniService) DeleteServcie() {
+func (mini Service) DeleteServcie() {
 	for _, p := range mini.Pods {
-		pod.RemovePod(p.Meta.Uid)
+		pod2.RemovePod(p.Meta.Uid)
 	}
 }

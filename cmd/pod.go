@@ -12,7 +12,7 @@ var PodCmd = &cobra.Command{
 	Short: `pod 相关的命令`,
 	Long:  `包括 get , update , delete , create`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("service 需要进一步指令,请查看 minik pod -h\n")
+		fmt.Printf("pod 需要进一步指令,请查看 minik pod -h\n")
 	},
 }
 
@@ -26,7 +26,7 @@ var podget = &cobra.Command{
 		if len(args) == 0 {
 			apiserver.DisplayAllPodsInfo()
 		} else {
-			apiserver.DisplayPodsInfo(args[0])
+			apiserver.DisplayPodInfo(args[0])
 		}
 	},
 }

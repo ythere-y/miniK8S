@@ -3,7 +3,7 @@ package kubelet
 import (
 	"fmt"
 	"minik8s/constant"
-	"minik8s/pod"
+	"minik8s/registry/pod"
 	"minik8s/utils"
 
 	"go.etcd.io/etcd/api/v3/mvccpb"

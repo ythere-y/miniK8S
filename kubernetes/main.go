@@ -6,7 +6,7 @@ import (
 	"minik8s/config"
 	"minik8s/controllerManager"
 	"minik8s/kubelet"
-	"minik8s/node"
+	"minik8s/registry/node"
 	"minik8s/scheduler"
 	"os"
 	"os/exec"
@@ -48,7 +48,7 @@ func Main() {
 填充初始的master节点的信息
 */
 func CreateMasterNode() {
-	var nodest node.NodeStatus
+	var nodest node.Node
 	nodest.Name = config.Configs.MasterNodeName
 	controllerManager.AddNode(nodest)
 	apiserver.CreateNode(nodest)

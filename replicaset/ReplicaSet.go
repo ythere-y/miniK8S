@@ -3,7 +3,7 @@ package replicaset
 import (
 	"fmt"
 	"io/ioutil"
-	"minik8s/pod"
+	"minik8s/registry/pod"
 	"minik8s/utils"
 
 	yaml "gopkg.in/yaml.v2"

@@ -5,7 +5,7 @@ import (
 	"github.com/docker/docker/client"
 	"minik8s/apiserver"
 	"minik8s/lab/dksdk"
-	"minik8s/pod"
+	"minik8s/registry/pod"
 	"minik8s/utils"
 )
 
