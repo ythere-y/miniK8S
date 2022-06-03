@@ -1,8 +1,6 @@
 package main
 
-import (
-	"minik8s/lab/rootContainer"
-)
+import "minik8s/cmd"
 
 // func main() {
 // 	//service.SerMain()
@@ -37,15 +35,18 @@ import (
 var rootName string
 
 func main() {
-	//cmd.RootCmdRun() // 关于命令行的测试
+	cmd.RootCmdRun() // 关于命令行的测试
 
 	//utils.CopyandRun()
 	//slurm := utils.ParseYaml(utils.Dir + "test.yaml")
 	//fmt.Print(slurm)
 	//utils.Slu2File(slurm)
-	//utils.Submit(utils.Dir+"test.yaml", utils.Dir+"test002.cu")
+	//utils.Submit(utils.Dir+"test.yaml", utils.Dir+"matrix.cu")
+	//utils.GetStat("matrix")
+	//utils.GetRes("matrix")
 
-	rootContainer.Test()
+	//rootContainer.Test()
+	//utils.GetRes("test002")
 	//fmt.Println(err.Error())
 
 	//service.OutPutFmtTest() //关于格式化输出的测试

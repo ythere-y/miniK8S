@@ -72,10 +72,10 @@ func CliCreatePodByPod(cli *client.Client, pod Pod) uint32 {
 		resouce.CPUShares = cont.CpuNum
 		resouce.Memory = cont.Memory
 		name := cont.Name
-		volume := cont.Volumn
-		port := cont.Port
+		//volume := cont.Volumn
+		//port := cont.Port
 		cid := dksdk.CreateContainer(cli, image, cmd,
-			resouce, name, volume, port, "")
+			resouce, name, nil, nil, "", "")
 		// allocate container id
 		newPod.Containers[index].Id = cid
 	}
@@ -100,10 +100,10 @@ func CliCreatePod(cli *client.Client, file string) uint32 {
 		resouce.CPUShares = cont.CpuNum
 		resouce.Memory = cont.Memory
 		name := cont.Name
-		volume := cont.Volumn
-		port := cont.Port
+		//volume := cont.Volumn
+		//port := cont.Port
 		cid := dksdk.CreateContainer(cli, image, cmd,
-			resouce, name, volume, port, "")
+			resouce, name, nil, nil, "", "")
 		// allocate container id
 		newPod.Containers[index].Id = cid
 	}
