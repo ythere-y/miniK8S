@@ -37,7 +37,7 @@ func startupEtcd(thisIP string) {
 	totalString = "#!/bin/bash\n"
 
 	frontArg = "etcd -name etcd-hc -data-dir /var/lib/etcd "
-	advertiseArg = "http://" + thisIP + ":2379,http://127.0.0.1:2379 "
+	advertiseArg = "--advertise-client-urls http://" + thisIP + ":2379,http://127.0.0.1:2379 "
 	listenArg += "--listen-client-urls http://" + thisIP + ":2379,http://127.0.0.1:2379 "
 	totalString += frontArg + advertiseArg + listenArg + "\n"
 	//totalString = "echo 'hello world~!'"
