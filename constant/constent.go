@@ -15,10 +15,11 @@ const (
 	ReplayOK    string = "__OK__"
 	ReplayERROR string = "__ERROR__"
 
-	PodSourceName     string = "pods"
-	NodeSourceName    string = "nodes"
-	ServiceSourceName string = "services"
-	ReplicaSourceName string = "replicaset"
+	PodSourceName        string = "pods"
+	NodeSourceName       string = "nodes"
+	ServiceSourceName    string = "services"
+	ReplicaSourceName    string = "replicaset"
+	AutoscalerSourceName string = "autoscaler"
 
 	CREATE string = "create"
 	DELETE string = "delete"
