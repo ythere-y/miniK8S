@@ -30,7 +30,9 @@ type ServiceYaml struct {
 	}
 	Selector map[string]string `yaml:"selector"`
 
-	ServiceIP string `yaml:"serviceip"`
+	ServiceIP   string `yaml:"serviceip"`
+	ServicePort string `yaml:"servicePort"`
+	TargetPort  string `yaml:"targetPort"`
 }
 
 type Service struct {
@@ -45,18 +47,31 @@ type Service struct {
 	Type        ServiceType
 }
 
-func (mini *Service) Build(yaml ServiceYaml) {
-	mini.Kind = yaml.Kind
-	mini.Name = yaml.MetaData.Name
-	mini.UID = utils.HashToUid(mini.Name)
-	mini.CreationTimestamp = time.Now()
+func DisplayService(s Service) {
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", s.Name)
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", s.Type)
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", s.ServiceIP)
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", s.ServicePort)
 
-	mini.serviceIP = yaml.ServiceIP
-
-	mini.Selector = yaml.Selector
-
-	mini.Type = ServiceTypeClusterIP
+	fmt.Printf("%v", utils.GetAge(s.CreationTimestamp))
+	fmt.Println()
 }
+
+//
+//func (mini *Service) Build(yaml ServiceYaml) {
+//	mini.Kind = yaml.Kind
+//	mini.Name = yaml.MetaData.Name
+//	mini.UID = utils.HashToUid(mini.Name)
+//	mini.CreationTimestamp = time.Now()
+//
+//	mini.ServiceIP = yaml.ServiceIP
+//	mini.ServicePort = yaml.ServicePort
+//	mini.TargetPort = yaml.TargetPort
+//
+//	mini.Selector = yaml.Selector
+//
+//	mini.Type = ServiceTypeClusterIP
+//}
 
 var blockSize = 20
 
@@ -73,8 +88,8 @@ func ServicePreDisplay() {
 func (mini Service) Display() {
 	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", mini.Name)
 	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", mini.Type)
-	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", mini.serviceIP)
-	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", mini.servicePort)
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", mini.ServiceIP)
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", mini.ServicePort)
 
 	fmt.Printf("%v", utils.GetAge(mini.CreationTimestamp))
 	fmt.Println()
@@ -113,6 +128,18 @@ func ParseServiceYaml(file string) ServiceYaml {
 
 func ServiceYamlToService(serviceyaml ServiceYaml) Service {
 	var newservice Service
-	newservice.Build(serviceyaml)
-	return *newservice
+	newservice.Kind = serviceyaml.Kind
+	newservice.Name = serviceyaml.MetaData.Name
+	newservice.UID = utils.HashToUid(newservice.Name)
+	newservice.CreationTimestamp = time.Now()
+
+	newservice.ServiceIP = serviceyaml.ServiceIP
+	newservice.ServicePort = serviceyaml.ServicePort
+	newservice.TargetPort = serviceyaml.TargetPort
+
+	newservice.Selector = serviceyaml.Selector
+
+	newservice.Type = ServiceTypeClusterIP
+
+	return newservice
 }

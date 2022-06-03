@@ -96,15 +96,15 @@ func deleteNode(event *clientv3.Event) error {
 			return err
 		}
 
-		var podSet []string
+		var nodeSet []string
 		for _, nodename := range keys {
 			for _, podname := range relations.NodetoPodRela[nodename] {
-				podSet = append(podSet, podname)
+				nodeSet = append(nodeSet, podname)
 			}
 		}
 		//先关闭所有的pod，再关闭所有的node
-		RemovePods(podSet)
-		apiserver.ActDeletePods(podSet)
+		RemoveNodes(nodeSet)
+		apiserver.ActDeleteNode(nodeSet)
 		RemoveNodes(keys)
 		apiserver.ActDeleteNode(keys)
 	}

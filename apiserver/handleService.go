@@ -190,10 +190,10 @@ func DisplayAllServiceInfo() {
 	service.ServicePreDisplay()
 	for _, event := range getRsp.Kvs {
 		tmpValue := event.Value
-		var tmpPod service.Service
-		err = json.Unmarshal(tmpValue, &tmpPod)
+		var tmpService service.Service
+		err = json.Unmarshal(tmpValue, &tmpService)
 		utils.HandleError("unmarshal service error", err)
-		tmpPod.Display()
+		service.DisplayService(tmpService)
 	}
 }
 

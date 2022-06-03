@@ -20,7 +20,7 @@ func DeletePod(name string) {
 		}
 	}
 }
-func RemovePods(names string) pod2.Pod {
+func RemovePods(name string) pod2.Pod {
 	for i, pod := range MemPods {
 		if pod.Meta.Name == name {
 			MemPods = append(MemPods[:i], MemPods[i+1:]...)
@@ -28,7 +28,7 @@ func RemovePods(names string) pod2.Pod {
 			break
 		}
 	}
-	return nil
+	return MemPods[0]
 }
 
 func AddNode(node node.Node) {
@@ -76,7 +76,7 @@ func RemoveServices(name string) service.Service {
 			break
 		}
 	}
-	return nil
+	return MemServices[0]
 }
 
 func AddPodtoNode(podname string, nodename string) {
