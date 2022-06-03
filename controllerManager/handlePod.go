@@ -172,6 +172,14 @@ func dealFail(event *clientv3.Event) error {
 			utils.HandleError("dealFail controller get node value error", err)
 			err = apiserver.DistributePodtoNode(nodeName, podName)
 			utils.HandleError("Distribute pod to node error", err)
+			// 通知kubelet监控健康状态
+			buildKey := etcd.SetKey(
+				etcd.SetPrefix(constant.WatchPrefix),
+				etcd.SetSourceType(constant.NodeSourceName),
+				etcd.JustAppend(nodeName),
+				etcd.JustAppend(podName))
+			buildvalue := podName
+			apiserver.SyncPut(buildKey, buildvalue)
 		}
 		err = nil
 	}
