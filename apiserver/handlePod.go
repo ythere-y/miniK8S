@@ -132,7 +132,7 @@ func CmdDeletePod(names []string) {
 	SyncPut(key, string(value))
 }
 
-func ActDeletePods(podsNames []string) {
+func ActDeletePods(name string, delpod pod2.Pod) {
 	var (
 		deleteTargets []string
 		buildKey      string
@@ -140,62 +140,71 @@ func ActDeletePods(podsNames []string) {
 		nodeName      string
 		serviceName   string
 	)
-	for _, key := range podsNames {
 
-		// 先查询relations找到所属的node
+	// 先查询relations找到所属的node
+	buildKey = etcd.SetKey(
+		etcd.SetPrefix(constant.RelationPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetPodName(name),
+		etcd.SetSourceType(constant.NodeSourceName))
+	nodeName, err = etcd.GetValueWithPrefix(buildKey)
+	utils.HandleError("get value error", err)
+	deleteTargets = append(deleteTargets, buildKey)
+	if nodeName != "" {
 		buildKey = etcd.SetKey(
 			etcd.SetPrefix(constant.RelationPrefix),
-			etcd.SetSourceType(constant.PodSourceName),
-			etcd.SetPodName(key),
-			etcd.SetSourceType(constant.NodeSourceName))
-		nodeName, err = etcd.GetValueWithPrefix(buildKey)
-		utils.HandleError("get value error", err)
+			etcd.SetSourceType(constant.NodeSourceName),
+			etcd.SetNodeName(nodeName),
+			etcd.SetPodName(name),
+		)
 		deleteTargets = append(deleteTargets, buildKey)
-		if nodeName != "" {
-			buildKey = etcd.SetKey(
-				etcd.SetPrefix(constant.RelationPrefix),
-				etcd.SetSourceType(constant.NodeSourceName),
-				etcd.SetNodeName(nodeName),
-				etcd.SetPodName(key),
-			)
-			deleteTargets = append(deleteTargets, buildKey)
-		}
-
-		// 先查询relations找到对应的service
-		buildKey = etcd.SetKey(
-			etcd.SetPrefix(constant.RelationPrefix),
-			etcd.SetSourceType(constant.PodSourceName),
-			etcd.SetPodName(key),
-			etcd.SetSourceType(constant.ServiceSourceName))
-		serviceName, err = etcd.GetValueWithPrefix(buildKey)
-		utils.HandleError("get value error", err)
-		deleteTargets = append(deleteTargets, buildKey)
-		if serviceName != "" {
-			buildKey = etcd.SetKey(
-				etcd.SetPrefix(constant.RelationPrefix),
-				etcd.SetSourceType(constant.ServiceSourceName),
-				etcd.SetNodeName(serviceName),
-				etcd.SetPodName(key),
-			)
-			deleteTargets = append(deleteTargets, buildKey)
-		}
-		buildKey = etcd.SetKey(
-			etcd.SetPrefix(constant.RelationPrefix),
-			etcd.SetSourceType(constant.PodSourceName),
-			etcd.SetPodName(key))
-		deleteTargets = append(deleteTargets, buildKey)
-
-		buildKey = etcd.SetKey(
-			etcd.SetPrefix(constant.RegistryPrefix),
-			etcd.SetSourceType(constant.PodSourceName),
-			etcd.SetPodName(key))
-		deleteTargets = append(deleteTargets, buildKey)
-
 	}
+
+	// 先查询relations找到对应的service
+	buildKey = etcd.SetKey(
+		etcd.SetPrefix(constant.RelationPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetPodName(name),
+		etcd.SetSourceType(constant.ServiceSourceName))
+	serviceName, err = etcd.GetValueWithPrefix(buildKey)
+	utils.HandleError("get value error", err)
+	deleteTargets = append(deleteTargets, buildKey)
+	if serviceName != "" {
+		buildKey = etcd.SetKey(
+			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetSourceType(constant.ServiceSourceName),
+			etcd.SetNodeName(serviceName),
+			etcd.SetPodName(name),
+		)
+		deleteTargets = append(deleteTargets, buildKey)
+	}
+	buildKey = etcd.SetKey(
+		etcd.SetPrefix(constant.RelationPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetPodName(name))
+	deleteTargets = append(deleteTargets, buildKey)
+
+	buildKey = etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetPodName(name))
+	deleteTargets = append(deleteTargets, buildKey)
+
 	for _, del := range deleteTargets {
-		fmt.Printf("del [key = %v]\n", del)
+		fmt.Printf("del [name = %v]\n", del)
 	}
 	SyncDel(deleteTargets)
+
+	setKey := etcd.SetKey(
+		etcd.SetPrefix(constant.KubeletPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetName(delpod.Meta.Name),
+		etcd.JustAppend(constant.DELETE))
+	setVal, err := json.Marshal(delpod)
+	if err != nil {
+		panic(err)
+	}
+	SyncPut(setKey, string(setVal))
 }
 
 // endregion

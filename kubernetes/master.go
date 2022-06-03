@@ -17,7 +17,7 @@ import (
 */
 func StartUpMaster() {
 	var err error
-	err = environment.EtcdStartUp()
+	err = environment.EtcdStartUp(config.Configs.MasterIP)
 	if err != nil {
 		panic(err)
 		return

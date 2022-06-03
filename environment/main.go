@@ -13,38 +13,49 @@ import (
 func Main() {
 }
 
-// TODO: 和startupetcd联合
-func EtcdStartUp() error {
+func EtcdStartUp(thisIP string) error {
 	var (
 		err error
 	)
 	fmt.Printf("[Etcd] start up, IP = %v\n", config.Configs.EtcdIp)
-
+	startupEtcd(thisIP)
+	setFlannelConfig(thisIP)
 	err = nil
 	return err
 
 }
 
-// TODO: 和startupflannel联合
 func FlannelStartUp(etcdip string) error {
 	var (
 		err error
 	)
 	fmt.Printf("[Flannel] start up, etcdIP = %v\n", etcdip)
+
+	startupFlannel(etcdip)
+
 	err = nil
 	return err
 }
 
-// TODO: 和iptablesSet联合
-func SetIptables(from string, to string) error {
+func SetIptables(srcIP string, srcPort string, desIP string, desPort string) error {
 	var (
 		err error
 	)
 	fmt.Printf("[IPtables] set ~!\n")
+	iptablesSet(srcIP, srcPort, desIP, desPort)
 	err = nil
 	return err
 }
 
+func RemoveIptables(srcIP string, srcPort string, desIP string, desPort string) error {
+	var (
+		err error
+	)
+	fmt.Printf("[IPtables] set ~!\n")
+	iptablesSet(srcIP, srcPort, desIP, desPort)
+	err = nil
+	return err
+}
 func startupEtcd(thisIP string) {
 	var (
 		//advertiseFlag string::

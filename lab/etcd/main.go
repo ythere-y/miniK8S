@@ -320,6 +320,39 @@ func Delete(key string) {
 	fmt.Printf("Delete operation : [key = %v] \n", key)
 }
 
+//DeleteListWithPrefix
+/*
+在etcd中删除一连串的key
+*/
+func DeleteListWithPrefix(key []string) {
+	var (
+		cli    *clientv3.Client
+		err    error
+		cancel context.CancelFunc
+		ctx    context.Context
+	)
+	cli = connectEtcd()
+	defer func(cli *clientv3.Client) {
+		err := cli.Close()
+		if err != nil {
+
+		}
+	}(cli)
+
+	// del
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
+	for _, innerKey := range key {
+		_, err = cli.Delete(ctx, innerKey, clientv3.WithPrefix())
+		if err != nil {
+			fmt.Printf("delete [key = %v] in etcd failed, err:%v\n", innerKey, err)
+			cancel()
+			return
+		}
+		fmt.Printf("Delete operation : [key = %v] \n", innerKey)
+	}
+	cancel()
+}
+
 //DeleteList
 /*
 在etcd中删除一连串的key

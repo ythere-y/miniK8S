@@ -10,6 +10,7 @@ const (
 	SchedulerPrefix  string = "scheduler"
 	RelationPrefix   string = "relation"
 	ReplayPrefix     string = "reply"
+	KubeletPrefix    string = "kubelet"
 
 	ReplayOK    string = "__OK__"
 	ReplayERROR string = "__ERROR__"

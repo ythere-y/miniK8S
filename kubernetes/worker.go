@@ -20,7 +20,6 @@ var tmpNode node.Node
 
 func StartUpWorker() {
 	var err error
-	err = environment.FlannelStartUp(config.Configs.EtcdIp)
 	if err != nil {
 		panic(err)
 		return

@@ -101,8 +101,8 @@ func deletePod(event *clientv3.Event) error {
 		if err != nil {
 			return err
 		}
-		RemovePods(keys)
-		apiserver.ActDeletePods(keys)
+		delpod := RemovePods(keys[0])
+		apiserver.ActDeletePods(keys, delpod)
 	}
 	return err
 

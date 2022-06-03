@@ -38,9 +38,10 @@ type Service struct {
 	meta.ObjectMeat
 
 	Selector    map[string]string
-	serviceIP   string
-	servicePort string
-	podIp       []string
+	ServiceIP   string
+	ServicePort string
+	TargetPort  string
+	PodIp       []string
 	Type        ServiceType
 }
 
@@ -55,13 +56,6 @@ func (mini *Service) Build(yaml ServiceYaml) {
 	mini.Selector = yaml.Selector
 
 	mini.Type = ServiceTypeClusterIP
-}
-
-//TODO:delete this test
-func OutPutFmtTest() {
-	BuildService("servicetest.yaml")
-	ServicePreDisplay()
-	serviceController1.ServiceList[0].Display()
 }
 
 var blockSize = 20
@@ -120,5 +114,5 @@ func ParseServiceYaml(file string) ServiceYaml {
 func ServiceYamlToService(serviceyaml ServiceYaml) Service {
 	var newservice Service
 	newservice.Build(serviceyaml)
-	return newservice
+	return *newservice
 }

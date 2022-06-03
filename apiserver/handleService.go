@@ -16,14 +16,28 @@ import (
 // region 增
 
 func SaveServiceInfo(service service.Service) error {
+	var (
+		setkeys []string
+		setvals []string
+	)
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.RegistryPrefix),
 		etcd.SetSourceType(constant.PodSourceName),
 		etcd.SetPodName(service.Name))
 	value, err := json.Marshal(service)
+	setkeys = append(setkeys, key)
+	setvals = append(setvals, string(value))
 
-	utils.HandleError("marshal service error", err)
-	etcd.Put(key, string(value))
+	key = etcd.SetKey(
+		etcd.SetPrefix(constant.KubeletPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetPodName(service.Name),
+		etcd.JustAppend(constant.CREATE))
+	value, err = json.Marshal(service)
+	setkeys = append(setkeys, key)
+	setvals = append(setvals, string(value))
+
+	etcd.PutList(setkeys, setvals)
 	return err
 }
 
@@ -55,29 +69,38 @@ func CreateService(status service.Service) {
 
 // region 删
 
-func ActDeleteService(names []string) {
+func ActDeleteService(name string, delser service.Service) {
 	// 1. 删除relations中的此service的目录
 	// 2. 删除registry中次service的目录
 	var deleteTargets []string
-	for _, key := range names {
-		// 先查询relations找到
-		buildKey := etcd.SetKey(
-			etcd.SetPrefix(constant.RelationPrefix),
-			etcd.SetSourceType(constant.ServiceSourceName),
-			etcd.SetPodName(key))
-		deleteTargets = append(deleteTargets, buildKey)
+	// 先查询relations找到
+	buildKey := etcd.SetKey(
+		etcd.SetPrefix(constant.RelationPrefix),
+		etcd.SetSourceType(constant.ServiceSourceName),
+		etcd.SetPodName(name))
+	deleteTargets = append(deleteTargets, buildKey)
 
-		buildKey = etcd.SetKey(
-			etcd.SetPrefix(constant.RegistryPrefix),
-			etcd.SetSourceType(constant.ServiceSourceName),
-			etcd.SetPodName(key))
-		deleteTargets = append(deleteTargets, buildKey)
+	buildKey = etcd.SetKey(
+		etcd.SetPrefix(constant.RegistryPrefix),
+		etcd.SetSourceType(constant.ServiceSourceName),
+		etcd.SetPodName(name))
+	deleteTargets = append(deleteTargets, buildKey)
 
-	}
 	for _, del := range deleteTargets {
-		fmt.Printf("del [key = %v]\n", del)
+		fmt.Printf("del [name = %v]\n", del)
 	}
-	SyncDel(deleteTargets)
+	SyncDelWithPrefix(deleteTargets)
+
+	setKey := etcd.SetKey(
+		etcd.SetPrefix(constant.KubeletPrefix),
+		etcd.SetSourceType(constant.ServiceSourceName),
+		etcd.SetName(delser.Name),
+		etcd.JustAppend(constant.DELETE))
+	setVal, err := json.Marshal(delser)
+	if err != nil {
+		panic(err)
+	}
+	SyncPut(setKey, string(setVal))
 }
 
 func CmdDeleteService(names []string) {

@@ -4,10 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e4d3e4a0-3c7c-4449-8f61-5a3892b6467e" name="Changes" comment="实现get pod IP by pod name">
+    <list default="true" id="e4d3e4a0-3c7c-4449-8f61-5a3892b6467e" name="Changes" comment="environment测试后回归package">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/environment/cloudtest.go" beforeDir="false" afterPath="$PROJECT_DIR$/environment/cloudtest.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/basicOperation.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/basicOperation.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/handlePod.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/handlePod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/handleService.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/handleService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/global.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/global.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/handlePod.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handlePod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/handleService.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handleService.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/environment/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/environment/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/handlePod.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/handlePod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/handleService.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/handleService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/master.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/master.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/worker.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/worker.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/registry/service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/service/service.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +79,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="iptables的set和delete部分完成" />
     <MESSAGE value="实现get pod IP by pod name" />
-    <option name="LAST_COMMIT_MESSAGE" value="实现get pod IP by pod name" />
+    <MESSAGE value="environment测试后回归package" />
+    <option name="LAST_COMMIT_MESSAGE" value="environment测试后回归package" />
   </component>
 </project>
