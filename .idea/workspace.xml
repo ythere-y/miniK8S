@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="增加后台运行">
+    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="运行flannel的脚本">
+      <change afterPath="$PROJECT_DIR$/environment/Scripts/envStartUp.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/environment/cloudtest.go" beforeDir="false" afterPath="$PROJECT_DIR$/environment/cloudtest.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -113,7 +115,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="切换分支看了一下之后配置怎么又没了" />
     <MESSAGE value="增加pod的信息的update功能" />
     <MESSAGE value="修改etcd的结构。增加node的属性，增加relation部分。开始考虑master的启动过程。" />
     <MESSAGE value="加入cni部分的配置文件、go语言调用文件。但是需要外部环境同时运行ctcd和flannel。" />
@@ -138,7 +139,8 @@
     <MESSAGE value="路径测试完成，试试云主机启动测试" />
     <MESSAGE value="修复命令单词错误" />
     <MESSAGE value="增加后台运行" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加后台运行" />
+    <MESSAGE value="运行flannel的脚本" />
+    <option name="LAST_COMMIT_MESSAGE" value="运行flannel的脚本" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

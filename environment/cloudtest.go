@@ -103,17 +103,16 @@ func startupFlannel(targetIP string) {
 	totalString += cmdLine + " &\n"
 
 	// 写入脚本
-	script.Echo(totalString).WriteFile(constant.EnvironmentSh)
+	script.Echo(totalString).WriteFile(constant.FlannelSh)
 
 	// 检验写入结果
-	get, err = script.File(constant.EnvironmentSh).String()
+	get, err = script.File(constant.FlannelSh).String()
 
 	if err != nil {
 		panic(err)
 	}
 
 	fmt.Printf("check the file :\n %v", get)
-	return
 	// 以下是执行该脚本内容的部分
 	check("bash")
 
@@ -121,7 +120,7 @@ func startupFlannel(targetIP string) {
 
 	cmdGoVer := &exec.Cmd{
 		Path:   goExecutable,
-		Args:   []string{goExecutable, constant.EnvironmentSh},
+		Args:   []string{goExecutable, constant.FlannelSh},
 		Stdout: os.Stdout,
 		Stderr: os.Stderr,
 	}
@@ -137,4 +136,5 @@ func startupFlannel(targetIP string) {
 func main() {
 	fmt.Print("hello world\n")
 	startupEtcd("192.168.1.4")
+	startupFlannel("192.168.1.4")
 }
