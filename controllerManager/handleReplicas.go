@@ -41,6 +41,7 @@ func CreateRs(event *clientv3.Event) error {
 	var err error
 	switch event.Type {
 	case mvccpb.PUT:
+		fmt.Printf("controller rs start creating")
 		var newRsYaml replicaset.RSyaml
 		err = yaml.Unmarshal(event.Kv.Value, &newRsYaml)
 		if err != nil {
@@ -52,6 +53,7 @@ func CreateRs(event *clientv3.Event) error {
 		// TODO: deal with pod replicas, create pod in some nodes. UNFINISHED
 		if reflect.DeepEqual(rsInfo.RSspec.SelectorLabels,
 			rsInfo.PodTemplate.Meta.Labels) {
+			fmt.Printf("controller rs create pods")
 			replicas := rsInfo.RSspec.Replicas
 			pods := replicaset.CreatePodInstances(rsInfo, replicas)
 			for _, pod := range pods {
