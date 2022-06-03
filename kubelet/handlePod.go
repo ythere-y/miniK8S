@@ -129,6 +129,8 @@ func CliCreatePodByPod(cli *client.Client, pod pod.Pod, net string) uint32 {
 		// allocate container id
 		newPod.Containers[index].Id = cid
 	}
+	err := apiserver.SavePodInfo(newPod)
+	utils.HandleError("save pod info error", err)
 	return newPod.Meta.Uid
 }
 
@@ -261,21 +263,21 @@ func kubeletWatchPod(podname string) {
 	utils.HandleError("kubelet watch get pod json unmarshal error", err)
 
 	//获取pod里面的容器信息
-	var contNames []string
+	var contIds []string
 	for _, cont := range podtmp.Containers {
-		contname := cont.Name
-		contNames = append(contNames, contname)
+		contid := cont.Id
+		contIds = append(contIds, contid)
 	}
 
-	go func(cli *client.Client, names []string, podname string) {
+	go func(cli *client.Client, ids []string, podname string) {
 		for {
 			//每4秒检查一次
 			t := time.NewTicker(4 * time.Second)
 			select {
 			case <-t.C:
 				//检查容器运行情况，如果有容器fail了，就通知master
-				for _, name := range names {
-					if !dksdk.IsRun(cli, name) {
+				for _, id := range ids {
+					if !dksdk.IsRun(cli, id) {
 						buildkey := etcd.SetKey(
 							etcd.SetPrefix(constant.WatchPrefix),
 							etcd.SetSourceType(constant.PodSourceName),
@@ -288,7 +290,7 @@ func kubeletWatchPod(podname string) {
 				}
 			}
 		}
-	}(cli, contNames, podname)
+	}(cli, contIds, podname)
 }
 
 // endregion
