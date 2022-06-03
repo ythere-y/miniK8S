@@ -92,15 +92,16 @@ func startupFlannel(targetIP string) {
 		get         string
 		err         error
 	)
-	// 检查etcd运行状态
-	cmdLine = "etcdctl  --endpoints http://" + targetIP + ":2379 member list\n"
-	totalString += cmdLine + " \n"
-	// 设置flannel参数
-	cmdLine = "etcdctl set  /coreos.com/network/config '{\"Network\": \"10.0.0.0/16\", \"SubnetLen\": 24, \"SubnetMin\": \"10.0.10.0\",\"SubnetMax\": \"10.0.20.0\", \"Backend\": {\"Type\": \"vxlan\"}}'"
-	totalString += cmdLine + " \n"
-
+	/*
+		// 检查etcd运行状态
+		cmdLine = "etcdctl  --endpoints http://" + targetIP + ":2379 member list\n"
+		totalString += cmdLine + " \n"
+		// 设置flannel参数
+		cmdLine = "etcdctl set  /coreos.com/network/config '{\"Network\": \"10.0.0.0/16\", \"SubnetLen\": 24, \"SubnetMin\": \"10.0.10.0\",\"SubnetMax\": \"10.0.20.0\", \"Backend\": {\"Type\": \"vxlan\"}}'"
+		totalString += cmdLine + " \n"
+	*/
 	// 启动flannel
-	cmdLine = "flannel -etcd-endpoints \"http://" + targetIP + ":4001,http://" + targetIP + "192.168.1.13:2379\""
+	cmdLine = "flannel -etcd-endpoints \"http://" + targetIP + ":4001,http://" + targetIP + ":2379\""
 	totalString += cmdLine + " &\n"
 
 	// 写入脚本
