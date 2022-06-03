@@ -126,7 +126,7 @@ func deletePod(event *clientv3.Event) error {
 func watchPod(event *clientv3.Event) error {
 	fmt.Printf("controller start watching pod\n")
 	// wait for pod creating
-	time.Sleep(15 * time.Second)
+	time.Sleep(12 * time.Second)
 	fmt.Println("controller watch pod finish sleep")
 	var err error
 	switch event.Type {
