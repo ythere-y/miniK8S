@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80f3a72f-8010-477c-b695-dd4f6fdf3b05" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/dns/a.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dns/dns.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/localhost/test.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/localhost/test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apimachinery/pkg/apis/core/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/apimachinery/pkg/apis/core/types.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -14,8 +16,36 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="go build minik8s" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="minik8s" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="minik8s" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build minik8s" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

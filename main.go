@@ -1,6 +1,6 @@
 package main
 
-import "minik8s/lab/localhost"
+import "minik8s/dns"
 
 // func main() {
 // 	//service.SerMain()
@@ -36,7 +36,8 @@ var rootName string
 
 func main() {
 	//cmd.RootCmdRun() // 关于命令行的测试
-	localhost.Test()
+	//localhost.Test()
+	dns.Ip2name("111", "a.service/80")
 
 	//utils.CopyandRun()
 	//slurm := utils.ParseYaml(utils.Dir + "test.yaml")

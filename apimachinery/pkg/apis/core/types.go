@@ -2471,25 +2471,25 @@ type PodList struct {
 	Items []Pod
 }
 
-// DNSPolicy defines how a pod's DNS will be configured.
+// DNSPolicy defines how a pod's dns will be configured.
 type DNSPolicy string
 
 const (
-	// DNSClusterFirstWithHostNet indicates that the pod should use cluster DNS
+	// DNSClusterFirstWithHostNet indicates that the pod should use cluster dns
 	// first, if it is available, then fall back on the default
-	// (as determined by kubelet) DNS settings.
+	// (as determined by kubelet) dns settings.
 	DNSClusterFirstWithHostNet DNSPolicy = "ClusterFirstWithHostNet"
 
-	// DNSClusterFirst indicates that the pod should use cluster DNS
+	// DNSClusterFirst indicates that the pod should use cluster dns
 	// first unless hostNetwork is true, if it is available, then
-	// fall back on the default (as determined by kubelet) DNS settings.
+	// fall back on the default (as determined by kubelet) dns settings.
 	DNSClusterFirst DNSPolicy = "ClusterFirst"
 
 	// DNSDefault indicates that the pod should use the default (as
-	// determined by kubelet) DNS settings.
+	// determined by kubelet) dns settings.
 	DNSDefault DNSPolicy = "Default"
 
-	// DNSNone indicates that the pod should use empty DNS settings. DNS
+	// DNSNone indicates that the pod should use empty dns settings. dns
 	// parameters such as nameservers and search paths should be defined via
 	// DNSConfig.
 	DNSNone DNSPolicy = "None"
@@ -2848,11 +2848,11 @@ type PodSpec struct {
 	// before the system actively tries to terminate the pod; value must be positive integer
 	// +optional
 	ActiveDeadlineSeconds *int64
-	// Set DNS policy for the pod.
+	// Set dns policy for the pod.
 	// Defaults to "ClusterFirst".
 	// Valid values are 'ClusterFirstWithHostNet', 'ClusterFirst', 'Default' or 'None'.
-	// DNS parameters given in DNSConfig will be merged with the policy selected with DNSPolicy.
-	// To have DNS options set along with hostNetwork, you have to specify DNS policy
+	// dns parameters given in DNSConfig will be merged with the policy selected with DNSPolicy.
+	// To have dns options set along with hostNetwork, you have to specify dns policy
 	// explicitly to 'ClusterFirstWithHostNet'.
 	// +optional
 	DNSPolicy DNSPolicy
@@ -2928,8 +2928,8 @@ type PodSpec struct {
 	// Defaults to PreemptLowerPriority if unset.
 	// +optional
 	PreemptionPolicy *PreemptionPolicy
-	// Specifies the DNS parameters of a pod.
-	// Parameters specified here will be merged to the generated DNS
+	// Specifies the dns parameters of a pod.
+	// Parameters specified here will be merged to the generated dns
 	// configuration based on DNSPolicy.
 	// +optional
 	DNSConfig *PodDNSConfig
@@ -3192,20 +3192,20 @@ const (
 	PodQOSBestEffort PodQOSClass = "BestEffort"
 )
 
-// PodDNSConfig defines the DNS parameters of a pod in addition to
+// PodDNSConfig defines the dns parameters of a pod in addition to
 // those generated from DNSPolicy.
 type PodDNSConfig struct {
-	// A list of DNS name server IP addresses.
+	// A list of dns name server IP addresses.
 	// This will be appended to the base nameservers generated from DNSPolicy.
 	// Duplicated nameservers will be removed.
 	// +optional
 	Nameservers []string
-	// A list of DNS search domains for host-name lookup.
+	// A list of dns search domains for host-name lookup.
 	// This will be appended to the base search paths generated from DNSPolicy.
 	// Duplicated search paths will be removed.
 	// +optional
 	Searches []string
-	// A list of DNS resolver options.
+	// A list of dns resolver options.
 	// This will be merged with the base options generated from DNSPolicy.
 	// Duplicated entries will be removed. Resolution options given in Options
 	// will override those that appear in the base DNSPolicy.
@@ -3213,7 +3213,7 @@ type PodDNSConfig struct {
 	Options []PodDNSConfigOption
 }
 
-// PodDNSConfigOption defines DNS resolver options of a pod.
+// PodDNSConfigOption defines dns resolver options of a pod.
 type PodDNSConfigOption struct {
 	// Required.
 	Name string
@@ -3709,7 +3709,7 @@ type LoadBalancerIngress struct {
 	// +optional
 	IP string
 
-	// Hostname is set for load-balancer ingress points that are DNS based
+	// Hostname is set for load-balancer ingress points that are dns based
 	// (typically AWS load-balancers)
 	// +optional
 	Hostname string
@@ -3883,7 +3883,7 @@ type ServiceSpec struct {
 	// publishNotReadyAddresses indicates that any agent which deals with endpoints for this
 	// Service should disregard any indications of ready/not-ready.
 	// The primary use case for setting this field is for a StatefulSet's Headless Service to
-	// propagate SRV DNS records for its Pods for the purpose of peer discovery.
+	// propagate SRV dns records for its Pods for the purpose of peer discovery.
 	// The Kubernetes controllers that generate Endpoints and EndpointSlice resources for
 	// Services interpret this to mean that all endpoints are considered "ready" even if the
 	// Pods themselves are not. Agents which consume only Kubernetes generated endpoints
@@ -4068,7 +4068,7 @@ type EndpointAddress struct {
 	// TODO: This should allow hostname or IP, see #4447.
 	IP string
 	// Optional: Hostname of this endpoint
-	// Meant to be used by DNS servers etc.
+	// Meant to be used by dns servers etc.
 	// +optional
 	Hostname string
 	// Optional: Node hosting this endpoint. This can be used to determine endpoints local to a node.
@@ -4436,12 +4436,12 @@ const (
 	// efficient for node-to-node traffic than a NodeInternalIP).
 	NodeExternalIP NodeAddressType = "ExternalIP"
 
-	// NodeInternalDNS identifies a DNS name which resolves to an IP address which has
+	// NodeInternalDNS identifies a dns name which resolves to an IP address which has
 	// the characteristics of a NodeInternalIP. The IP it resolves to may or may not
 	// be a listed NodeInternalIP address.
 	NodeInternalDNS NodeAddressType = "InternalDNS"
 
-	// NodeExternalDNS identifies a DNS name which resolves to an IP address which has
+	// NodeExternalDNS identifies a dns name which resolves to an IP address which has
 	// the characteristics of a NodeExternalIP. The IP it resolves to may or may not
 	// be a listed NodeExternalIP address.
 	NodeExternalDNS NodeAddressType = "ExternalDNS"
@@ -4468,7 +4468,7 @@ type ResourceName string
 // with the -, _, and . characters allowed anywhere, except the first or last character.
 // The default convention, matching that for annotations, is to use lower-case names, with dashes, rather than
 // camel case, separating compound words.
-// Fully-qualified resource typenames are constructed from a DNS-style subdomain, followed by a slash `/` and a name.
+// Fully-qualified resource typenames are constructed from a dns-style subdomain, followed by a slash `/` and a name.
 const (
 	// CPU, in cores. (500m = .5 cores)
 	ResourceCPU ResourceName = "cpu"
