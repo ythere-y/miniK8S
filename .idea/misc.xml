@@ -4,6 +4,10 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
+          <option name="caretOffset" value="1141" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/dns/dns.go" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
           <option name="caretOffset" value="0" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/registry/pod/Pod.go" />
         </OpenedFileInfo>
@@ -38,10 +42,6 @@
         <OpenedFileInfo>
           <option name="caretOffset" value="2165" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/main.go" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="1177" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/dns/dns.go" />
         </OpenedFileInfo>
       </list>
     </option>
