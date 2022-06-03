@@ -2,15 +2,16 @@ package kubelet
 
 import (
 	"fmt"
-	"github.com/docker/docker/client"
-	"go.etcd.io/etcd/api/v3/mvccpb"
-	clientv3 "go.etcd.io/etcd/client/v3"
 	"minik8s/apiserver"
 	"minik8s/constant"
 	"minik8s/lab/dksdk"
 	. "minik8s/lab/etcd"
 	"minik8s/registry/pod"
 	"minik8s/utils"
+
+	"github.com/docker/docker/client"
+	"go.etcd.io/etcd/api/v3/mvccpb"
+	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
 // region 听
@@ -37,6 +38,8 @@ func nodehandler(event *clientv3.Event) error {
 		podName := utils.GetLastWord(string(event.Kv.Key))
 		StopPod(podName)
 		RemovePod(podName)
+		StopPod(podName + "-pause")
+		RemovePod(podName + "-pause")
 	case mvccpb.PUT:
 		fmt.Printf("kubelet handling key = %v, value = %v\n", string(event.Kv.Key), string(event.Kv.Value))
 		// 增加/修改 一个pod的操作

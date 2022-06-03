@@ -6,9 +6,10 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/bitfield/script"
 	"minik8s/shellScripts"
 	"strings"
+
+	"github.com/bitfield/script"
 
 	//"github.com/docker/docker/pkg/stdcopy"
 	"io"
@@ -154,6 +155,16 @@ func StopContainer(containerID string, cli *client.Client) {
 		fmt.Printf("容器%s已经被停止\n", containerID)
 	}
 }
+
+// func StopContainerByName(containerName string, cli *client.Client) {
+// 	timeout := time.Second * 10
+// 	err := cli.ContainerStop(context.Background(), containerID, &timeout)
+// 	if err != nil {
+// 		fmt.Println("容器", containerID, "停止失败")
+// 	} else {
+// 		fmt.Printf("容器%s已经被停止\n", containerID)
+// 	}
+// }
 
 // 删除
 func RemoveContainer(containerID string, cli *client.Client) (string, error) {
