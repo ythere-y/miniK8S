@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="增加更多打印">
-      <change afterPath="$PROJECT_DIR$/Scripts/tmp.sh" afterDir="false" />
+    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="增加Scripts目录">
+      <change afterPath="$PROJECT_DIR$/environment/Scripts/etcdSh.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/environment/zztest.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/environment/cloudtest.go" beforeDir="false" afterPath="$PROJECT_DIR$/environment/cloudtest.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -136,7 +136,8 @@
     <MESSAGE value="iptables终于接近了落地，实际发挥作用还有问题" />
     <MESSAGE value="命令构建尝试" />
     <MESSAGE value="增加更多打印" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加更多打印" />
+    <MESSAGE value="增加Scripts目录" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加Scripts目录" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

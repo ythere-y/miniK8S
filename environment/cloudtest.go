@@ -52,16 +52,26 @@ func startupEtcd(thisIP string) {
 	totalString += cmdLine + "\n"
 
 	// 写入脚本
-	fmt.Printf("ready to write [file = %v], context ->:\n%v\n", constant.EtcdSh, totalString)
+	//fmt.Printf("ready to write [file = %v], context ->:\n%v\n", constant.EtcdSh, totalString)
 
-	script.Echo(totalString).WriteFile(constant.EtcdSh)
+	// function to check if file exists
+	_, err = os.Stat(constant.EtcdSh)
 
+	// check if error is "file not exists"
+	if os.IsNotExist(err) {
+		os.Create(constant.EtcdSh)
+	}
+
+	_, err = script.IfExists(constant.EtcdSh).Echo(totalString).WriteFile(constant.EtcdSh)
+
+	if err != nil {
+		panic(err)
+	}
 	// 检验写入结果
 	get, err = script.File(constant.EtcdSh).String()
 
 	fmt.Printf("check the file :\n %v", get)
 
-	return
 	// 以下是执行该脚本内容的部分
 	check("bash")
 
