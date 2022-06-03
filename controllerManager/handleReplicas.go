@@ -56,6 +56,12 @@ func CreateRs(event *clientv3.Event) error {
 		replicas := rsInfo.RSspec.Replicas
 		pods := replicaset.CreatePodInstances(rsInfo, replicas)
 		for _, pod := range pods {
+			for _, mempod := range MemPods {
+				if mempod.Meta.Name == pod.Meta.Name {
+					fmt.Printf("pod %v already exist~!\n", pod.Meta.Name)
+					return err
+				}
+			}
 			err = apiserver.SaveRsPodInfo(rsInfo, pod)
 			utils.HandleError("save rs info error", err)
 			// create pod
@@ -83,6 +89,7 @@ func DeleteRs(event *clientv3.Event) error {
 		var names []string
 		var rsDelTar []string
 		var podDelTar []string
+		var rspodDelTar []string
 		err = json.Unmarshal(event.Kv.Value, &names)
 		for _, rsname := range names {
 			// set rs key to be deleted
@@ -100,12 +107,20 @@ func DeleteRs(event *clientv3.Event) error {
 				rspodname := podname + "-" + strconv.Itoa(i)
 				// 之后会交给deletePod处理
 				podDelTar = append(podDelTar, rspodname)
+				// delete rs pod relations
+				rspodkey := etcd.SetKey(
+					etcd.SetPrefix(constant.RegistryPrefix),
+					etcd.SetSourceType(constant.ReplicaSourceName),
+					etcd.JustAppend(rsname),
+					etcd.JustAppend(rspodname))
+				rspodDelTar = append(rspodDelTar, rspodkey)
 			}
 		}
-		// delete rs info
+		// delete rs info and relation info
 		apiserver.SyncDel(rsDelTar)
+		apiserver.SyncDel(rspodDelTar)
 		// delete pods in these rs
-		apiserver.CmdStopPods(podDelTar)
+		// apiserver.CmdStopPods(podDelTar)
 		apiserver.CmdDeleteNode(podDelTar)
 	}
 	return err
