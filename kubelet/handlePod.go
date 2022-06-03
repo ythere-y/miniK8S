@@ -240,7 +240,7 @@ func watchHandler(event *clientv3.Event) error {
 	case mvccpb.PUT:
 		var podName string
 		podName = string(event.Kv.Value)
-		kubeletWatchPod(podName)
+		go kubeletWatchPod(podName)
 	}
 	return err
 }
@@ -260,6 +260,7 @@ func kubeletWatchPod(podname string) {
 	err = json.Unmarshal([]byte(value), &podtmp)
 	utils.HandleError("kubelet watch get pod json unmarshal error", err)
 
+	//获取pod里面的容器信息
 	var contNames []string
 	for _, cont := range podtmp.Containers {
 		contname := cont.Name
@@ -268,11 +269,11 @@ func kubeletWatchPod(podname string) {
 
 	go func(cli *client.Client, names []string, podname string) {
 		for {
-			//每3秒检查一次
-			t := time.NewTicker(3 * time.Second)
+			//每4秒检查一次
+			t := time.NewTicker(4 * time.Second)
 			select {
 			case <-t.C:
-				//检查容器运行情况
+				//检查容器运行情况，如果有容器fail了，就通知master
 				for _, name := range names {
 					if !dksdk.IsRun(cli, name) {
 						buildkey := etcd.SetKey(

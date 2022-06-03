@@ -55,6 +55,8 @@ func watchRs(event *clientv3.Event) error {
 	return err
 }
 
+//对replicaset里面的pod进行监听处理
+//交给pod controller处理，value为需要监听的pod name
 func watchRsPod(event *clientv3.Event) error {
 	var err error
 	switch event.Type {

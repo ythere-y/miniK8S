@@ -129,6 +129,7 @@ func watchPod(event *clientv3.Event) error {
 	case mvccpb.PUT:
 		var podName string
 		podName = string(event.Kv.Value)
+		// 根据Podname获得node name
 		nodeName, err := etcd.GetValue(
 			etcd.SetKey(
 				etcd.SetPrefix(constant.RelationPrefix),
@@ -136,6 +137,7 @@ func watchPod(event *clientv3.Event) error {
 				etcd.JustAppend(podName),
 				etcd.JustAppend(constant.NodeSourceName)))
 		utils.HandleError("watchPod controller get node value error", err)
+		// 通知kubelet监控健康状态
 		buildKey := etcd.SetKey(
 			etcd.SetPrefix(constant.WatchPrefix),
 			etcd.SetSourceType(constant.NodeSourceName),
