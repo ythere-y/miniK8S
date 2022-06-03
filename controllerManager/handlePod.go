@@ -173,6 +173,7 @@ func dealFail(event *clientv3.Event) error {
 			err = apiserver.DistributePodtoNode(nodeName, podName)
 			utils.HandleError("Distribute pod to node error", err)
 			// 通知kubelet监控健康状态
+			time.Sleep(15 * time.Second)
 			buildKey := etcd.SetKey(
 				etcd.SetPrefix(constant.WatchPrefix),
 				etcd.SetSourceType(constant.NodeSourceName),
