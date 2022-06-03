@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="先创建master后跟slave成功">
-      <change afterPath="$PROJECT_DIR$/cmd/quit.go" afterDir="false" />
+    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="检测了pod创建、删除的流程，pod get还有bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiserver/handleNode.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/handleNode.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiserver/handlePod.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/handlePod.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/node.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/node.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/startCmd.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/startCmd.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllerManager/handleNode.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handleNode.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/dksdk/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/lab/dksdk/run.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -137,7 +128,8 @@
     <MESSAGE value="masternode的startupOK，开始测试slave的加入" />
     <MESSAGE value="slave的创建与master相关的命令基本完成，还需要slave的落地实现" />
     <MESSAGE value="先创建master后跟slave成功" />
-    <option name="LAST_COMMIT_MESSAGE" value="先创建master后跟slave成功" />
+    <MESSAGE value="检测了pod创建、删除的流程，pod get还有bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="检测了pod创建、删除的流程，pod get还有bug" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
