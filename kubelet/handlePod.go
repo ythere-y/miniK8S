@@ -248,6 +248,10 @@ func watchHandler(event *clientv3.Event) error {
 }
 
 func kubeletWatchPod(podname string) {
+	fmt.Printf("kubelet start to watch pod: %s, first sleep and wait\n", podname)
+	//休眠15秒等pod创建完成
+	time.Sleep(15 * time.Second)
+	fmt.Println("kubelet watch finish sleep")
 	cli, err := client.NewClientWithOpts(client.FromEnv)
 	utils.HandleError("kubelete watch pod create client error", err)
 	//拿到对应的pod
