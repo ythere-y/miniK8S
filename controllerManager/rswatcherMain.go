@@ -2,6 +2,7 @@ package controllerManager
 
 import (
 	"encoding/json"
+	"fmt"
 	"minik8s/apiserver"
 	"minik8s/constant"
 	"minik8s/lab/etcd"
@@ -15,6 +16,7 @@ import (
 
 // watch /registry/replicaset
 func RsWatch() {
+	fmt.Println("Set Rs Watch /registry/replicaset")
 	// var watchName string
 	watchName := etcd.SetKey(
 		etcd.SetPrefix(constant.RegistryPrefix),
@@ -29,6 +31,8 @@ func RsPodWatch(rsName string) {
 		etcd.SetPrefix(constant.RelationPrefix),
 		etcd.SetSourceType(constant.ReplicaSourceName),
 		etcd.JustAppend(rsName))
+	fmt.Println("Set Rs Pod Watch")
+	fmt.Print(watchName)
 	apiserver.SyncWatch(watchName, watchRsPod)
 }
 
@@ -42,6 +46,7 @@ func ListenRpod(podName string) {
 
 // 监听rs创立，每新建一个rs，就对其pod进行监听
 func watchRs(event *clientv3.Event) error {
+	fmt.Println("A new rs created, watchRs to deal!!")
 	var err error
 	switch event.Type {
 	case mvccpb.PUT:
@@ -58,6 +63,7 @@ func watchRs(event *clientv3.Event) error {
 //对replicaset里面的pod进行监听处理
 //交给pod controller处理，value为需要监听的pod name
 func watchRsPod(event *clientv3.Event) error {
+	fmt.Println("watchRsPod start")
 	var err error
 	switch event.Type {
 	case mvccpb.PUT:
