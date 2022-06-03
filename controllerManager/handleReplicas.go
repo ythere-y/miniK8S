@@ -121,7 +121,7 @@ func DeleteRs(event *clientv3.Event) error {
 		apiserver.SyncDel(rspodDelTar)
 		// delete pods in these rs
 		// apiserver.CmdStopPods(podDelTar)
-		apiserver.CmdDeleteNode(podDelTar)
+		apiserver.CmdDeletePod(podDelTar)
 	}
 	return err
 }
