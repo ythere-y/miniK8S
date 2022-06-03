@@ -1,0 +1,12 @@
+kind: HorizontalPodAutoscaler
+name: astest
+workload: Pod
+spec:
+  minreplicas: 1
+  maxreplicas: 5
+  selector:
+    labels:
+      app: splines
+  metrics:
+    cpu: 
+    memory:

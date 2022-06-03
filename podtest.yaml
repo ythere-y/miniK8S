@@ -2,7 +2,7 @@ kind: Pod
 metadata: 
   name: testpod
   labels:
-    app: nginx
+    app: splines
 spec:
   containers:
     - name: cont1
