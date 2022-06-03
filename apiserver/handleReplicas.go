@@ -158,8 +158,18 @@ func SaveRsPodInfo(rs replicaset.ReplicaSet, pod pod.Pod) error {
 		etcd.SetSourceType(constant.ReplicaSourceName),
 		etcd.JustAppend(rs.RSmeta.Name),
 		etcd.JustAppend(pod.Meta.Name))
-	value, err := json.Marshal(pod)
-	utils.HandleError("marshal rspod error", err)
+	value := pod.Meta.Name
 	etcd.Put(key, string(value))
-	return err
+	return nil
+}
+
+func CheckRs(rs replicaset.ReplicaSet, pod pod.Pod) error {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RelationPrefix),
+		etcd.SetSourceType(constant.ReplicaSourceName),
+		etcd.JustAppend(rs.RSmeta.Name),
+		etcd.JustAppend(pod.Meta.Name))
+	value := pod.Meta.Name
+	etcd.Put(key, string(value))
+	return nil
 }

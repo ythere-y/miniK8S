@@ -16,8 +16,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-func init() {
-	fmt.Printf("Pod controller init!")
+func replicasetControllerWatch() {
+	fmt.Printf("Replicaset controller init!")
 	var watchName string
 	watchName = SetKey(
 		SetPrefix(constant.ControllerPrefix),
@@ -88,7 +88,7 @@ func DeleteRs(event *clientv3.Event) error {
 	case mvccpb.PUT:
 		var names []string
 		var rsDelTar []string
-		var podDelTar []string
+		// var podDelTar []string
 		var rspodDelTar []string
 		err = json.Unmarshal(event.Kv.Value, &names)
 		for _, rsname := range names {
@@ -106,7 +106,7 @@ func DeleteRs(event *clientv3.Event) error {
 			for i := 1; i <= replicas; i++ {
 				rspodname := podname + "-" + strconv.Itoa(i)
 				// 之后会交给deletePod处理
-				podDelTar = append(podDelTar, rspodname)
+				// podDelTar = append(podDelTar, rspodname)
 				// delete rs pod relations
 				rspodkey := etcd.SetKey(
 					etcd.SetPrefix(constant.RegistryPrefix),

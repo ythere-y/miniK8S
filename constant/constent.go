@@ -10,6 +10,7 @@ const (
 	SchedulerPrefix  string = "scheduler"
 	RelationPrefix   string = "relation"
 	ReplayPrefix     string = "reply"
+	WatchPrefix      string = "watch"
 
 	ReplayOK    string = "__OK__"
 	ReplayERROR string = "__ERROR__"
@@ -23,6 +24,8 @@ const (
 	DELETE string = "delete"
 	UPDATE string = "update"
 	STOP   string = "stop"
+	CHECK  string = "check"
+	WATCH  string = "watch"
 
 	StopFlag   string = "__stop__"
 	RemoveFlag string = "__remove__"

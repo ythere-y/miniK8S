@@ -1,13 +1,16 @@
 package kubelet
 
 import (
+	"encoding/json"
 	"fmt"
 	"minik8s/apiserver"
 	"minik8s/constant"
 	"minik8s/lab/dksdk"
+	"minik8s/lab/etcd"
 	. "minik8s/lab/etcd"
 	"minik8s/registry/pod"
 	"minik8s/utils"
+	"time"
 
 	"github.com/docker/docker/client"
 	"go.etcd.io/etcd/api/v3/mvccpb"
@@ -26,6 +29,13 @@ func kubeletePodWatch() {
 		SetNodeName(NodeName),
 	)
 	apiserver.SyncWatch(watchName, nodehandler)
+
+	watchName = SetKey(
+		SetPrefix(constant.WatchPrefix),
+		SetSourceType(constant.NodeSourceName),
+		SetNodeName(NodeName),
+	)
+	apiserver.SyncWatch(watchName, watchHandler)
 
 }
 func nodehandler(event *clientv3.Event) error {
@@ -222,6 +232,62 @@ func RunPodByName(podName string) {
 	}
 	utils.DebugTanInfo()
 
+}
+
+func watchHandler(event *clientv3.Event) error {
+	var err error
+	switch event.Type {
+	case mvccpb.PUT:
+		var podName string
+		podName = string(event.Kv.Value)
+		kubeletWatchPod(podName)
+	}
+	return err
+}
+
+func kubeletWatchPod(podname string) {
+	cli, err := client.NewClientWithOpts(client.FromEnv)
+	utils.HandleError("kubelete watch pod create client error", err)
+	//拿到对应的pod
+	value, err := etcd.GetValue(
+		etcd.SetKey(
+			etcd.SetPrefix(constant.RegistryPrefix),
+			etcd.SetSourceType(constant.PodSourceName),
+			etcd.JustAppend(podname)))
+	utils.HandleError("kubelet watch pod get pod error", err)
+
+	var podtmp pod.Pod
+	err = json.Unmarshal([]byte(value), &podtmp)
+	utils.HandleError("kubelet watch get pod json unmarshal error", err)
+
+	var contNames []string
+	for _, cont := range podtmp.Containers {
+		contname := cont.Name
+		contNames = append(contNames, contname)
+	}
+
+	go func(cli *client.Client, names []string, podname string) {
+		for {
+			//每3秒检查一次
+			t := time.NewTicker(3 * time.Second)
+			select {
+			case <-t.C:
+				//检查容器运行情况
+				for _, name := range names {
+					if !dksdk.IsRun(cli, name) {
+						buildkey := etcd.SetKey(
+							etcd.SetPrefix(constant.WatchPrefix),
+							etcd.SetSourceType(constant.PodSourceName),
+							etcd.JustAppend(podname),
+						)
+						buildvalue := podname
+						apiserver.SyncPut(buildkey, buildvalue)
+						break
+					}
+				}
+			}
+		}
+	}(cli, contNames, podname)
 }
 
 // endregion

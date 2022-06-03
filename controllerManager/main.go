@@ -28,4 +28,6 @@ func ControllerStartUp() {
 	nodeControllerWatch()
 	podControllerWatch()
 	serviceControllerWatch()
+	replicasetControllerWatch()
+	RsWatch()
 }
