@@ -19,6 +19,6 @@ spec:
         cpu: 2
         memory: 8000000000
         volumn: 
-          path: {}
         port: 
           10081/tcp: {}
+        hostport: 
