@@ -9,7 +9,6 @@ import (
 	. "minik8s/lab/etcd"
 	"minik8s/registry/replicaset"
 	"minik8s/utils"
-	"reflect"
 	"strconv"
 
 	"go.etcd.io/etcd/api/v3/mvccpb"
@@ -51,23 +50,23 @@ func CreateRs(event *clientv3.Event) error {
 		err = apiserver.SaveRsInfo(rsInfo)
 		utils.HandleError("save replicaset info error", err)
 		// TODO: deal with pod replicas, create pod in some nodes. UNFINISHED
-		if reflect.DeepEqual(rsInfo.RSspec.SelectorLabels,
-			rsInfo.PodTemplate.Meta.Labels) {
-			fmt.Printf("controller rs create pods")
-			replicas := rsInfo.RSspec.Replicas
-			pods := replicaset.CreatePodInstances(rsInfo, replicas)
-			for _, pod := range pods {
-				err = apiserver.SaveRsPodInfo(rsInfo, pod)
-				utils.HandleError("save rs info error", err)
-				// create pod
-				AddPod(pod)
-				err = apiserver.SavePodInfo(pod)
-				utils.HandleError("save pod info error", err)
+		// if reflect.DeepEqual(rsInfo.RSspec.SelectorLabels,
+		// 	rsInfo.PodTemplate.Meta.Labels) {
+		fmt.Printf("controller rs create pods")
+		replicas := rsInfo.RSspec.Replicas
+		pods := replicaset.CreatePodInstances(rsInfo, replicas)
+		for _, pod := range pods {
+			err = apiserver.SaveRsPodInfo(rsInfo, pod)
+			utils.HandleError("save rs info error", err)
+			// create pod
+			AddPod(pod)
+			err = apiserver.SavePodInfo(pod)
+			utils.HandleError("save pod info error", err)
 
-				// 这里取消了scheduler的数据转发层，直接把scheduler作为controller内部的一个分支
-				err = DisPodtoNode(pod.Meta.Name)
-			}
+			// 这里取消了scheduler的数据转发层，直接把scheduler作为controller内部的一个分支
+			err = DisPodtoNode(pod.Meta.Name)
 		}
+		// }
 	}
 	return err
 }
