@@ -4,10 +4,28 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="到controller层完成，再次更改了relation的目录结构，其他地方可能尚未匹配">
-      <change afterPath="$PROJECT_DIR$/controllerManager/scheduler.go" afterDir="false" />
+    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="masternode的startupOK，开始测试slave的加入">
+      <change afterPath="$PROJECT_DIR$/kubelet/handlePod.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kubelet/iptables.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kubernetes/master.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kubernetes/worker.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/basicOperation.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/basicOperation.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/handleNode.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/handleNode.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/join.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/join.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/slaveNode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/slaveNode.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/handleNode.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handleNode.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllerManager/handlePod.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handlePod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/handleService.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handleService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/func.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/handler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/etcd/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +43,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="cloutTest" />
+        <entry key="$PROJECT_DIR$" value="iptables" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -41,39 +59,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "DefaultGoTemplateProperty": "Go File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "D:/06-2021Spring/云操作系统设计与实践/Minik8s_lab/minik8s/cmd",
-    "nodejs_package_manager_path": "npm"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/06-2021Spring/云操作系统设计与实践/Minik8s_lab/minik8s/cmd&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s\cmd" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s" />
+      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s\constant" />
       <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s\registry" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
-      <module name="minik8s" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="FILE" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
     <configuration name="go build minik8s" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="minik8s" />
       <working_directory value="$PROJECT_DIR$" />
@@ -81,15 +93,6 @@
       <package value="minik8s" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$/main.go" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
-      <module name="minik8s" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind value="DIRECTORY" />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -138,7 +141,11 @@
     <MESSAGE value="修复binds问题" />
     <MESSAGE value="cmd-apiserver层完成" />
     <MESSAGE value="到controller层完成，再次更改了relation的目录结构，其他地方可能尚未匹配" />
-    <option name="LAST_COMMIT_MESSAGE" value="到controller层完成，再次更改了relation的目录结构，其他地方可能尚未匹配" />
+    <MESSAGE value="删减了scheduler层级，把功能放到了controller中" />
+    <MESSAGE value="node的基本流程完成，开始测试" />
+    <MESSAGE value="遇到函数使用错误，需要合并" />
+    <MESSAGE value="masternode的startupOK，开始测试slave的加入" />
+    <option name="LAST_COMMIT_MESSAGE" value="masternode的startupOK，开始测试slave的加入" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

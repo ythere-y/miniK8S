@@ -3,7 +3,6 @@ package apiserver
 import (
 	"fmt"
 	"minik8s/lab/etcd"
-	"minik8s/utils"
 )
 
 func ApiServerTest() {
@@ -24,5 +23,4 @@ func Main() {
 	fmt.Println("[Api Server] Main started!")
 	etcd.TestConnect()
 
-	utils.HoldPro()
 }

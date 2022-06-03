@@ -1,14 +1,56 @@
 package main
 
-import "minik8s/cmd"
+import (
+	"fmt"
+	clientv3 "go.etcd.io/etcd/client/v3"
+	"minik8s/apiserver"
+	"minik8s/controllerManager"
+	"minik8s/kubernetes"
+	"time"
+)
 
 var rootName string
 
+func tmph(event *clientv3.Event) error {
+	fmt.Printf("time out got value = %v\n", string(event.Kv.Value))
+	return nil
+}
+
+func nor(event *clientv3.Event) error {
+	fmt.Printf("normal got value = %v\n", string(event.Kv.Value))
+	return nil
+}
+
+func fail() {
+	fmt.Println("fail!")
+}
+func timeoutTest() {
+
+	apiserver.SyncWatchWithTime("/test", tmph, fail, 5*time.Second)
+}
+
+func normalTest() {
+	apiserver.SyncWatch("/test", nor)
+}
+func watchwithTimeTest() {
+
+	go timeoutTest()
+	go normalTest()
+	time.Sleep(2 * time.Second)
+	apiserver.SyncPut("/test", "test1")
+	apiserver.SyncPut("/test", "test11")
+	apiserver.SyncPut("/test", "test11111")
+
+	time.Sleep(2 * time.Second)
+	apiserver.SyncPut("/test", "test2")
+}
 func main() {
 	//log.Println("hello world")
 	//shellScripts.Main()
-	// rootContainer.Test()
-	//go kubernetes.Main() // kubernetes的测试部分
+	//rootContainer.Test()
+	//watchwithTimeTest() // 关于定时watch的测试
+	controllerManager.ControllerStartUp()
+	kubernetes.Test() // kubernetes的测试部分
 	//go cni.Main() // 测试CNI插件功能部分
 	//go environment.Main() //测试启动前的环境准备
 	//go controllerManager.Main() // 启动controller manager
@@ -19,12 +61,14 @@ func main() {
 	//config.Main()
 	//time.Sleep(2 * time.Second)
 	//go kubernetes.StartUpMaster()	// master节点的初始化startup
-	cmd.RootCmdRun() // 关于命令行的测试
+	//cmd.RootCmdRun() // 关于命令行的测试
 	//service.OutPutFmtTest() //关于格式化输出的测试
 	//service.SerReadTest() // 关于读取yamle文件建立service的测试
 
 	//circle.CircleTest() // 关于循环import的测试
 	//utils.HoldPro() // 阻塞进程防止运行结束
+
+	time.Sleep(time.Second * 10)
 	return
 
 }

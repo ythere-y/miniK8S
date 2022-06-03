@@ -10,6 +10,8 @@ type Options struct {
 }
 type Option func(*string)
 
+type FailOut func()
+
 type Handler func(event *clientv3.Event) error
 
 func JustAppend(context string) Option {

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	clientv3 "go.etcd.io/etcd/client/v3"
+	"log"
 	"minik8s/constant"
 	"minik8s/lab/etcd"
 	"minik8s/registry/node"
@@ -11,16 +12,19 @@ import (
 	"time"
 )
 
+var noderole = "_node aipserver_ "
+
 // region 增
 
-func CmdCreateNode(status node.Node) {
+func CmdCreateNode(filecontext []byte, cur time.Time) {
 	key := etcd.SetKey(
-		etcd.SetPrefix(constant.RegistryPrefix),
-		etcd.SetSourceType(constant.NodeSourceName),
-		etcd.SetNodeName(status.Name))
-	value, err := json.Marshal(status)
-	utils.HandleError("marshal node status error", err)
-	SyncPut(key, string(value))
+		etcd.SetPrefix(constant.ControllerPrefix),
+		etcd.JustAppend(constant.NodeSourceName),
+		etcd.JustAppend(constant.CREATE),
+		etcd.JustAppend(cur.String()))
+	value := filecontext
+	log.Println(noderole + "cmd create node")
+	SerlPut(key, string(value))
 }
 
 func SaveNodeInfo(node node.Node) error {
@@ -29,9 +33,9 @@ func SaveNodeInfo(node node.Node) error {
 		etcd.SetSourceType(constant.PodSourceName),
 		etcd.SetPodName(node.Name))
 	value, err := json.Marshal(node)
-
+	log.Println(noderole + "act save node info")
 	utils.HandleError("marshal pod error", err)
-	etcd.Put(key, string(value))
+	SerlPut(key, string(value))
 	return err
 }
 
@@ -40,6 +44,7 @@ func SaveNodeInfo(node node.Node) error {
 // region 删
 
 // TODO: 实现是移动pod的内容，是有问题的，还需要考量
+
 func ActDeleteNode(names []string) {
 	var deleteTargets []string
 	for _, key := range names {

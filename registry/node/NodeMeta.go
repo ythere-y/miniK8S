@@ -22,22 +22,12 @@ type Node struct {
 	CreatTime time.Time
 }
 
-type NodeBasic struct {
-	Addr string
-	Name string
+type NodeYaml struct {
+	Addr string `yaml:"addr"`
+	Name string `yaml:"name"`
 }
 
 var blockSize = 20
-
-func NodeBasicToNode(nodeB NodeBasic) Node {
-	var retNode Node
-	retNode.Addr = nodeB.Addr
-	retNode.Name = nodeB.Name
-	retNode.Capacity = 16
-	retNode.Status = NODE_OK
-	retNode.CreatTime = time.Now()
-	return retNode
-}
 
 func NodePreDisplay() {
 	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", "NAME")

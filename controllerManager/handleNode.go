@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
-	"gopkg.in/yaml.v2"
+	"log"
 	"minik8s/apiserver"
 	"minik8s/constant"
 	. "minik8s/lab/etcd"
@@ -13,8 +13,11 @@ import (
 	"minik8s/utils"
 )
 
-func init() {
-	fmt.Printf("Node controller init!")
+var noderole = " __node controller__ "
+
+func nodeControllerWatch() {
+
+	fmt.Println("[Node controller] init!")
 	var watchName string
 	watchName = SetKey(
 		SetPrefix(constant.ControllerPrefix),
@@ -38,24 +41,34 @@ func createNode(event *clientv3.Event) error {
 	var err error
 	switch event.Type {
 	case mvccpb.PUT:
-		var newone node.NodeBasic
-		err = yaml.Unmarshal(event.Kv.Value, &newone)
+		log.Println(noderole + "create Node")
+		var newone node.NodeYaml
+		newone = node.ParseNodeYaml(event.Kv.Value)
 		if err != nil {
 			fmt.Printf("yaml unmarshal error->:\n%v\n", err.Error())
 		}
-		nodeInfo := node.NodeBasicToNode(newone)
+		nodeInfo := node.NodeYamlToNode(newone)
 		nodename := nodeInfo.Name
-
+		log.Printf("node name = %v\n", nodename)
 		for _, memNode := range MemNodes {
 			if memNode.Name == nodename {
 				fmt.Printf("node %v already exist~!\n", nodename)
+				apiserver.Reply(event.Kv.Key, constant.ReplayERROR)
 				return err
 			}
 		}
 
 		AddNode(nodeInfo)
+
+		apiserver.Reply(event.Kv.Key, constant.ReplayOK)
 		err = apiserver.SaveNodeInfo(nodeInfo)
+
 		utils.HandleError("save pod info error", err)
+		fmt.Printf("after node create , memnodes display\n")
+		for i, memNode := range MemNodes {
+			js, _ := json.Marshal(memNode)
+			fmt.Printf("[node %v] = %v\n", i, string(js))
+		}
 	}
 	return err
 }

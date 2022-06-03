@@ -2,57 +2,69 @@ package kubelet
 
 import (
 	"fmt"
+	"github.com/docker/docker/client"
+	"go.etcd.io/etcd/api/v3/mvccpb"
+	clientv3 "go.etcd.io/etcd/client/v3"
 	"minik8s/apiserver"
+	"minik8s/constant"
 	"minik8s/lab/dksdk"
+	. "minik8s/lab/etcd"
 	"minik8s/registry/pod"
 	"minik8s/utils"
-
-	"github.com/docker/docker/client"
 )
 
-var (
-	KPods    []pod.Pod
-	PodsInfo map[string]pod.Pod
-)
+// region 听
 
-//StopPod
-/**
- * API: stop pod
- * cli: docker client; podId: pod id specified to stop
-**/
-func StopPod(name string) {
-	for index, pod := range KPods {
-		if pod.Meta.Name == name {
-			// get its client
-			cli := pod.PodClient
-			for _, cont := range pod.Containers {
-				dksdk.StopContainer(cont.Id, cli)
-			}
-			// stop manually, failed
-			KPods[index].Stats.Status = POD_FAILED
+func kubeletePodWatch() {
+
+	fmt.Println("[Kubelet] [name = " + NodeName + "] Main started!")
+
+	watchName := SetKey(
+		SetPrefix(constant.RelationPrefix),
+		SetSourceType(constant.NodeSourceName),
+		SetNodeName(NodeName),
+	)
+	apiserver.SyncWatch(watchName, nodehandler)
+
+}
+func nodehandler(event *clientv3.Event) error {
+	var err error
+	switch event.Type {
+	case mvccpb.DELETE:
+		// 删除一个pod的操作
+		fmt.Printf("kubelet handling Delete key = %v\n", string(event.Kv.Key))
+
+		podName := utils.GetLastWord(string(event.Kv.Key))
+		StopPod(podName)
+		RemovePod(podName)
+	case mvccpb.PUT:
+		fmt.Printf("kubelet handling key = %v, value = %v\n", string(event.Kv.Key), string(event.Kv.Value))
+		// 增加/修改 一个pod的操作
+		podName := utils.GetLastWord(string(event.Kv.Key))
+		operation := string(event.Kv.Value)
+		switch operation {
+		case podName:
+			// 是创建操作
+			var podInfo *pod.Pod
+			podInfo = apiserver.GetPodInfo(podName)
+			CreateAndRunPod(podInfo)
+		case constant.StopFlag:
+			// 是停止命令
+			StopPod(podName)
+		case constant.RemoveFlag:
+			// 是删除命令
+			StopPod(podName)
+			RemovePod(podName)
+		default:
+			fmt.Printf("op = %v, it not in any!\n", operation)
 		}
 	}
+	return err
 }
 
-//RemovePod
-/**
- * API: remove pod
- * cli: docker client; podId: pod to remove
-**/
-func RemovePod(name string) {
-	for index, pod := range KPods {
-		if pod.Meta.Name == name {
-			// get its client
-			cli := pod.PodClient
-			// remove containers first
-			for _, cont := range pod.Containers {
-				dksdk.RemoveContainer(cont.Id, cli)
-			}
-			// delete pod info from global list
-			KPods = append(KPods[:index], KPods[index+1:]...)
-		}
-	}
-}
+// endregion
+
+// region 增
 
 func CreateAndRunPod(pod *pod.Pod) uint32 {
 	KPods = append(KPods, *pod)
@@ -107,28 +119,61 @@ func CliCreatePodByPod(cli *client.Client, pod pod.Pod, net string) uint32 {
 	return newPod.Meta.Uid
 }
 
-// func CliCreatePodByPod(cli *client.Client, pod pod.Pod) uint32 {
-// 	// create meta datas
-// 	newPod := pod
-// 	// allocate client
-// 	newPod.PodClient = cli
-// 	// create containers
-// 	for index, cont := range newPod.Containers {
-// 		image := cont.ContainerImage
-// 		cmd := cont.Command
-// 		var resource dksdk.Resource
-// 		resource.CPUShares = cont.CpuNum
-// 		resource.Memory = cont.Memory
-// 		name := cont.Name
-// 		volume := cont.Volumn
-// 		port := cont.Port
-// 		cid := dksdk.CreateContainer(cli, image, cmd,
-// 			resource, name, volume, port, "")
-// 		// allocate container id
-// 		newPod.Containers[index].Id = cid
-// 	}
-// 	return newPod.Meta.Uid
-// }
+// endregion
+
+// region 删
+
+//StopPod
+/**
+ * API: stop pod
+ * cli: docker client; podId: pod id specified to stop
+**/
+func StopPod(name string) {
+	for index, pod := range KPods {
+		if pod.Meta.Name == name {
+			// get its client
+			cli := pod.PodClient
+			for _, cont := range pod.Containers {
+				dksdk.StopContainer(cont.Id, cli)
+			}
+			// stop manually, failed
+			KPods[index].Stats.Status = POD_FAILED
+		}
+	}
+}
+
+//RemovePod
+/**
+ * API: remove pod
+ * cli: docker client; podId: pod to remove
+**/
+func RemovePod(name string) {
+	for index, pod := range KPods {
+		if pod.Meta.Name == name {
+			// get its client
+			cli := pod.PodClient
+			// remove containers first
+			for _, cont := range pod.Containers {
+				dksdk.RemoveContainer(cont.Id, cli)
+			}
+			// delete pod info from global list
+			KPods = append(KPods[:index], KPods[index+1:]...)
+		}
+	}
+}
+
+// endregion
+
+// region 改
+
+// endregion
+
+// region 查
+
+// endregion
+
+// region 令
+
 func RunPod(podId uint32) {
 	for index, ipod := range KPods {
 		// get specified pod
@@ -145,7 +190,6 @@ func RunPod(podId uint32) {
 		}
 	}
 }
-
 func RunPodByName(podName string) {
 	ipod := PodsInfo[podName]
 	utils.CheckNil("ipod", ipod)
@@ -173,6 +217,4 @@ func RunPodByName(podName string) {
 
 }
 
-func init() {
-	PodsInfo = make(map[string]pod.Pod)
-}
+// endregion

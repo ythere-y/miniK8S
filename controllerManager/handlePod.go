@@ -14,8 +14,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-func init() {
-	fmt.Printf("Pod controller init!")
+func podControllerWatch() {
+	fmt.Println("[Pod controller] init!")
 	var watchName string
 	watchName = SetKey(
 		SetPrefix(constant.ControllerPrefix),

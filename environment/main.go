@@ -2,6 +2,7 @@ package environment
 
 import (
 	"fmt"
+	"minik8s/config"
 	"os/exec"
 	"time"
 )
@@ -33,4 +34,23 @@ func Main() {
 	for range tick {
 		fmt.Println("...")
 	}
+}
+
+func EtcdStartUp() error {
+	var (
+		err error
+	)
+	fmt.Printf("[Etcd] start up, IP = %v\n", config.Configs.EtcdIp)
+
+	err = nil
+	return err
+
+}
+func FlannelStartUp(etcdip string) error {
+	var (
+		err error
+	)
+	fmt.Printf("[Flannel] start up, etcdIP = %v\n", etcdip)
+	err = nil
+	return err
 }
