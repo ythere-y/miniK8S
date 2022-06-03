@@ -47,6 +47,7 @@ func RunRootContainer(name string) string {
 		panic(err)
 	}
 
+	//-p 8088:80
 	runCmd := "docker run -d --name " + name + " busybox /bin/sh -c \"while true; do echo hello world; sleep 1; done\" " + follow + "\n"
 
 	_, err = script.Echo(runCmd).WriteFile("./lab/dksdk/run.sh")

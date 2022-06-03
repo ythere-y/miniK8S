@@ -36,7 +36,7 @@ var rootName string
 
 func main() {
 	//cmd.RootCmdRun() // 关于命令行的测试
-	//localhost.Test()
+	//rootContainer.Test()
 	dns.Ip2name("10.119.11.72", "master.node/88")
 
 	//utils.CopyandRun()
