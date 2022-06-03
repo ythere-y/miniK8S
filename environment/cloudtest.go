@@ -28,7 +28,6 @@ func startupEtcd(thisIP string) {
 		advertiseArg string
 		listenArg    string
 		totalString  string
-		cmdLine      string
 		//count        int64
 		get string
 		err error
