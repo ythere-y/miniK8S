@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"minik8s/constant/config"
+	"minik8s/config"
 )
 
 var joinCmd = &cobra.Command{

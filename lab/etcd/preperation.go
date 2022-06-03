@@ -1,6 +1,8 @@
 package etcd
 
 import (
+	"fmt"
+	"minik8s/config"
 	"minik8s/utils"
 	"strings"
 )
@@ -8,6 +10,7 @@ import (
 var Endpoints []string = nil
 
 func TestConnect() {
+	fmt.Printf("try to connect to etcd, etcdIP = %v\n", config.Configs.EtcdIp)
 	Put("//test part/a", "hello world")
 	getRes, err := GetNormal("//test part/a")
 	utils.HandleError("get operation error ", err)

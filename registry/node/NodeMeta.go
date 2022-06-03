@@ -23,8 +23,8 @@ type Node struct {
 }
 
 type NodeYaml struct {
-	Addr string
-	Name string
+	Addr string `yaml:"addr"`
+	Name string `yaml:"name"`
 }
 
 var blockSize = 20

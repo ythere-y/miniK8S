@@ -5,7 +5,6 @@ import (
 	"minik8s/registry/node"
 	"minik8s/registry/pod"
 	"minik8s/registry/service"
-	"minik8s/utils"
 )
 
 var MemNodes []node.Node
@@ -16,7 +15,6 @@ var relations Relation
 func Main() {
 	fmt.Println("[Controller Manager] Main started!")
 
-	utils.HoldPro()
 }
 
 func init() {

@@ -3,8 +3,8 @@ package kubelet
 import (
 	"fmt"
 	"minik8s/apiserver"
+	"minik8s/config"
 	"minik8s/constant"
-	"minik8s/constant/config"
 	. "minik8s/lab/etcd"
 	"minik8s/utils"
 )

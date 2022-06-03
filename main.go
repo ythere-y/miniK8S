@@ -1,14 +1,15 @@
 package main
 
-import "minik8s/lab/rootContainer"
+import "minik8s/kubernetes"
 
 var rootName string
 
 func main() {
 	//log.Println("hello world")
 	//shellScripts.Main()
-	rootContainer.Test()
-	//go kubernetes.Main() // kubernetes的测试部分
+	//rootContainer.Test()
+	//config.Main()
+	kubernetes.Main() // kubernetes的测试部分
 	//go cni.Main() // 测试CNI插件功能部分
 	//go environment.Main() //测试启动前的环境准备
 	//go controllerManager.Main() // 启动controller manager
