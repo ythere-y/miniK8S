@@ -24,6 +24,7 @@ func init() {
 	RootCmd.AddCommand(PodCmd)
 	RootCmd.AddCommand(TestCmd)
 	RootCmd.AddCommand(CudaCmd)
+	RootCmd.AddCommand(DnsCmd)
 }
 
 var rootName string

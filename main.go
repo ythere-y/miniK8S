@@ -1,9 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"minik8s/dns"
-)
+import "minik8s/cmd"
 
 // func main() {
 // 	//service.SerMain()
@@ -38,12 +35,12 @@ import (
 var rootName string
 
 func main() {
-	//cmd.RootCmdRun() // 关于命令行的测试
+	cmd.RootCmdRun() // 关于命令行的测试
 	//rootContainer.Test()
-	//dns.Ip2name("10.119.11.72", "master.node/88")
-	out := dns.ParseYaml("./dns/dns.yaml")
-	fmt.Println(out)
-	dns.C2host(out)
+
+	//fmt.Println(dns.RunCmd("ls"))
+	//out := dns.ParseYaml("./dns/dns.yaml")
+	//dns.C2Dock(out)
 
 	//utils.CopyandRun()
 	//slurm := utils.ParseYaml(utils.Dir + "test.yaml")

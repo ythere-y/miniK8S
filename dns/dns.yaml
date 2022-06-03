@@ -3,6 +3,6 @@ name: test
 host: test.service
 binds:
   - service-ip: '10.10.10.10'
-    path: s1
+    path: s11
   - service-ip: '10.10.10.10'
-    path: s2
+    path: s22
