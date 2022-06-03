@@ -4,27 +4,17 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="masternode的startupOK，开始测试slave的加入">
-      <change afterPath="$PROJECT_DIR$/kubelet/handlePod.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kubelet/iptables.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kubernetes/master.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kubernetes/worker.go" afterDir="false" />
+    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="slave的创建与master相关的命令基本完成，还需要slave的落地实现">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiserver/basicOperation.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/basicOperation.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiserver/handleNode.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/handleNode.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/join.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/join.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/apimain.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/apimain.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/config/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/slaveNode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/slaveNode.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllerManager/handleNode.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handleNode.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllerManager/handlePod.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handlePod.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllerManager/handleService.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handleService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubelet/func.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubelet/handler.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/kubelet/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kubernetes/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/etcd/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/master.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/master.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/worker.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/worker.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/etcd/preperation.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/preperation.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -145,7 +135,8 @@
     <MESSAGE value="node的基本流程完成，开始测试" />
     <MESSAGE value="遇到函数使用错误，需要合并" />
     <MESSAGE value="masternode的startupOK，开始测试slave的加入" />
-    <option name="LAST_COMMIT_MESSAGE" value="masternode的startupOK，开始测试slave的加入" />
+    <MESSAGE value="slave的创建与master相关的命令基本完成，还需要slave的落地实现" />
+    <option name="LAST_COMMIT_MESSAGE" value="slave的创建与master相关的命令基本完成，还需要slave的落地实现" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

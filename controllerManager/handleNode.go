@@ -7,6 +7,7 @@ import (
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"log"
 	"minik8s/apiserver"
+	"minik8s/config"
 	"minik8s/constant"
 	. "minik8s/lab/etcd"
 	"minik8s/registry/node"
@@ -36,7 +37,13 @@ func nodeControllerWatch() {
 }
 
 // region 增
-// TODO 实现
+
+func CreateMasterNode(nodefile []byte) {
+	nodeInfo := node.NodeYamlToNode(node.ParseNodeYaml(nodefile))
+	AddNode(nodeInfo)
+	config.SetConfigThisNode(nodeInfo)
+	displayCurMemNodes()
+}
 func createNode(event *clientv3.Event) error {
 	var err error
 	switch event.Type {
@@ -64,11 +71,7 @@ func createNode(event *clientv3.Event) error {
 		err = apiserver.SaveNodeInfo(nodeInfo)
 
 		utils.HandleError("save pod info error", err)
-		fmt.Printf("after node create , memnodes display\n")
-		for i, memNode := range MemNodes {
-			js, _ := json.Marshal(memNode)
-			fmt.Printf("[node %v] = %v\n", i, string(js))
-		}
+		displayCurMemNodes()
 	}
 	return err
 }
@@ -110,6 +113,14 @@ func deleteNode(event *clientv3.Event) error {
 // endregion
 
 // region 查
+
+func displayCurMemNodes() {
+	fmt.Printf("after node create , memnodes display\n")
+	for i, memNode := range MemNodes {
+		js, _ := json.Marshal(memNode)
+		fmt.Printf("[node %v] = %v\n", i, string(js))
+	}
+}
 
 // endregion
 

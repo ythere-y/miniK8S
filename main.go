@@ -4,7 +4,6 @@ import (
 	"fmt"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"minik8s/apiserver"
-	"minik8s/controllerManager"
 	"minik8s/kubernetes"
 	"time"
 )
@@ -49,7 +48,8 @@ func main() {
 	//shellScripts.Main()
 	//rootContainer.Test()
 	//watchwithTimeTest() // 关于定时watch的测试
-	controllerManager.ControllerStartUp()
+	//kubernetes.StartUpMaster()	// 启动master
+	//controllerManager.ControllerStartUp()
 	kubernetes.Test() // kubernetes的测试部分
 	//go cni.Main() // 测试CNI插件功能部分
 	//go environment.Main() //测试启动前的环境准备

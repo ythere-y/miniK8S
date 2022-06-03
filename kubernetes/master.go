@@ -8,7 +8,7 @@ import (
 	"minik8s/constant"
 	"minik8s/controllerManager"
 	"minik8s/environment"
-	"time"
+	"minik8s/kubelet"
 )
 
 //StartUpMaster
@@ -27,7 +27,7 @@ func StartUpMaster() {
 		panic(err)
 		return
 	}
-	controllerManager.Main()
+	controllerManager.ControllerStartUp()
 
 	apiserver.Main()
 
@@ -36,7 +36,8 @@ func StartUpMaster() {
 		panic(err)
 	}
 	fmt.Printf("read file:\n%v\n", string(nodeFile))
-	cur := time.Now()
-	apiserver.CmdCreateNode(nodeFile, cur)
+	controllerManager.CreateMasterNode(nodeFile)
 
+	kubelet.StartUp()
+	kubelet.IptablesInit()
 }

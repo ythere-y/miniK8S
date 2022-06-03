@@ -25,7 +25,8 @@ func Main() {
 
 func StartUp() {
 	fmt.Printf("[Kubelete] [name = %v ] [this IP = %v] start up \n", config.Configs.ThisNode.Name, config.Configs.ThisNode.Addr)
-	NodeName = config.Configs.LocalNodeName
+	NodeName = config.Configs.ThisNode.Name
+	kubeletePodWatch()
 }
 
 func init() {

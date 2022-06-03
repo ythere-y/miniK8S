@@ -54,7 +54,9 @@ func JoinAsWorker(args []string) {
 	tmpNode = node.NodeYamlToNode(node.ParseNodeYaml(nodeFile))
 	getstr, _ := json.Marshal(tmpNode)
 	fmt.Printf("tmpnode get :\n%v\n", string(getstr))
-	config.Configs.ThisNode = tmpNode
+
+	config.SetConfigThisNode(tmpNode)
+
 	CreateNodeReplayWatch(cur)
 
 }
@@ -79,7 +81,6 @@ func handleNodeCreateReply(event *clientv3.Event) error {
 			StartUpWorker()
 		} else if string(event.Kv.Value) == constant.ReplayERROR {
 			fmt.Println("get ERROR replay, end up")
-
 			createNodeFail()
 		}
 	}

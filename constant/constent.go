@@ -35,5 +35,5 @@ const (
 )
 
 const (
-	WaitReplyTime time.Duration = 5 * time.Second
+	WaitReplyTime time.Duration = 10 * time.Second
 )

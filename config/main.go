@@ -21,6 +21,10 @@ type Config struct {
 var Configs Config
 var once sync.Once
 
+func SetConfigThisNode(se node.Node) {
+	Configs.ThisNode = se
+}
+
 func Main() {
 	get, _ := json.Marshal(Configs)
 	fmt.Println(string(get))
