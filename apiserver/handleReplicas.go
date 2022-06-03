@@ -148,10 +148,9 @@ func SaveRsInfo(rs replicaset.ReplicaSet) error {
 	return err
 }
 
-// NOT USED
 /*
- * pods managed by replicaset should be put into a new key
- * in etcd, which is /registry/rspods/[rs_name]/[pod_name]
+ * pods managed by replicaset should be put into a relation
+ * part of etcd: /relation/replicaset/[rsname]/[podname]
  */
 func SaveRsPodInfo(rs replicaset.ReplicaSet, pod pod.Pod) error {
 	key := etcd.SetKey(

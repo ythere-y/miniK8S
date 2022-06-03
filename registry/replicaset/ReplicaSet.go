@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"minik8s/registry/pod"
 	"minik8s/utils"
+	"strconv"
 
 	yaml "gopkg.in/yaml.v2"
 )
@@ -46,6 +47,7 @@ func YamlToRS(rsyaml RSyaml) ReplicaSet {
 		tmpContainer.Memory = value.Memory
 		tmpContainer.Volumn = value.Volumn
 		tmpContainer.Port = value.Port
+		tmpContainer.HostPort = value.HostPort
 		// append it to pod
 		newRS.PodTemplate.Containers = append(newRS.PodTemplate.Containers, tmpContainer)
 	}
@@ -62,4 +64,40 @@ func ParseYamlToRS(file string) ReplicaSet {
 	rsyaml := ParseRSYaml(file)
 	newRS := YamlToRS(rsyaml)
 	return newRS
+}
+
+/*
+ * Create pod instances, whose pod number is same as
+ * replicas difined in replicaset.
+ */
+func CreatePodInstances(rs ReplicaSet, replicas int) []pod.Pod {
+	var podInstances []pod.Pod
+	for i := 1; i <= replicas; i++ {
+		podtemp := CreateOnePodInstance(rs, i)
+		podInstances = append(podInstances, podtemp)
+	}
+	return podInstances
+}
+
+/*
+ * Used in CreatePodInstances(...)
+ * Create one pod instance with specified numtag
+ *
+ * Extracting pod template in replicaset structure
+ * to an actual pod instance,
+ * and tag it with the numtag.
+ * Fot instance, pod name in template is rspod,
+ * and numtag is 1, then the pod name in the
+ * extracted instance is rspod-1
+ */
+func CreateOnePodInstance(rs ReplicaSet, numtag int) pod.Pod {
+	podInstance := rs.PodTemplate
+	podtempname := podInstance.Meta.Name
+	// update name with numtag
+	newName := podtempname + "-" + strconv.Itoa(numtag)
+	// calc uid by new name
+	uid := utils.HashToUid(newName)
+	podInstance.Meta.Uid = uid
+	podInstance.Meta.Name = newName
+	return podInstance
 }

@@ -8,7 +8,7 @@ import (
 	"minik8s/utils"
 )
 
-var NodeName string = ""
+var NodeName string = "master" // for test
 var (
 	KPods    []pod.Pod
 	PodsInfo map[string]pod.Pod
