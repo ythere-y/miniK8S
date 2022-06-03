@@ -4,12 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	clientv3 "go.etcd.io/etcd/client/v3"
+	"log"
 	"minik8s/constant"
 	"minik8s/lab/etcd"
 	"minik8s/registry/node"
 	"minik8s/utils"
 	"time"
 )
+
+var noderole = "_node aipserver_ "
 
 // region 增
 
@@ -20,8 +23,8 @@ func CmdCreateNode(filecontext []byte) {
 		etcd.JustAppend(constant.CREATE),
 		etcd.JustAppend(time.Now().String()))
 	value := filecontext
-
-	SyncPut(key, string(value))
+	log.Println(noderole + "cmd create node")
+	SerlPut(key, string(value))
 }
 
 func SaveNodeInfo(node node.Node) error {
@@ -30,9 +33,9 @@ func SaveNodeInfo(node node.Node) error {
 		etcd.SetSourceType(constant.PodSourceName),
 		etcd.SetPodName(node.Name))
 	value, err := json.Marshal(node)
-
+	log.Println(noderole + "act save node info")
 	utils.HandleError("marshal pod error", err)
-	etcd.Put(key, string(value))
+	SerlPut(key, string(value))
 	return err
 }
 

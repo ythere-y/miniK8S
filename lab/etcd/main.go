@@ -149,11 +149,9 @@ func EasyPutGetTest() {
 		DialTimeout: 5 * time.Second,
 	})
 	if err != nil {
-		// handle error!
-		fmt.Printf("connect to etcd failed, err:%v\n", err)
+		panic(err)
 		return
 	}
-	fmt.Println("connect to etcd success")
 	defer cli.Close()
 	// put
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
@@ -239,7 +237,7 @@ func Put(key string, value string) {
 		fmt.Printf("put to etcd failed, err:%v\n", err)
 		return
 	}
-	fmt.Printf("Put operation : key = %v, val = %v\n", key, value)
+	fmt.Printf("Put operation :\n[key] = %v \n[val] = %v\n", key, value)
 }
 
 //PutList
@@ -383,7 +381,7 @@ func WatchWithFunc(name string, handler Handler) {
 	watchRespChan := cli.Watch(context.Background(), name, clientv3.WithPrefix()) // <-chan WatchResponse
 	for watchResp := range watchRespChan {
 		for _, event := range watchResp.Events {
-			err = defaultHandler(event)
+			//err = defaultHandler(event)
 			err = handler(event)
 			if err != nil {
 				return

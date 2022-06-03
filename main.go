@@ -1,14 +1,17 @@
 package main
 
-import "minik8s/lab/rootContainer"
+import (
+	"minik8s/kubernetes"
+	"time"
+)
 
 var rootName string
 
 func main() {
 	//log.Println("hello world")
 	//shellScripts.Main()
-	rootContainer.Test()
-	//go kubernetes.Main() // kubernetes的测试部分
+	//rootContainer.Test()
+	kubernetes.Main() // kubernetes的测试部分
 	//go cni.Main() // 测试CNI插件功能部分
 	//go environment.Main() //测试启动前的环境准备
 	//go controllerManager.Main() // 启动controller manager
@@ -25,6 +28,8 @@ func main() {
 
 	//circle.CircleTest() // 关于循环import的测试
 	//utils.HoldPro() // 阻塞进程防止运行结束
+
+	time.Sleep(time.Second * 5)
 	return
 
 }

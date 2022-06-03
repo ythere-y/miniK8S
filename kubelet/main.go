@@ -29,6 +29,10 @@ func Main() {
 	utils.HoldPro()
 }
 
+func StartUp() {
+	fmt.Printf("[Kubelete] [name = %v ] start up \n")
+}
+
 func init() {
 	NodeName = config.Configs.MasterNodeName
 }

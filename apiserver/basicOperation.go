@@ -69,6 +69,10 @@ func SyncWatch(name string, handler etcd.Handler) {
 	go etcd.WatchWithFunc(name, handler)
 }
 
+func SerlPut(key string, value string) {
+	etcd.Put(key, value)
+}
+
 //SyncPut
 /*
 向etcd中put一个k-v对

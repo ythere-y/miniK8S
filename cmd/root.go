@@ -26,6 +26,7 @@ func init() {
 	RootCmd.AddCommand(TestCmd)
 	RootCmd.AddCommand(joinCmd)
 	RootCmd.AddCommand(RsCmd)
+	RootCmd.AddCommand(startCmd)
 }
 
 var rootName string

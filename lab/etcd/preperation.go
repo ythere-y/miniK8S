@@ -20,4 +20,5 @@ func TestConnect() {
 	if strings.Compare(string(getRes.Kvs[0].Value), "hello world") != 0 {
 		utils.DebugError("test connect get error")
 	}
+	fmt.Printf("test connect success!")
 }
