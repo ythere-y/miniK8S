@@ -2,6 +2,8 @@ package dns
 
 import (
 	"fmt"
+	"gopkg.in/yaml.v2"
+	"io/ioutil"
 	"os"
 )
 
@@ -39,4 +41,39 @@ func Ip2name(ip string, name string) {
 	}
 
 	fmt.Println("Domain name config success")
+}
+
+func ParseYaml(file string) Dns {
+	fmt.Println("start parsing yaml file")
+	var dns Dns
+	yamlFile, err := ioutil.ReadFile(file)
+	if err != nil {
+		fmt.Println("yaml file read error")
+		fmt.Println(err)
+	}
+
+	err = yaml.Unmarshal(yamlFile, &dns)
+	if err != nil {
+		fmt.Println("yaml unmarshal error")
+		fmt.Println(err)
+	}
+	return dns
+}
+
+func C2host(dns Dns) {
+	for _, val := range dns.DnsBinds {
+		Ip2name(val.ServiceIp, val.Path+"."+dns.Host)
+	}
+}
+
+type Dns struct {
+	Kind     string    `yaml:"kind"`
+	Name     string    `yaml:"name"`
+	Host     string    `yaml:"host"`
+	DnsBinds []DnsBind `yaml:"binds"`
+}
+
+type DnsBind struct {
+	ServiceIp string `yaml:"service-ip"`
+	Path      string `yaml:"path"`
 }
