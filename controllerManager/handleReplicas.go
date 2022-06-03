@@ -40,6 +40,8 @@ func CreateRs(event *clientv3.Event) error {
 	var err error
 	switch event.Type {
 	case mvccpb.PUT:
+		// set running flag
+		RsRunningFlag = true
 		fmt.Printf("controller rs start creating")
 		var newRsYaml replicaset.RSyaml
 		err = yaml.Unmarshal(event.Kv.Value, &newRsYaml)
@@ -86,6 +88,8 @@ func DeleteRs(event *clientv3.Event) error {
 	var err error
 	switch event.Type {
 	case mvccpb.PUT:
+		// set running flag to false
+		RsRunningFlag = false
 		var names []string
 		var rsDelTar []string
 		// var podDelTar []string

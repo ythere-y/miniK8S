@@ -275,8 +275,8 @@ func kubeletWatchPod(podname string) {
 
 	go func(cli *client.Client, ids []string, podname string) {
 		for {
-			//每4秒检查一次
-			t := time.NewTicker(4 * time.Second)
+			//每5秒检查一次
+			t := time.NewTicker(5 * time.Second)
 			select {
 			case <-t.C:
 				//检查容器运行情况，如果有容器fail了，就通知master

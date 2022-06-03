@@ -158,12 +158,15 @@ func dealFail(event *clientv3.Event) error {
 	var err error
 	switch event.Type {
 	case mvccpb.PUT:
-		var podName string
-		podName = string(event.Kv.Value)
-		// //先删除旧的Pod
-		// apiserver.CmdDeletePod([]string{podName})
-		//重新创建fail的pod
-		err = DisPodtoNode(podName)
+		if RsRunningFlag {
+			podName := string(event.Kv.Value)
+			// //先删除旧的Pod
+			// apiserver.CmdDeletePod([]string{podName})
+			//重新创建fail的pod
+			err = DisPodtoNode(podName)
+			utils.HandleError("dealfail recreate pod error", err)
+		}
+		err = nil
 	}
 	return err
 }

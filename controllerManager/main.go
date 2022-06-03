@@ -11,6 +11,7 @@ var MemNodes []node.Node
 var MemPods []pod.Pod
 var MemServices []service.Service
 var relations Relation
+var RsRunningFlag bool
 
 func Main() {
 	fmt.Println("[Controller Manager] Main started!")
