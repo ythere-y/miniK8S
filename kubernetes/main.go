@@ -5,8 +5,9 @@ import (
 )
 
 func Test() {
-	fmt.Println("slave join test")
-	JoinAsWorker([]string{"localhost:2379", "./config/slaveNode.yaml"})
+	fmt.Println("master start test")
+	StartUpMaster()
+	// JoinAsWorker([]string{"localhost:2379", "./config/slaveNode.yaml"})
 
 }
 
