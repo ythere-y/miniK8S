@@ -37,7 +37,7 @@ var rootName string
 func main() {
 	//cmd.RootCmdRun() // 关于命令行的测试
 	//localhost.Test()
-	dns.Ip2name("111", "a.service/80")
+	dns.Ip2name("10.119.11.72", "master.node/88")
 
 	//utils.CopyandRun()
 	//slurm := utils.ParseYaml(utils.Dir + "test.yaml")
