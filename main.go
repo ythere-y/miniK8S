@@ -5,6 +5,7 @@ import (
 	"minik8s/apiserver"
 	"minik8s/cmd"
 	"minik8s/controllerManager"
+	"minik8s/kubelet"
 	"minik8s/kubernetes"
 	"time"
 
@@ -56,9 +57,9 @@ func main() {
 	time.Sleep(time.Second * 3)
 	//go cni.Main() // 测试CNI插件功能部分
 	//go environment.Main() //测试启动前的环境准备
-	//go controllerManager.Main() // 启动controller manager
+	go controllerManager.Main() // 启动controller manager
 	//go scheduler.Main()         // 启动scheduler
-	//go kubelet.Main()           // 启动kubelet
+	go kubelet.Main() // 启动kubelet
 	//apiserver.ApiServerTest() //关于apiserver的测试
 	//go etcd.LabMain() //关于etcd的测试
 	//config.Main()
