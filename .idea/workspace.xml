@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e4d3e4a0-3c7c-4449-8f61-5a3892b6467e" name="Changes" comment="">
+    <list default="true" id="e4d3e4a0-3c7c-4449-8f61-5a3892b6467e" name="Changes" comment="iptables的set和delete部分完成">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/environment/cloudtest.go" beforeDir="false" afterPath="$PROJECT_DIR$/environment/cloudtest.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/environment/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/environment/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,5 +39,32 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="autoStart" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="iptables的set和delete部分完成" />
+    <option name="LAST_COMMIT_MESSAGE" value="iptables的set和delete部分完成" />
   </component>
 </project>

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/bitfield/script"
 	"minik8s/constant"
@@ -137,7 +138,58 @@ func iptablesSet(srcIP string, srcPort string, desIP string, desPort string) {
 	writeAndRun(constant.TmpSh, totalString)
 }
 
+func GetPodIPByName(podName string) string {
+	var (
+		totalString string
+		cmdLine     string
+		err         error
+
+		filename string = constant.TmpSh
+		context  string
+		res      string
+	)
+	cmdLine = "docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' " + podName + "-pause"
+	totalString += cmdLine + " \n"
+
+	context = totalString
+	// 写入脚本
+	script.Echo(context).WriteFile(filename)
+
+	// 检验写入结果
+	_, err = script.File(filename).String()
+
+	if err != nil {
+		panic(err)
+	}
+
+	//fmt.Printf("check the file :\n %v", get)
+	// 以下是执行该脚本内容的部分
+	//check("bash")
+	var stdout, stderr bytes.Buffer
+
+	goExecutable, _ := exec.LookPath("bash")
+
+	cmdGoVer := &exec.Cmd{
+		Path:   goExecutable,
+		Args:   []string{goExecutable, filename},
+		Stdout: &stdout,
+		Stderr: &stderr,
+	}
+	fmt.Println(cmdGoVer.String())
+
+	if err := cmdGoVer.Run(); err != nil {
+		fmt.Println("Error: ", err)
+	}
+	res = stdout.String()
+	//fmt.Printf("get stdout -> \n%v\n", stdout.String())
+	//fmt.Printf("get stderr -> \n%v\n", stderr.String())
+	os.Remove(constant.TmpSh)
+	return res
+}
+
 func main() {
 	fmt.Print("hello world\n")
-	iptablesDelete("10.10.10.10", "10", "192.168.1.4", "80")
+	//iptablesDelete("10.10.10.10", "10", "192.168.1.4", "80")
+	getIP := GetPodIPByName("web")
+	fmt.Printf("get pod ip = %v\n", getIP)
 }
