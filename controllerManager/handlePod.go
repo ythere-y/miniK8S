@@ -9,6 +9,7 @@ import (
 	. "minik8s/lab/etcd"
 	pod2 "minik8s/registry/pod"
 	"minik8s/utils"
+	"time"
 
 	"go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
@@ -124,6 +125,9 @@ func deletePod(event *clientv3.Event) error {
 
 func watchPod(event *clientv3.Event) error {
 	fmt.Printf("controller start watching pod\n")
+	// wait for pod creating
+	time.Sleep(15 * time.Second)
+	fmt.Println("controller watch pod finish sleep")
 	var err error
 	switch event.Type {
 	case mvccpb.PUT:
