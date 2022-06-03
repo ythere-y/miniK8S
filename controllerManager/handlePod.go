@@ -3,14 +3,15 @@ package controllerManager
 import (
 	"encoding/json"
 	"fmt"
-	"go.etcd.io/etcd/api/v3/mvccpb"
-	clientv3 "go.etcd.io/etcd/client/v3"
-	"gopkg.in/yaml.v2"
 	"minik8s/apiserver"
 	"minik8s/constant"
 	. "minik8s/lab/etcd"
 	pod2 "minik8s/registry/pod"
 	"minik8s/utils"
+
+	"go.etcd.io/etcd/api/v3/mvccpb"
+	clientv3 "go.etcd.io/etcd/client/v3"
+	"gopkg.in/yaml.v2"
 )
 
 func init() {
@@ -65,8 +66,8 @@ func createPod(event *clientv3.Event) error {
 
 		// 这里取消了scheduler的数据转发层，直接把scheduler作为controller内部的一个分支
 		err = DisPodtoNode(podName)
-		//err = apiserver.PushPodToScheduler(podInfo)
-		//utils.HandleError("push pod to scheduler error", err)
+		// err = apiserver.PushPodToScheduler(podInfo)
+		// utils.HandleError("push pod to scheduler error", err)
 	}
 	return err
 }
