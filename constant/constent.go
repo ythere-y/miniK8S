@@ -28,7 +28,7 @@ const (
 	RemoveFlag string = "__remove__"
 	UpdateFlag string = "__update__"
 
-	EtcdSh        string = "./Scripts/etcdSh"
+	EtcdSh        string = "./Scripts/etcdSh.sh"
 	EnvironmentSh string = "./Scripts/envStartUp.sh"
 
 	MasterNodeFile string = "./config/masterNode.yaml"

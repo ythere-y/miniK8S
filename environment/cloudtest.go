@@ -53,6 +53,7 @@ func startupEtcd(thisIP string) {
 
 	// 写入脚本
 	fmt.Printf("ready to write [file = %v], context ->:\n%v\n", constant.EtcdSh, totalString)
+
 	script.Echo(totalString).WriteFile(constant.EtcdSh)
 
 	// 检验写入结果
