@@ -27,6 +27,8 @@ func init() {
 	RootCmd.AddCommand(joinCmd)
 	RootCmd.AddCommand(RsCmd)
 	RootCmd.AddCommand(startCmd)
+	RootCmd.AddCommand(NodeCmd)
+	RootCmd.AddCommand(exitCmd)
 }
 
 var rootName string

@@ -109,7 +109,7 @@ func CmdDeletePod(names []string) {
 	nameSet := utils.ParseNames(names)
 	for _, name := range nameSet {
 		path := etcd.SetKey(
-			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetPrefix(constant.RegistryPrefix),
 			etcd.SetSourceType(constant.PodSourceName),
 			etcd.SetPodName(name))
 		if CheckIfExist(path) == false {
@@ -148,7 +148,7 @@ func ActDeletePods(podsNames []string) {
 			etcd.SetSourceType(constant.PodSourceName),
 			etcd.SetPodName(key),
 			etcd.SetSourceType(constant.NodeSourceName))
-		nodeName, err = etcd.GetValue(buildKey)
+		nodeName, err = etcd.GetValueWithPrefix(buildKey)
 		utils.HandleError("get value error", err)
 		deleteTargets = append(deleteTargets, buildKey)
 		if nodeName != "" {
@@ -167,7 +167,7 @@ func ActDeletePods(podsNames []string) {
 			etcd.SetSourceType(constant.PodSourceName),
 			etcd.SetPodName(key),
 			etcd.SetSourceType(constant.ServiceSourceName))
-		serviceName, err = etcd.GetValue(buildKey)
+		serviceName, err = etcd.GetValueWithPrefix(buildKey)
 		utils.HandleError("get value error", err)
 		deleteTargets = append(deleteTargets, buildKey)
 		if serviceName != "" {

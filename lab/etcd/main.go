@@ -44,6 +44,25 @@ func GetWithPrefix(key string) (*clientv3.GetResponse, error) {
 
 	return getRsp, err
 }
+func GetValueWithPrefix(key string) (string, error) {
+	var (
+		err    error
+		cli    *clientv3.Client
+		getRsp *clientv3.GetResponse
+		ctx    context.Context
+		cancel context.CancelFunc
+	)
+	cli = connectEtcd()
+	defer cli.Close()
+	// get
+	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
+	getRsp, err = cli.Get(ctx, key, clientv3.WithPrefix())
+	cancel()
+	if getRsp.Count == 0 {
+		return "", err
+	}
+	return string(getRsp.Kvs[0].Value), err
+}
 
 func GetValue(key string) (string, error) {
 	var (

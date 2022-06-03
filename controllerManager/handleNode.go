@@ -39,8 +39,14 @@ func nodeControllerWatch() {
 // region 增
 
 func CreateMasterNode(nodefile []byte) {
+
 	nodeInfo := node.NodeYamlToNode(node.ParseNodeYaml(nodefile))
 	AddNode(nodeInfo)
+	err := apiserver.SaveNodeInfo(nodeInfo)
+	if err != nil {
+		panic(err)
+		return
+	}
 	config.SetConfigThisNode(nodeInfo)
 	displayCurMemNodes()
 }

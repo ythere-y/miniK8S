@@ -7,8 +7,8 @@ import (
 )
 
 var NodeCmd = &cobra.Command{
-	Use:   "pod",
-	Short: `pod 相关的命令`,
+	Use:   "node",
+	Short: `node 相关的命令`,
 	Long:  `包括 get , delete`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("node 需要进一步指令,请查看 minik node -h\n")

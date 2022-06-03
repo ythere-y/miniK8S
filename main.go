@@ -4,9 +4,6 @@ import (
 	"fmt"
 	"minik8s/apiserver"
 	"minik8s/cmd"
-	"minik8s/controllerManager"
-	"minik8s/kubernetes"
-	"minik8s/utils"
 	"time"
 
 	clientv3 "go.etcd.io/etcd/client/v3"
@@ -52,8 +49,8 @@ func main() {
 	//shellScripts.Main()
 	//rootContainer.Test()
 	//watchwithTimeTest() // 关于定时watch的测试
-	controllerManager.ControllerStartUp()
-	kubernetes.Test() // kubernetes的测试部分
+	//controllerManager.ControllerStartUp()
+	//kubernetes.Test() // kubernetes的测试部分
 	//go cni.Main() // 测试CNI插件功能部分
 	//go environment.Main() //测试启动前的环境准备
 	//go controllerManager.Main() // 启动controller manager
@@ -64,7 +61,7 @@ func main() {
 	//config.Main()
 	//time.Sleep(2 * time.Second)
 	//go kubernetes.StartUpMaster()	// master节点的初始化startup
-	//cmd.RootCmdRun() // 关于命令行的测试
+	cmd.RootCmdRun() // 关于命令行的测试
 	//service.OutPutFmtTest() //关于格式化输出的测试
 	//service.SerReadTest() // 关于读取yamle文件建立service的测试
 

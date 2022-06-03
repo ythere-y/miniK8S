@@ -30,7 +30,7 @@ func CmdCreateNode(filecontext []byte, cur time.Time) {
 func SaveNodeInfo(node node.Node) error {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.RegistryPrefix),
-		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetSourceType(constant.NodeSourceName),
 		etcd.SetPodName(node.Name))
 	value, err := json.Marshal(node)
 	log.Println(noderole + "act save node info")
@@ -148,6 +148,7 @@ func DistributePodtoNode(nodeName string, podName string) error {
 		etcd.SetPrefix(constant.RelationPrefix),
 		etcd.SetSourceType(constant.PodSourceName),
 		etcd.SetNodeName(podName),
+		etcd.SetSourceType(constant.NodeSourceName),
 		etcd.SetPodName(nodeName))
 	value = nodeName
 	keys = append(keys, key)
