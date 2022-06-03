@@ -84,7 +84,7 @@ func startupEtcd(thisIP string) {
 	if err := cmdGoVer.Run(); err != nil {
 		fmt.Println("Error: ", err)
 	}
-
+	os.Remove(constant.EtcdSh)
 }
 func startupFlannel(targetIP string) {
 	var (
@@ -132,6 +132,7 @@ func startupFlannel(targetIP string) {
 	if err := cmdGoVer.Run(); err != nil {
 		fmt.Println("Error: ", err)
 	}
+	os.Remove(constant.FlannelSh)
 
 }
 
