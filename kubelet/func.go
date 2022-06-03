@@ -5,7 +5,7 @@ import (
 	"github.com/docker/docker/client"
 	"minik8s/apiserver"
 	"minik8s/lab/dksdk"
-	"minik8s/pod"
+	"minik8s/registry/pod"
 	"minik8s/utils"
 )
 
@@ -51,14 +51,6 @@ func RemovePod(name string) {
 			KPods = append(KPods[:index], KPods[index+1:]...)
 		}
 	}
-}
-
-//UpdatePod
-/*
-根据podName以及pod的信息更新pod的实际运行状态
-*/
-func UpdatePod(podName string) {
-	//TODO:还没想好pod的更新如何处理
 }
 
 func CreateAndRunPod(pod *pod.Pod) uint32 {

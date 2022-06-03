@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-var Dir = "D:/Schoolwork/2022_spring/CloudComputing/labs/Minik8s/minik8s/cuda/"
+var Dir = "/root/work/minik/minik8s/cuda/"
 
 func check(e error) {
 	if e != nil {

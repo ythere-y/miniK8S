@@ -1,55 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
-    <option name="autoReloadType" value="ALL" />
+    <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80f3a72f-8010-477c-b695-dd4f6fdf3b05" name="Changes" comment="" />
+    <list default="true" id="80f3a72f-8010-477c-b695-dd4f6fdf3b05" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/apiserver/handleNode.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apiserver/handlePod.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apiserver/handleService.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmd/node.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllerManager/global.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllerManager/handleNode.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllerManager/handlePod.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllerManager/handleService.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllerManager/scheduler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllerManager/types.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/registry/node/NodeMeta.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shellScripts/infoGet.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/basicOperation.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/basicOperation.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/commands.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/commands.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/pod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/handler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cuda/matrix.cu" beforeDir="false" afterPath="$PROJECT_DIR$/cuda/matrix.cu" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/func.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/func.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/handler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/types.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/types.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/rootContainer/test.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/rootContainer/test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node/NodeMeta.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pod/DockerManager.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/pod/DockerManager.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pod/Pod.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/pod/Pod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pod/PodMeta.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/pod/PodMeta.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/replicaset/ReplicaSet.go" beforeDir="false" afterPath="$PROJECT_DIR$/replicaset/ReplicaSet.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/replicaset/rsMeta.go" beforeDir="false" afterPath="$PROJECT_DIR$/replicaset/rsMeta.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/ServiceController.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/service/ServiceController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/dksdktest.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/service/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shellScripts/envSetUp.go" beforeDir="false" afterPath="$PROJECT_DIR$/shellScripts/envSetUp.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shellScripts/shellTest.go" beforeDir="false" afterPath="$PROJECT_DIR$/shellScripts/shellTest.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/sshUtils.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/sshUtils.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/stringUtils.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/stringUtils.go" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Go File" />
-      </list>
-    </option>
-  </component>
-  <component name="GOROOT" url="file://$PROJECT_DIR$/../../../../../../Download/package/go" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProjectId" id="29ynuFcrSqbAs4zpZp6w21uvQft" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultGoTemplateProperty": "Go File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.go.format.on.save.advertiser.fired": "true",
-    "RunOnceActivity.go.formatter.settings.were.checked": "true",
-    "RunOnceActivity.go.migrated.go.modules.settings": "true",
-    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
-    "RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "configurable..is.expanded": "false",
-    "configurable.GoLibrariesConfigurable.is.expanded": "true",
-    "go.import.settings.migrated": "true",
-    "last_opened_file_path": "C:/Users/A",
-    "settings.editor.selected.configurable": "go.vgo"
-  }
-}]]></component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -61,13 +65,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VgoProject">
-    <environment>
-      <map>
-        <entry key="GOPROXY" value="https://goproxy.cn,direct" />
-      </map>
-    </environment>
-    <settings-migrated>true</settings-migrated>
   </component>
 </project>

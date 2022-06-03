@@ -1,36 +1,11 @@
 package apiserver
 
 import (
-	"encoding/json"
-	"fmt"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"minik8s/constant"
 	"minik8s/lab/etcd"
-	"minik8s/pod"
 	"minik8s/utils"
 )
-
-//GetPodInfo
-/*
- 根据podName，从/registry/pods/目录下寻找对应的pod
-并组建成Pod返回
-*/
-func GetPodInfo(podName string) *pod.Pod {
-	getRes, err := etcd.Get(etcd.SetKey(
-		etcd.SetPrefix(constant.RegistryPrefix),
-		etcd.SetSourceType("pods"),
-		etcd.SetName(podName)))
-
-	utils.HandleError("get pod info error", err)
-	if len(getRes) == 0 {
-		return nil
-	}
-	var podInfo pod.Pod
-	err = json.Unmarshal([]byte(getRes[0]), &podInfo)
-	utils.HandleError("unmarshal pod failed ", err)
-
-	return &podInfo
-}
 
 //GetChildNum
 /*
@@ -110,69 +85,6 @@ func SyncPutList(key []string, value []string) {
 	go etcd.PutList(key, value)
 }
 
-func StopPods(podsNames []string) {
-
-	var deleteTargets []string
-	var values []string
-
-	for _, key := range podsNames {
-		buildKey := etcd.SetKey(
-			etcd.SetPrefix(constant.RelationPrefix),
-			etcd.SetSourceType(constant.PodSourceName),
-			etcd.SetPodName(key))
-		nodeName, err := etcd.GetValue(buildKey)
-		utils.HandleError("get value error", err)
-
-		buildKey = etcd.SetKey(
-			etcd.SetPrefix(constant.RelationPrefix),
-			etcd.SetSourceType(constant.NodeSourceName),
-			etcd.SetNodeName(nodeName),
-			etcd.SetPodName(key),
-		)
-		deleteTargets = append(deleteTargets, buildKey)
-		values = append(values, constant.StopFlag)
-	}
-	for _, del := range deleteTargets {
-		fmt.Printf("stop [key = %v]\n", del)
-	}
-	SyncPutList(deleteTargets, values)
-}
-
-func DeletePods(podsNames []string) {
-	var deleteTargets []string
-	for _, key := range podsNames {
-
-		// 先查询relations找到
-		buildKey := etcd.SetKey(
-			etcd.SetPrefix(constant.RelationPrefix),
-			etcd.SetSourceType(constant.PodSourceName),
-			etcd.SetPodName(key))
-		nodeName, err := etcd.GetValue(buildKey)
-		utils.HandleError("get value error", err)
-
-		deleteTargets = append(deleteTargets, buildKey)
-		buildKey = etcd.SetKey(
-			etcd.SetPrefix(constant.RelationPrefix),
-			etcd.SetSourceType(constant.NodeSourceName),
-			//TODO:需要一种能找到该pod归属于哪个node的机制
-			etcd.SetNodeName(nodeName),
-			etcd.SetPodName(key),
-		)
-		deleteTargets = append(deleteTargets, buildKey)
-
-		buildKey = etcd.SetKey(
-			etcd.SetPrefix(constant.RegistryPrefix),
-			etcd.SetSourceType(constant.PodSourceName),
-			etcd.SetPodName(key))
-		deleteTargets = append(deleteTargets, buildKey)
-
-	}
-	for _, del := range deleteTargets {
-		fmt.Printf("del [key = %v]\n", del)
-	}
-	SyncDel(deleteTargets)
-}
-
 //SyncDel
 /*
 在etcd中删除某个key
@@ -186,3 +98,66 @@ func SyncDel(key []string) {
 		go etcd.DeleteList(key)
 	}
 }
+
+// region 添加关系relation
+
+func SaveRelationPodtoNode(keyname string, valname string) {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RelationPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetPodName(keyname),
+		etcd.SetNodeName(valname))
+	val := valname
+	etcd.Put(key, val)
+}
+
+func SaveRelationNodetoPod(keyname string, valname string) {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RelationPrefix),
+		etcd.SetSourceType(constant.NodeSourceName),
+		etcd.SetPodName(keyname),
+		etcd.SetNodeName(valname))
+	val := valname
+	etcd.Put(key, val)
+}
+func SaveRelationServicetoPod(keyname string, valname string) {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RelationPrefix),
+		etcd.SetSourceType(constant.ServiceSourceName),
+		etcd.SetPodName(keyname),
+		etcd.SetNodeName(valname))
+	val := valname
+	etcd.Put(key, val)
+}
+
+// endregion
+
+// region 删除关系
+
+func DeleteRelationPodtoNode(keyname string, valname string) {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RelationPrefix),
+		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetPodName(keyname),
+		etcd.SetNodeName(valname))
+	etcd.Delete(key)
+}
+func DeleteRelationNodetoPod(keyname string, valname string) {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RelationPrefix),
+		etcd.SetSourceType(constant.ServiceSourceName),
+		etcd.SetPodName(keyname),
+		etcd.SetNodeName(valname))
+	etcd.Delete(key)
+}
+
+func DeleteRelationServicetoPod(keyname string, valname string) {
+	key := etcd.SetKey(
+		etcd.SetPrefix(constant.RelationPrefix),
+		etcd.SetSourceType(constant.ServiceSourceName),
+		etcd.SetPodName(keyname),
+		etcd.SetNodeName(valname))
+	etcd.Delete(key)
+}
+
+// endregion

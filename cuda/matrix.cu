@@ -77,3 +77,9 @@ int main()
 	
 	return 0;
 }
+
+//minik cu submit D:/Schoolwork/2022_spring/CloudComputing/labs/Minik8s/minik8s/cuda/test.yaml D:/Schoolwork/2022_spring/CloudComputing/labs/Minik8s/minik8s/cuda/matrix.cu
+
+//minik cu submit /root/work/minik/minik8s/cuda/test.yaml /root/work/minik/minik8s/cuda/matrix.cu
+//minik cu state matrix
+//minik cu result matrix

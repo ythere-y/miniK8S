@@ -53,3 +53,38 @@ func DebugTanInfo() {
 		fmt.Printf("file: %s, line: %d\n", file, line)
 	}
 }
+
+// ParseNames
+/*
+解析多个名字，去除其中的重复内容
+*/
+func ParseNames(names []string) []string {
+	var nameSet []string
+	for index, name := range names {
+		haveTheSame := false
+		for i := 0; i < index; i++ {
+			if name == names[index] {
+				haveTheSame = true
+				break
+			}
+		}
+		if haveTheSame == true {
+			continue
+		}
+		nameSet = append(nameSet, name)
+	}
+	return nameSet
+}
+
+// LabelMatch
+// 判断selector与labels是否有匹配项
+func LabelMatch(selector map[string]string, labels map[string]string) bool {
+	for lab_key, lab_val := range labels {
+		for sel_key, sel_val := range selector {
+			if lab_key == sel_key && lab_val == sel_val {
+				return true
+			}
+		}
+	}
+	return false
+}

@@ -3,7 +3,7 @@ package kubelet
 import (
 	"fmt"
 	"minik8s/constant"
-	"minik8s/pod"
+	"minik8s/registry/pod"
 	"minik8s/utils"
 
 	"go.etcd.io/etcd/api/v3/mvccpb"
@@ -39,8 +39,6 @@ func kubelethandler(event *clientv3.Event) error {
 			// 是删除命令
 			StopPod(podName)
 			RemovePod(podName)
-		case constant.UpdateFlag:
-			UpdatePod(podName)
 		default:
 			fmt.Printf("op = %v, it not in any!\n", operation)
 		}

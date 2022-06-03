@@ -54,6 +54,7 @@ type Pod struct {
 	Meta       PodMeta
 	Stats      PodStatus // Pod status
 	Containers []ContainerMeta
+	Addr       string // IP address
 }
 
 // Container meta data in yaml

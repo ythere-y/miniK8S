@@ -1,7 +1,7 @@
 package replicaset
 
 import (
-	"minik8s/pod"
+	"minik8s/registry/pod"
 )
 
 type ReplicaSetMeta struct {
