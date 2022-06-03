@@ -34,7 +34,7 @@ var rsdelete = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("delete replicaset by name %v\n", args[0])
-		apiserver.DeleteRs(args[0])
+		apiserver.DeleteRs(args)
 	},
 }
 
