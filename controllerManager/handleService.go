@@ -16,7 +16,7 @@ import (
 )
 
 func serviceControllerWatch() {
-	fmt.Printf("Service controller init!")
+	fmt.Println("[Service controller] init!")
 	var watchName string
 	watchName = SetKey(
 		SetPrefix(constant.ControllerPrefix),

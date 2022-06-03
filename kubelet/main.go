@@ -4,35 +4,30 @@ import (
 	"fmt"
 	"minik8s/apiserver"
 	"minik8s/config"
-	"minik8s/constant"
-	. "minik8s/lab/etcd"
+	"minik8s/registry/pod"
 	"minik8s/utils"
 )
 
 var NodeName string = ""
+var (
+	KPods    []pod.Pod
+	PodsInfo map[string]pod.Pod
+)
 
 func CreateKubelet(listen string) {
-	apiserver.SyncWatch(listen, kubelethandler)
+	apiserver.SyncWatch(listen, nodehandler)
 }
 
 func Main() {
-	fmt.Println("[Kubelet] [name = " + NodeName + "] Main started!")
-
-	watchName := SetKey(
-		SetPrefix(constant.RelationPrefix),
-		SetSourceType(constant.NodeSourceName),
-		SetNodeName(NodeName),
-	)
-
-	CreateKubelet(watchName)
 
 	utils.HoldPro()
 }
 
 func StartUp() {
-	fmt.Printf("[Kubelete] [name = %v ] start up \n")
+	fmt.Printf("[Kubelete] [name = %v ] [this IP = %v] start up \n", config.Configs.ThisNode.Name, config.Configs.ThisNode.Addr)
+	NodeName = config.Configs.LocalNodeName
 }
 
 func init() {
-	NodeName = config.Configs.MasterNodeName
+	PodsInfo = make(map[string]pod.Pod)
 }

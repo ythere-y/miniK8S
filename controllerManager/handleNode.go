@@ -17,7 +17,7 @@ var noderole = " __node controller__ "
 
 func nodeControllerWatch() {
 
-	fmt.Printf("[Node controller] init!")
+	fmt.Println("[Node controller] init!")
 	var watchName string
 	watchName = SetKey(
 		SetPrefix(constant.ControllerPrefix),
@@ -53,12 +53,16 @@ func createNode(event *clientv3.Event) error {
 		for _, memNode := range MemNodes {
 			if memNode.Name == nodename {
 				fmt.Printf("node %v already exist~!\n", nodename)
+				apiserver.Reply(event.Kv.Key, constant.ReplayERROR)
 				return err
 			}
 		}
 
 		AddNode(nodeInfo)
+
+		apiserver.Reply(event.Kv.Key, constant.ReplayOK)
 		err = apiserver.SaveNodeInfo(nodeInfo)
+
 		utils.HandleError("save pod info error", err)
 		fmt.Printf("after node create , memnodes display\n")
 		for i, memNode := range MemNodes {

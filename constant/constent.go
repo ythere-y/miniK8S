@@ -1,5 +1,7 @@
 package constant
 
+import "time"
+
 const (
 	EtcdIPAddr string = "localhost:2379"
 
@@ -7,6 +9,10 @@ const (
 	RegistryPrefix   string = "registry"
 	SchedulerPrefix  string = "scheduler"
 	RelationPrefix   string = "relation"
+	ReplayPrefix     string = "reply"
+
+	ReplayOK    string = "__OK__"
+	ReplayERROR string = "__ERROR__"
 
 	PodSourceName     string = "pods"
 	NodeSourceName    string = "nodes"
@@ -26,4 +32,8 @@ const (
 	EnvironmentSh string = "./Scripts/envStartUp.sh"
 
 	MasterNodeFile string = "./config/masterNode.yaml"
+)
+
+const (
+	WaitReplyTime time.Duration = 5 * time.Second
 )

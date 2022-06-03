@@ -16,12 +16,12 @@ var noderole = "_node aipserver_ "
 
 // region 增
 
-func CmdCreateNode(filecontext []byte) {
+func CmdCreateNode(filecontext []byte, cur time.Time) {
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.ControllerPrefix),
 		etcd.JustAppend(constant.NodeSourceName),
 		etcd.JustAppend(constant.CREATE),
-		etcd.JustAppend(time.Now().String()))
+		etcd.JustAppend(cur.String()))
 	value := filecontext
 	log.Println(noderole + "cmd create node")
 	SerlPut(key, string(value))

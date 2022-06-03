@@ -11,6 +11,8 @@ var joinCmd = &cobra.Command{
 	Long:  `join masterIP:port node.yaml`,
 	Args:  cobra.ExactArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
+		// 通过etcd发送join请求
 		kubernetes.JoinAsWorker(args)
+
 	},
 }

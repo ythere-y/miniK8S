@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"minik8s/registry/node"
 	"sync"
 )
 
@@ -13,6 +14,8 @@ type Config struct {
 	EtcdIp         string
 	MasterIP       string
 	MasterNodeName string
+	LocalNodeName  string
+	ThisNode       node.Node
 }
 
 var Configs Config

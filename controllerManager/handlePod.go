@@ -14,7 +14,7 @@ import (
 )
 
 func podControllerWatch() {
-	fmt.Printf("[Pod controller] init!")
+	fmt.Println("[Pod controller] init!")
 	var watchName string
 	watchName = SetKey(
 		SetPrefix(constant.ControllerPrefix),

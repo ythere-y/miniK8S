@@ -365,6 +365,48 @@ func DeleteWithPrefix(key string) {
 	fmt.Printf("Delete operation : [key = %v] \n", key)
 }
 
+//WatchWithFuncWithTime
+/*
+watch某个name，并且用handler进行后续处理,且超时之后自动放弃watch
+*/
+func WatchWithFuncWithTime(name string, handler Handler, fail FailOut, timeset time.Duration) {
+
+	var (
+		cli         *clientv3.Client
+		err         error
+		successFlag = false
+	)
+	cli = connectEtcd()
+	defer cli.Close()
+
+	ctx, cancle := context.WithCancel(context.Background())
+	time.AfterFunc(timeset, func() {
+		if successFlag == false {
+			fail()
+
+		}
+		cancle()
+		return
+	})
+	watchRespChan := cli.Watch(ctx, name, clientv3.WithPrefix()) // <-chan WatchResponse
+	for watchResp := range watchRespChan {
+		for _, event := range watchResp.Events {
+			//err = defaultHandler(event)
+			err = handler(event)
+			if err != nil {
+				return
+			}
+			successFlag = true
+			cancle()
+			return
+		}
+		//cancle()
+		//return
+	}
+
+	fmt.Printf("watch on %v ended~!\n", name)
+}
+
 //WatchWithFunc
 /*
 watch某个name，并且用handler进行后续处理
