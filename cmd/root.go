@@ -23,6 +23,7 @@ func init() {
 	RootCmd.AddCommand(ServiceCmd)
 	RootCmd.AddCommand(PodCmd)
 	RootCmd.AddCommand(TestCmd)
+	RootCmd.AddCommand(joinCmd)
 }
 
 var rootName string

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
-	"gopkg.in/yaml.v2"
 	"minik8s/apiserver"
 	"minik8s/constant"
 	. "minik8s/lab/etcd"
@@ -38,12 +37,12 @@ func createNode(event *clientv3.Event) error {
 	var err error
 	switch event.Type {
 	case mvccpb.PUT:
-		var newone node.NodeBasic
-		err = yaml.Unmarshal(event.Kv.Value, &newone)
+		var newone node.NodeYaml
+		newone = node.ParseNodeYaml(event.Kv.Value)
 		if err != nil {
 			fmt.Printf("yaml unmarshal error->:\n%v\n", err.Error())
 		}
-		nodeInfo := node.NodeBasicToNode(newone)
+		nodeInfo := node.NodeYamlToNode(newone)
 		nodename := nodeInfo.Name
 
 		for _, memNode := range MemNodes {

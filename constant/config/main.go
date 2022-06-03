@@ -11,6 +11,7 @@ import (
 //创建一个结构体
 type Config struct {
 	EtcdIp         string
+	MasterIP       string
 	MasterNodeName string
 }
 

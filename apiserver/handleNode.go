@@ -13,13 +13,14 @@ import (
 
 // region 增
 
-func CmdCreateNode(status node.Node) {
+func CmdCreateNode(filecontext []byte) {
 	key := etcd.SetKey(
-		etcd.SetPrefix(constant.RegistryPrefix),
-		etcd.SetSourceType(constant.NodeSourceName),
-		etcd.SetNodeName(status.Name))
-	value, err := json.Marshal(status)
-	utils.HandleError("marshal node status error", err)
+		etcd.SetPrefix(constant.ControllerPrefix),
+		etcd.JustAppend(constant.NodeSourceName),
+		etcd.JustAppend(constant.CREATE),
+		etcd.JustAppend(time.Now().String()))
+	value := filecontext
+
 	SyncPut(key, string(value))
 }
 
@@ -40,6 +41,7 @@ func SaveNodeInfo(node node.Node) error {
 // region 删
 
 // TODO: 实现是移动pod的内容，是有问题的，还需要考量
+
 func ActDeleteNode(names []string) {
 	var deleteTargets []string
 	for _, key := range names {

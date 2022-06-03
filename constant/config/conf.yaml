@@ -1,4 +1,6 @@
 #etcdIP
 etcdip: "localhost:2379"
+# master IP
+masterip: "locaohost"
 #master node name
 masternodename: "master"

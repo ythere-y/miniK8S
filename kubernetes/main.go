@@ -2,12 +2,13 @@ package kubernetes
 
 import (
 	"fmt"
+	"io/ioutil"
 	"minik8s/apiserver"
-	"minik8s/config"
+	"minik8s/constant"
+	"minik8s/constant/config"
 	"minik8s/controllerManager"
 	"minik8s/kubelet"
 	"minik8s/registry/node"
-	"minik8s/scheduler"
 	"os"
 	"os/exec"
 	"time"
@@ -51,7 +52,7 @@ func CreateMasterNode() {
 	var nodest node.Node
 	nodest.Name = config.Configs.MasterNodeName
 	controllerManager.AddNode(nodest)
-	apiserver.CmdCreateNode(nodest)
+	//apiserver.CmdCreateNode(nodest)
 	go kubelet.Main()
 }
 
@@ -60,9 +61,15 @@ func CreateMasterNode() {
 开启一个master节点
 */
 func StartUpMaster() {
-	go scheduler.Main()
 	go controllerManager.Main()
-	go apiserver.Main()
+
+	apiserver.Main()
+
+	nodeFile, err := ioutil.ReadFile(constant.MasterNodeFile)
+	if err != nil {
+		panic(err)
+	}
+	apiserver.CmdCreateNode(nodeFile)
 
 	CreateMasterNode()
 
