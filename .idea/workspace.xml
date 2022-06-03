@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="路径测试完成，试试云主机启动测试">
+    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="修复命令单词错误">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/environment/cloudtest.go" beforeDir="false" afterPath="$PROJECT_DIR$/environment/cloudtest.go" afterDir="false" />
     </list>
@@ -136,7 +136,8 @@
     <MESSAGE value="增加更多打印" />
     <MESSAGE value="增加Scripts目录" />
     <MESSAGE value="路径测试完成，试试云主机启动测试" />
-    <option name="LAST_COMMIT_MESSAGE" value="路径测试完成，试试云主机启动测试" />
+    <MESSAGE value="修复命令单词错误" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复命令单词错误" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

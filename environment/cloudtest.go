@@ -39,17 +39,17 @@ func startupEtcd(thisIP string) {
 	frontArg = "etcd -name etcd-hc -data-dir /var/lib/etcd "
 	advertiseArg = "--advertise-client-urls http://" + thisIP + ":2379,http://127.0.0.1:2379 "
 	listenArg += "--listen-client-urls http://" + thisIP + ":2379,http://127.0.0.1:2379 "
-	totalString += frontArg + advertiseArg + listenArg + "\n"
+	totalString += frontArg + advertiseArg + listenArg + " &\n"
 	//totalString = "echo 'hello world~!'"
 	if err != nil {
 		panic(err)
 	}
 	// 检查etcd运行状态
 	cmdLine = "etcdctl  --endpoints http://" + thisIP + ":2379 member list\n"
-	totalString += cmdLine + "\n"
+	totalString += cmdLine + " \n"
 	// 设置flannel参数
 	cmdLine = "etcdctl set  /coreos.com/network/config '{\"Network\": \"10.0.0.0/16\", \"SubnetLen\": 24, \"SubnetMin\": \"10.0.10.0\",\"SubnetMax\": \"10.0.20.0\", \"Backend\": {\"Type\": \"vxlan\"}}'"
-	totalString += cmdLine + "\n"
+	totalString += cmdLine + " \n"
 
 	// 写入脚本
 	//fmt.Printf("ready to write [file = %v], context ->:\n%v\n", constant.EtcdSh, totalString)
