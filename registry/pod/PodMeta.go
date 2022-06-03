@@ -28,8 +28,9 @@ type ContainerMeta struct {
 	Command        []string
 	CpuNum         int64
 	Memory         int64
-	Volumn         map[string]struct{}
+	Volumn         []string
 	Port           nat.PortSet
+	HostPort       string
 }
 
 // Pod meta data for specification
@@ -59,13 +60,14 @@ type Pod struct {
 
 // Container meta data in yaml
 type ContainerYaml struct {
-	Name    string              `yaml:"name"`
-	Image   string              `yaml:"image"`
-	Command []string            `yaml:"command"`
-	Cpu     int64               `yaml:"cpu"`
-	Memory  int64               `yaml:"memory"`
-	Volumn  map[string]struct{} `yaml:"volumn"`
-	Port    nat.PortSet         `yaml:"port"`
+	Name     string      `yaml:"name"`
+	Image    string      `yaml:"image"`
+	Command  []string    `yaml:"command"`
+	Cpu      int64       `yaml:"cpu"`
+	Memory   int64       `yaml:"memory"`
+	Volumn   []string    `yaml:"volumn"`
+	Port     nat.PortSet `yaml:"port"`
+	HostPort string      `yaml:"hostport"`
 }
 
 type PodYaml struct {

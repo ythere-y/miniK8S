@@ -11,9 +11,9 @@ spec:
       cpu: 2
       memory: 8000000000
       volumn: 
-        path: {}
       port: 
         10081/tcp: {}
+      hostport: 
     - name: cont2
       image: bfirsh/reticulate-splines
       command: [
@@ -21,6 +21,6 @@ spec:
       cpu: 4
       memory: 8000000000
       volumn: 
-        path: {}
       port: 
         10082/tcp: {}
+      hostport: 

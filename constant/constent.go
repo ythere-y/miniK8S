@@ -11,6 +11,7 @@ const (
 	PodSourceName     string = "pods"
 	NodeSourceName    string = "nodes"
 	ServiceSourceName string = "services"
+	ReplicaSourceName string = "replicaset"
 
 	CREATE string = "create"
 	DELETE string = "delete"
