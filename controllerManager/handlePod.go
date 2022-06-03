@@ -138,8 +138,7 @@ func watchPod(event *clientv3.Event) error {
 			etcd.SetKey(
 				etcd.SetPrefix(constant.RelationPrefix),
 				etcd.SetSourceType(constant.PodSourceName),
-				etcd.JustAppend(podName),
-				etcd.JustAppend(constant.NodeSourceName)))
+				etcd.JustAppend(podName)))
 		utils.HandleError("watchPod controller get node value error", err)
 		// 通知kubelet监控健康状态
 		buildKey := etcd.SetKey(
