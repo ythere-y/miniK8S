@@ -15,7 +15,8 @@ import (
 
 var noderole = " __node controller__ "
 
-func init() {
+func nodeControllerWatch() {
+
 	fmt.Printf("[Node controller] init!")
 	var watchName string
 	watchName = SetKey(

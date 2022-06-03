@@ -13,8 +13,8 @@ import (
 	"minik8s/utils"
 )
 
-func init() {
-	fmt.Printf("Pod controller init!")
+func podControllerWatch() {
+	fmt.Printf("[Pod controller] init!")
 	var watchName string
 	watchName = SetKey(
 		SetPrefix(constant.ControllerPrefix),

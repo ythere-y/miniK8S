@@ -15,7 +15,7 @@ import (
 	"minik8s/utils"
 )
 
-func init() {
+func serviceControllerWatch() {
 	fmt.Printf("Service controller init!")
 	var watchName string
 	watchName = SetKey(

@@ -17,8 +17,15 @@ func Main() {
 
 }
 
-func init() {
+func memInit() {
 	relations.PodstoNodeRela = make(map[string]string)
 	relations.NodetoPodRela = make(map[string][]string)
 	relations.ServicetoPodRela = make(map[string][]string)
+}
+
+func ControllerStartUp() {
+	memInit()
+	nodeControllerWatch()
+	podControllerWatch()
+	serviceControllerWatch()
 }

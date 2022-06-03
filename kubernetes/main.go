@@ -16,8 +16,9 @@ func Main() {
 	//Test func
 	fmt.Println("kubernetes start up~!")
 
-	StartUpMaster()
+	//StartUpMaster()
 
+	JoinAsWorker([]string{"localhost:2379", "./config/slaveNode.yaml"})
 }
 
 //CreateMasterNode

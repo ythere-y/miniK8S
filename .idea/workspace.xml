@@ -4,22 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="遇到函数使用错误，需要合并">
-      <change afterPath="$PROJECT_DIR$/cmd/startCmd.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/slaveNode.yaml" afterDir="false" />
+    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="masternode的startupOK，开始测试slave的加入">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiserver/basicOperation.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/basicOperation.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiserver/handleNode.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/handleNode.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/join.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/join.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/root.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllerManager/handleNode.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handleNode.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/environment/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/environment/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kubelet/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/handlePod.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handlePod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/handleService.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handleService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllerManager/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/kubernetes/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/dksdk/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/lab/dksdk/run.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/etcd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lab/etcd/preperation.go" beforeDir="false" afterPath="$PROJECT_DIR$/lab/etcd/preperation.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +129,8 @@
     <MESSAGE value="删减了scheduler层级，把功能放到了controller中" />
     <MESSAGE value="node的基本流程完成，开始测试" />
     <MESSAGE value="遇到函数使用错误，需要合并" />
-    <option name="LAST_COMMIT_MESSAGE" value="遇到函数使用错误，需要合并" />
+    <MESSAGE value="masternode的startupOK，开始测试slave的加入" />
+    <option name="LAST_COMMIT_MESSAGE" value="masternode的startupOK，开始测试slave的加入" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
