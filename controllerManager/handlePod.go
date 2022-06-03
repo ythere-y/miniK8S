@@ -162,9 +162,16 @@ func dealFail(event *clientv3.Event) error {
 			podName := string(event.Kv.Value)
 			// //先删除旧的Pod
 			// apiserver.CmdDeletePod([]string{podName})
-			//重新创建fail的pod
-			err = DisPodtoNode(podName)
-			utils.HandleError("dealfail recreate pod error", err)
+			//重新创建fail的pod, 就分配到原node上
+			nodeName, err := etcd.GetValueWithPrefix(
+				etcd.SetKey(
+					etcd.SetPrefix(constant.RelationPrefix),
+					etcd.SetSourceType(constant.PodSourceName),
+					etcd.JustAppend(podName),
+					etcd.JustAppend(constant.NodeSourceName)))
+			utils.HandleError("dealFail controller get node value error", err)
+			err = apiserver.DistributePodtoNode(nodeName, podName)
+			utils.HandleError("Distribute pod to node error", err)
 		}
 		err = nil
 	}

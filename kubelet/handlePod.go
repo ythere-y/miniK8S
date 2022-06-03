@@ -290,7 +290,7 @@ func kubeletWatchPod(podname string) {
 						buildvalue := podname
 						apiserver.SyncPut(buildkey, buildvalue)
 						// 给controller时间新建pod
-						time.Sleep(12 * time.Second)
+						time.Sleep(60 * time.Second)
 						break
 					}
 				}
