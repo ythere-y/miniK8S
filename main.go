@@ -1,6 +1,6 @@
 package main
 
-import "minik8s/cmd"
+import "minik8s/lab/localhost"
 
 // func main() {
 // 	//service.SerMain()
@@ -35,7 +35,8 @@ import "minik8s/cmd"
 var rootName string
 
 func main() {
-	cmd.RootCmdRun() // 关于命令行的测试
+	//cmd.RootCmdRun() // 关于命令行的测试
+	localhost.Test()
 
 	//utils.CopyandRun()
 	//slurm := utils.ParseYaml(utils.Dir + "test.yaml")

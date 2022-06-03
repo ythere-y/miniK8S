@@ -21,4 +21,6 @@ func Test() {
 	dksdk.StartContainer(id, cli)
 	id2 := dksdk.CreateContainer(cli, "nginx", nil, source, "name2", binds, nil, "", id)
 	dksdk.StartContainer(id2, cli)
+	dksdk.StopContainer("name1", cli)
+	dksdk.RemoveContainer("name1", cli)
 }

@@ -158,6 +158,12 @@ func StopContainer(containerID string, cli *client.Client) {
 // 删除
 func RemoveContainer(containerID string, cli *client.Client) (string, error) {
 	err := cli.ContainerRemove(context.Background(), containerID, types.ContainerRemoveOptions{})
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	} else {
+		fmt.Printf("容器%s已经被删除\n", containerID)
+	}
 	//log(err)
 	return containerID, err
 }
