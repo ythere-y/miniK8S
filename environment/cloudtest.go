@@ -91,6 +91,48 @@ func startupEtcd(thisIP string) {
 	}
 
 }
+func startupFlannel(targetIP string) {
+	var (
+		totalString string
+		cmdLine     string
+		get         string
+		err         error
+	)
+	// 启动flannel
+	cmdLine = "flannel -etcd-endpoints \"http://" + targetIP + ":4001,http://" + targetIP + "192.168.1.13:2379\""
+	totalString += cmdLine + " &\n"
+
+	// 写入脚本
+	script.Echo(totalString).WriteFile(constant.EnvironmentSh)
+
+	// 检验写入结果
+	get, err = script.File(constant.EnvironmentSh).String()
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("check the file :\n %v", get)
+	return
+	// 以下是执行该脚本内容的部分
+	check("bash")
+
+	goExecutable, _ := exec.LookPath("bash")
+
+	cmdGoVer := &exec.Cmd{
+		Path:   goExecutable,
+		Args:   []string{goExecutable, constant.EnvironmentSh},
+		Stdout: os.Stdout,
+		Stderr: os.Stderr,
+	}
+
+	fmt.Println(cmdGoVer.String())
+
+	if err := cmdGoVer.Run(); err != nil {
+		fmt.Println("Error: ", err)
+	}
+
+}
 
 func main() {
 	fmt.Print("hello world\n")
