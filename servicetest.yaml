@@ -3,8 +3,7 @@ metadata:
   name: testservice
   labels:
     app: "nginx"
-port: 123
-targetPort: 321
+serviceip: "192.168.30.30:30"
 selector:
   name: "hello"
   app: "world"

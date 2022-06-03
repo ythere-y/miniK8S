@@ -17,8 +17,6 @@ import (
 
 func kubeletePodWatch() {
 
-	fmt.Println("[Kubelet] [name = " + NodeName + "] Main started!")
-
 	watchName := SetKey(
 		SetPrefix(constant.RelationPrefix),
 		SetSourceType(constant.NodeSourceName),

@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="检测了pod创建、删除的流程，pod get还有bug">
+    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="解决pod下的残留数据">
+      <change afterPath="$PROJECT_DIR$/kubelet/handleService.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/environment/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/environment/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/handlePod.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/handlePod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/registry/service/ServiceController.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/service/ServiceController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/registry/service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/service/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicetest.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/servicetest.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shellScripts/envSetUp.go" beforeDir="false" afterPath="$PROJECT_DIR$/shellScripts/envSetUp.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,7 +136,8 @@
     <MESSAGE value="slave的创建与master相关的命令基本完成，还需要slave的落地实现" />
     <MESSAGE value="先创建master后跟slave成功" />
     <MESSAGE value="检测了pod创建、删除的流程，pod get还有bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="检测了pod创建、删除的流程，pod get还有bug" />
+    <MESSAGE value="解决pod下的残留数据" />
+    <option name="LAST_COMMIT_MESSAGE" value="解决pod下的残留数据" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

@@ -26,7 +26,10 @@ func Main() {
 func StartUp() {
 	fmt.Printf("[Kubelete] [name = %v ] [this IP = %v] start up \n", config.Configs.ThisNode.Name, config.Configs.ThisNode.Addr)
 	NodeName = config.Configs.ThisNode.Name
+	fmt.Println("[Kubelet] [name = " + NodeName + "] Main started!")
+
 	kubeletePodWatch()
+	kubeleteServiceWatch()
 }
 
 func init() {

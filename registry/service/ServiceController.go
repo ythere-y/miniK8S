@@ -2,12 +2,10 @@ package service
 
 import (
 	"fmt"
+	"k8s.io/apimachinery/pkg/util/intstr"
 	"minik8s/K8SClient"
 	"minik8s/apimachinery/pkg/apis/core"
 	"minik8s/apimachinery/pkg/apis/meta"
-	"minik8s/registry/pod"
-
-	"k8s.io/apimachinery/pkg/util/intstr"
 )
 
 var serviceController1 = ServiceController{}
@@ -72,33 +70,6 @@ func GetServiceByName(name string) {
 		if service.Name == name {
 			service.Display()
 		}
-	}
-}
-
-func RemoveAllService() {
-	for _, service := range serviceController1.ServiceList {
-		for _, pd := range service.Pods {
-			pod.RemovePod(pd.Meta.Uid)
-		}
-	}
-}
-
-func DeleteServiceByName(name string) {
-	for index, service := range serviceController1.ServiceList {
-		if service.Name == name {
-			fmt.Println("delete the servcie\n")
-			service.Display()
-			service.DeleteServcie()
-		}
-		serviceController1.ServiceList = append(serviceController1.ServiceList[:index], serviceController1.ServiceList[index+1:]...)
-	}
-}
-func DeleteServiceByUID(UID uint32) {
-	for index, service := range serviceController1.ServiceList {
-		if service.UID == UID {
-			service.DeleteServcie()
-		}
-		serviceController1.ServiceList = append(serviceController1.ServiceList[:index], serviceController1.ServiceList[index+1:]...)
 	}
 }
 

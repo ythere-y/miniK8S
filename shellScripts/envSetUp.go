@@ -144,6 +144,7 @@ func startupEtcd(thisIP string) {
 	}
 
 }
+
 func startupFlannel(targetIP string) {
 	var (
 		totalString string

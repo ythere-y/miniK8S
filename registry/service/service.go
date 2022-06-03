@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"minik8s/meta"
-	pod2 "minik8s/registry/pod"
 	"minik8s/utils"
 	"strconv"
 	"time"
@@ -31,19 +30,18 @@ type ServiceYaml struct {
 	}
 	Selector map[string]string `yaml:"selector"`
 
-	Port       int `yaml:"port"`
-	TargetPort int `yaml:"targetPort"`
+	ServiceIP string `yaml:"serviceip"`
 }
 
 type Service struct {
 	meta.TypeMeta
 	meta.ObjectMeat
 
-	Selector   map[string]string
-	Pods       []pod2.Pod
-	Port       int
-	TargetPort int
-	Type       ServiceType
+	Selector    map[string]string
+	serviceIP   string
+	servicePort string
+	podIp       []string
+	Type        ServiceType
 }
 
 func (mini *Service) Build(yaml ServiceYaml) {
@@ -52,15 +50,11 @@ func (mini *Service) Build(yaml ServiceYaml) {
 	mini.UID = utils.HashToUid(mini.Name)
 	mini.CreationTimestamp = time.Now()
 
-	mini.Port = yaml.Port
-	mini.TargetPort = yaml.TargetPort
+	mini.serviceIP = yaml.ServiceIP
 
 	mini.Selector = yaml.Selector
 
 	mini.Type = ServiceTypeClusterIP
-	for _, pod := range pod2.KPods {
-		mini.Pods = append(mini.Pods, pod)
-	}
 }
 
 //TODO:delete this test
@@ -76,6 +70,7 @@ func ServicePreDisplay() {
 
 	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", "NAME")
 	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", "TYPE")
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", "ADDR")
 	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", "PORT")
 	fmt.Printf("%s", "AGE")
 	fmt.Println()
@@ -84,7 +79,9 @@ func ServicePreDisplay() {
 func (mini Service) Display() {
 	fmt.Printf("%-"+strconv.Itoa(blockSize)+"s", mini.Name)
 	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", mini.Type)
-	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", mini.Port)
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", mini.serviceIP)
+	fmt.Printf("%-"+strconv.Itoa(blockSize)+"v", mini.servicePort)
+
 	fmt.Printf("%v", utils.GetAge(mini.CreationTimestamp))
 	fmt.Println()
 
@@ -124,10 +121,4 @@ func ServiceYamlToService(serviceyaml ServiceYaml) Service {
 	var newservice Service
 	newservice.Build(serviceyaml)
 	return newservice
-}
-
-func (mini Service) DeleteServcie() {
-	for _, p := range mini.Pods {
-		pod2.RemovePod(p.Meta.Uid)
-	}
 }
