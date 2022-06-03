@@ -115,7 +115,7 @@ func DeleteRs(event *clientv3.Event) error {
 					etcd.JustAppend(rspodname))
 				rspodDelTar = append(rspodDelTar, rspodkey)
 				// delete pod
-				apiserver.CmdDeletePod(rspodname)
+				apiserver.CmdDeletePod([]string{rspodname})
 			}
 		}
 		// delete rs info and relation info
