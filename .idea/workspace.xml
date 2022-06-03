@@ -1,157 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
-    <option name="autoReloadType" value="ALL" />
+    <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88a08cd9-bc11-4dd0-a9f3-5182b0069806" name="变更" comment="删除sh文件">
+    <list default="true" id="e4d3e4a0-3c7c-4449-8f61-5a3892b6467e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constant/constent.go" beforeDir="false" afterPath="$PROJECT_DIR$/constant/constent.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/environment/cloudtest.go" beforeDir="false" afterPath="$PROJECT_DIR$/environment/cloudtest.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/environment/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/environment/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Go File" />
-      </list>
-    </option>
-  </component>
-  <component name="GOROOT" url="file://C:/Program Files/Go" />
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="iptables" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProjectId" id="29Q0phrmwUvYGe8rR2lzWpIWM2N" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.watchers.conflict.with.on.save.actions.check.performed&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/06-2021Spring/云操作系统设计与实践/Minik8s_lab/minik8s/cmd&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
-  }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s\cmd" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s" />
-      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s\constant" />
-      <recent name="D:\06-2021Spring\云操作系统设计与实践\Minik8s_lab\minik8s\registry" />
-    </key>
-  </component>
   <component name="RunManager">
-    <configuration name="go build minik8s" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="minik8s" />
       <working_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
       <package value="minik8s" />
       <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$/main.go" />
+      <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Go 构建.go build minik8s" />
-        <item itemvalue="Go 构建.go build minik8s" />
-        <item itemvalue="Go 构建.go build minik8s" />
-      </list>
-    </recent_temporary>
-  </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="iptables" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="merge" />
-    <MESSAGE value="first_try" />
-    <MESSAGE value="修正换行符号错误" />
-    <MESSAGE value="修复binds问题" />
-    <MESSAGE value="cmd-apiserver层完成" />
-    <MESSAGE value="到controller层完成，再次更改了relation的目录结构，其他地方可能尚未匹配" />
-    <MESSAGE value="删减了scheduler层级，把功能放到了controller中" />
-    <MESSAGE value="node的基本流程完成，开始测试" />
-    <MESSAGE value="遇到函数使用错误，需要合并" />
-    <MESSAGE value="masternode的startupOK，开始测试slave的加入" />
-    <MESSAGE value="slave的创建与master相关的命令基本完成，还需要slave的落地实现" />
-    <MESSAGE value="先创建master后跟slave成功" />
-    <MESSAGE value="检测了pod创建、删除的流程，pod get还有bug" />
-    <MESSAGE value="解决pod下的残留数据" />
-    <MESSAGE value="iptables终于接近了落地，实际发挥作用还有问题" />
-    <MESSAGE value="命令构建尝试" />
-    <MESSAGE value="增加更多打印" />
-    <MESSAGE value="增加Scripts目录" />
-    <MESSAGE value="路径测试完成，试试云主机启动测试" />
-    <MESSAGE value="修复命令单词错误" />
-    <MESSAGE value="增加后台运行" />
-    <MESSAGE value="运行flannel的脚本" />
-    <MESSAGE value="启动etcd和flannel" />
-    <MESSAGE value="在etcd和flannel之间增加sleep" />
-    <MESSAGE value="删除sh文件" />
-    <option name="LAST_COMMIT_MESSAGE" value="删除sh文件" />
-  </component>
-  <component name="VgoProject">
-    <settings-migrated>true</settings-migrated>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/environment/main.go</url>
-          <line>37</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="minik8s" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="DIRECTORY" />
+      <package value="minik8s" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
   </component>
 </project>

@@ -30,6 +30,7 @@ const (
 
 	EtcdSh        string = "./Scripts/etcdSh.sh"
 	EnvironmentSh string = "./Scripts/envStartUp.sh"
+	TmpSh         string = "./Scripts/tmp.sh"
 	FlannelSh     string = "./Scripts/flannelSh.sh"
 
 	MasterNodeFile string = "./config/masterNode.yaml"

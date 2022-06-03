@@ -6,7 +6,6 @@ import (
 	"minik8s/constant"
 	"os"
 	"os/exec"
-	"time"
 )
 
 func check(name string) string {
@@ -29,7 +28,6 @@ func startupEtcd(thisIP string) {
 		listenArg    string
 		totalString  string
 		//count        int64
-		get string
 		err error
 	)
 
@@ -45,70 +43,47 @@ func startupEtcd(thisIP string) {
 		panic(err)
 	}
 
-	// 写入脚本
-	//fmt.Printf("ready to write [file = %v], context ->:\n%v\n", constant.EtcdSh, totalString)
-
-	// function to check if file exists
-	_, err = os.Stat(constant.EtcdSh)
-
-	// check if error is "file not exists"
-	if os.IsNotExist(err) {
-		os.Create(constant.EtcdSh)
-	}
-
-	_, err = script.IfExists(constant.EtcdSh).Echo(totalString).WriteFile(constant.EtcdSh)
-
-	if err != nil {
-		panic(err)
-	}
-	// 检验写入结果
-	get, err = script.File(constant.EtcdSh).String()
-
-	fmt.Printf("check the file :\n %v", get)
-
-	// 以下是执行该脚本内容的部分
-	check("bash")
-
-	goExecutable, _ := exec.LookPath("bash")
-
-	cmdGoVer := &exec.Cmd{
-		Path:   goExecutable,
-		Args:   []string{goExecutable, constant.EtcdSh},
-		Stdout: os.Stdout,
-		Stderr: os.Stderr,
-	}
-
-	fmt.Println(cmdGoVer.String())
-
-	if err := cmdGoVer.Run(); err != nil {
-		fmt.Println("Error: ", err)
-	}
-	os.Remove(constant.EtcdSh)
+	writeAndRun(constant.EtcdSh, totalString)
 }
+func setFlannelConfig(targetIP string) {
+	var (
+		totalString string
+		cmdLine     string
+	)
+
+	// 检查etcd运行状态
+	cmdLine = "etcdctl  --endpoints http://" + targetIP + ":2379 member list\n"
+	totalString += cmdLine + " \n"
+	// 设置flannel参数
+	cmdLine = "etcdctl set  /coreos.com/network/config '{\"Network\": \"10.0.0.0/16\", \"SubnetLen\": 24, \"SubnetMin\": \"10.0.10.0\",\"SubnetMax\": \"10.0.20.0\", \"Backend\": {\"Type\": \"vxlan\"}}'"
+	totalString += cmdLine + " \n"
+
+	writeAndRun(constant.TmpSh, totalString)
+}
+
 func startupFlannel(targetIP string) {
 	var (
 		totalString string
 		cmdLine     string
-		get         string
-		err         error
 	)
-	/*
-		// 检查etcd运行状态
-		cmdLine = "etcdctl  --endpoints http://" + targetIP + ":2379 member list\n"
-		totalString += cmdLine + " \n"
-		// 设置flannel参数
-		cmdLine = "etcdctl set  /coreos.com/network/config '{\"Network\": \"10.0.0.0/16\", \"SubnetLen\": 24, \"SubnetMin\": \"10.0.10.0\",\"SubnetMax\": \"10.0.20.0\", \"Backend\": {\"Type\": \"vxlan\"}}'"
-		totalString += cmdLine + " \n"
-	*/
+
 	// 启动flannel
 	cmdLine = "flannel -etcd-endpoints \"http://" + targetIP + ":4001,http://" + targetIP + ":2379\""
 	totalString += cmdLine + " &\n"
 
+	writeAndRun(constant.FlannelSh, totalString)
+}
+
+func writeAndRun(filename string, context string) {
+	var (
+		get string
+		err error
+	)
 	// 写入脚本
-	script.Echo(totalString).WriteFile(constant.FlannelSh)
+	script.Echo(context).WriteFile(filename)
 
 	// 检验写入结果
-	get, err = script.File(constant.FlannelSh).String()
+	get, err = script.File(filename).String()
 
 	if err != nil {
 		panic(err)
@@ -122,7 +97,7 @@ func startupFlannel(targetIP string) {
 
 	cmdGoVer := &exec.Cmd{
 		Path:   goExecutable,
-		Args:   []string{goExecutable, constant.FlannelSh},
+		Args:   []string{goExecutable, filename},
 		Stdout: os.Stdout,
 		Stderr: os.Stderr,
 	}
@@ -132,13 +107,37 @@ func startupFlannel(targetIP string) {
 	if err := cmdGoVer.Run(); err != nil {
 		fmt.Println("Error: ", err)
 	}
-	os.Remove(constant.FlannelSh)
+	os.Remove(constant.TmpSh)
 
+}
+
+func iptablesDelete(srcIP string, srcPort string, desIP string, desPort string) {
+	var (
+		totalString string
+		cmdLine     string
+	)
+	cmdLine = "iptables -t nat -D OUTPUT -d " + srcIP + "/32 -p tcp -m tcp --dport " + srcPort + " -j DNAT --to-destination " + desIP + ":" + desPort
+
+	totalString += cmdLine + " \n"
+	cmdLine = "iptables -t nat -D PREROUTING -d " + srcIP + "/32 -p tcp -m tcp --dport " + srcPort + " -j DNAT --to-destination " + desIP + ":" + desPort
+	totalString += cmdLine + " \n"
+	writeAndRun(constant.TmpSh, totalString)
+}
+
+func iptablesSet(srcIP string, srcPort string, desIP string, desPort string) {
+	var (
+		totalString string
+		cmdLine     string
+	)
+	cmdLine = "iptables -t nat -A OUTPUT -d " + srcIP + "/32 -p tcp -m tcp --dport " + srcPort + " -j DNAT --to-destination " + desIP + ":" + desPort
+
+	totalString += cmdLine + " \n"
+	cmdLine = "iptables -t nat -A PREROUTING -d " + srcIP + "/32 -p tcp -m tcp --dport " + srcPort + " -j DNAT --to-destination " + desIP + ":" + desPort
+	totalString += cmdLine + " \n"
+	writeAndRun(constant.TmpSh, totalString)
 }
 
 func main() {
 	fmt.Print("hello world\n")
-	startupEtcd("192.168.1.4")
-	time.Sleep(5 * time.Second)
-	startupFlannel("192.168.1.4")
+	iptablesDelete("10.10.10.10", "10", "192.168.1.4", "80")
 }
