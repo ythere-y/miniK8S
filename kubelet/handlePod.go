@@ -36,10 +36,10 @@ func nodehandler(event *clientv3.Event) error {
 		fmt.Printf("kubelet handling Delete key = %v\n", string(event.Kv.Key))
 
 		podName := utils.GetLastWord(string(event.Kv.Key))
-		StopPod(podName)
+		cli := StopPod(podName)
 		RemovePod(podName)
-		StopPod(podName + "-pause")
-		RemovePod(podName + "-pause")
+		dksdk.StopContainer(podName+"-pause", cli)
+		dksdk.RemoveContainer(podName+"-pause", cli)
 	case mvccpb.PUT:
 		fmt.Printf("kubelet handling key = %v, value = %v\n", string(event.Kv.Key), string(event.Kv.Value))
 		// 增加/修改 一个pod的操作
@@ -131,7 +131,7 @@ func CliCreatePodByPod(cli *client.Client, pod pod.Pod, net string) uint32 {
  * API: stop pod
  * cli: docker client; podId: pod id specified to stop
 **/
-func StopPod(name string) {
+func StopPod(name string) *client.Client {
 	for index, pod := range KPods {
 		if pod.Meta.Name == name {
 			// get its client
@@ -141,8 +141,10 @@ func StopPod(name string) {
 			}
 			// stop manually, failed
 			KPods[index].Stats.Status = POD_FAILED
+			return cli
 		}
 	}
+	return nil
 }
 
 //RemovePod
@@ -150,7 +152,7 @@ func StopPod(name string) {
  * API: remove pod
  * cli: docker client; podId: pod to remove
 **/
-func RemovePod(name string) {
+func RemovePod(name string) *client.Client {
 	for index, pod := range KPods {
 		if pod.Meta.Name == name {
 			// get its client
@@ -161,8 +163,10 @@ func RemovePod(name string) {
 			}
 			// delete pod info from global list
 			KPods = append(KPods[:index], KPods[index+1:]...)
+			return cli
 		}
 	}
+	return nil
 }
 
 // endregion
