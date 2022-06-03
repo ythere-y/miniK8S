@@ -18,7 +18,7 @@ import (
 // region 听
 
 func kubeletePodWatch() {
-
+	fmt.Printf("kubelet start watch node name = %v\n", NodeName)
 	watchName := SetKey(
 		SetPrefix(constant.KubeletPrefix),
 		SetSourceType(constant.NodeSourceName),
@@ -34,8 +34,10 @@ func nodehandler(event *clientv3.Event) error {
 		fmt.Printf("kubelet handling key = %v, value = %v\n", string(event.Kv.Key), string(event.Kv.Value))
 		// 增加一个pod的操作
 		operation := utils.GetLastWord(string(event.Kv.Key))
+		var podInfoGround pod.Pod
 		var podInfo *pod.Pod
-		err = json.Unmarshal(event.Kv.Key, podInfo)
+		err = json.Unmarshal(event.Kv.Value, &podInfoGround)
+		podInfo = &podInfoGround
 		if err != nil {
 			panic(err)
 		}
@@ -47,7 +49,7 @@ func nodehandler(event *clientv3.Event) error {
 			CreateAndRunPod(podInfo)
 			podIP := environment.GetPodIPByName(podName)
 			podInfo.Addr = podIP
-		case constant.RemoveFlag:
+		case constant.DELETE:
 			// 是删除命令
 			StopPod(podName)
 			RemovePod(podName)

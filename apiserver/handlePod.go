@@ -197,8 +197,9 @@ func ActDeletePods(name string, delpod pod2.Pod) {
 
 	setKey := etcd.SetKey(
 		etcd.SetPrefix(constant.KubeletPrefix),
-		etcd.SetSourceType(constant.PodSourceName),
-		etcd.SetName(delpod.Meta.Name),
+		etcd.SetSourceType(constant.NodeSourceName),
+		etcd.SetName(nodeName),
+		etcd.JustAppend(delpod.Meta.Name),
 		etcd.JustAppend(constant.DELETE))
 	setVal, err := json.Marshal(delpod)
 	if err != nil {

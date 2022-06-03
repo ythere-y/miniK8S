@@ -6,11 +6,22 @@
   <component name="ChangeListManager">
     <list default="true" id="e4d3e4a0-3c7c-4449-8f61-5a3892b6467e" name="Changes" comment="etcd中增加kubelet目录交换命令">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scripts/tmp.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/apimain.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/apimain.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/handleNode.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/handleNode.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiserver/handlePod.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/handlePod.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apiserver/handleService.go" beforeDir="false" afterPath="$PROJECT_DIR$/apiserver/handleService.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllerManager/global.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/global.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllerManager/handleNode.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handleNode.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllerManager/handlePod.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllerManager/handlePod.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/registry/service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/registry/service/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/test.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/test.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/slaveNode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/slaveNode.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/environment/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/environment/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/handlePod.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/handlePod.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubelet/handleService.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubelet/handleService.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/master.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/master.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kubernetes/worker.go" beforeDir="false" afterPath="$PROJECT_DIR$/kubernetes/worker.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab/dksdk/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/lab/dksdk/run.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servicetest.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/servicetest.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +44,15 @@
       <filePath value="$PROJECT_DIR$" />
       <method v="2" />
     </configuration>
+    <configuration name="go build minik8s" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="minik8s" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="minik8s" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
       <module name="minik8s" />
       <working_directory value="$PROJECT_DIR$" />
@@ -43,6 +63,11 @@
       <framework value="gotest" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build minik8s" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

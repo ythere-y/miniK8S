@@ -10,6 +10,7 @@ import (
 	"minik8s/environment"
 	. "minik8s/lab/etcd"
 	"minik8s/registry/service"
+	"minik8s/utils"
 )
 
 func kubeleteServiceWatch() {
@@ -28,32 +29,35 @@ func servicehandler(event *clientv3.Event) error {
 
 	switch event.Type {
 
-	case mvccpb.DELETE:
-		// 删除一个service的操作
-		fmt.Printf("kubelet handling Delete service = %v\n", string(event.Kv.Key))
-		var servieInfo service.Service
-		// 遍历写入iptables
-		for _, podip := range servieInfo.PodIp {
-			err = environment.RemoveIptables(servieInfo.ServiceIP, servieInfo.ServicePort, podip, servieInfo.TargetPort)
-			if err != nil {
-				panic(err)
-			}
-		}
-
 	case mvccpb.PUT:
 		// 增加一个services的操作
-		fmt.Printf("kubelet handling key = %v, value = %v\n", string(event.Kv.Key), string(event.Kv.Value))
+		fmt.Printf("\n\n[**]kubelet handling key = %v, value = %v\n", string(event.Kv.Key), string(event.Kv.Value))
 		var servieInfo service.Service
-
-		// 遍历写入iptables
-		for _, podip := range servieInfo.PodIp {
-			err = environment.SetIptables(servieInfo.ServiceIP, servieInfo.ServicePort, podip, servieInfo.TargetPort)
-			if err != nil {
-				panic(err)
-			}
-		}
-
+		operation := utils.GetLastWord(string(event.Kv.Key))
+		fmt.Printf("[***] the operation is %v\n", operation)
 		err = json.Unmarshal(event.Kv.Value, &servieInfo)
+
+		switch operation {
+		case constant.CREATE:
+			fmt.Printf("[set]\n")
+			// 遍历写入iptables
+			for _, podip := range servieInfo.PodIp {
+				err = environment.SetIptables(servieInfo.ServiceIP, servieInfo.ServicePort, podip, servieInfo.TargetPort)
+				if err != nil {
+					panic(err)
+				}
+			}
+		case constant.DELETE:
+			fmt.Printf("[remove]\n")
+			// 遍历写入iptables
+			for _, podip := range servieInfo.PodIp {
+				err = environment.RemoveIptables(servieInfo.ServiceIP, servieInfo.ServicePort, podip, servieInfo.TargetPort)
+				if err != nil {
+					panic(err)
+				}
+			}
+
+		}
 
 	}
 	return err

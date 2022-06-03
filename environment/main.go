@@ -8,6 +8,7 @@ import (
 	"minik8s/constant"
 	"os"
 	"os/exec"
+	"time"
 )
 
 func Main() {
@@ -19,6 +20,7 @@ func EtcdStartUp(thisIP string) error {
 	)
 	fmt.Printf("[Etcd] start up, IP = %v\n", config.Configs.EtcdIp)
 	startupEtcd(thisIP)
+	time.Sleep(10 * time.Second)
 	setFlannelConfig(thisIP)
 	err = nil
 	return err

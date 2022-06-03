@@ -22,15 +22,16 @@ func SaveServiceInfo(service service.Service) error {
 	)
 	key := etcd.SetKey(
 		etcd.SetPrefix(constant.RegistryPrefix),
-		etcd.SetSourceType(constant.PodSourceName),
-		etcd.SetPodName(service.Name))
+		etcd.SetSourceType(constant.ServiceSourceName),
+		etcd.SetPodName(service.Name),
+		etcd.JustAppend(constant.CREATE))
 	value, err := json.Marshal(service)
 	setkeys = append(setkeys, key)
 	setvals = append(setvals, string(value))
 
 	key = etcd.SetKey(
 		etcd.SetPrefix(constant.KubeletPrefix),
-		etcd.SetSourceType(constant.PodSourceName),
+		etcd.SetSourceType(constant.ServiceSourceName),
 		etcd.SetPodName(service.Name),
 		etcd.JustAppend(constant.CREATE))
 	value, err = json.Marshal(service)
@@ -108,7 +109,7 @@ func CmdDeleteService(names []string) {
 	nameSet := utils.ParseNames(names)
 	for _, name := range nameSet {
 		path := etcd.SetKey(
-			etcd.SetPrefix(constant.RelationPrefix),
+			etcd.SetPrefix(constant.RegistryPrefix),
 			etcd.SetSourceType(constant.ServiceSourceName),
 			etcd.SetPodName(name))
 		if CheckIfExist(path) == false {

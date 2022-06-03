@@ -22,7 +22,7 @@ var serviceget = &cobra.Command{
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
-			apiserver.DisplayAllNodeInfo()
+			apiserver.DisplayAllServiceInfo()
 		} else {
 			apiserver.DisplayNodeInfo(args[0])
 		}
