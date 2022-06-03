@@ -42,6 +42,7 @@ func podControllerWatch() {
 // region 增
 
 func createPod(event *clientv3.Event) error {
+	fmt.Printf("controller start creating pod\n")
 	var err error
 	switch event.Type {
 	case mvccpb.PUT:
