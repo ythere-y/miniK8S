@@ -26,7 +26,7 @@ func init() {
 	RootCmd.AddCommand(TestCmd)
 	RootCmd.AddCommand(joinCmd)
 	RootCmd.AddCommand(RsCmd)
-	RootCmd.AddCommand(AutoScalerCmd)
+	// RootCmd.AddCommand(AutoScalerCmd)
 	RootCmd.AddCommand(ReloadCmd)
 	RootCmd.AddCommand(startCmd)
 	RootCmd.AddCommand(NodeCmd)
