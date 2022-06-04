@@ -1,16 +1,21 @@
 package kubelet
 
 import (
+	"encoding/json"
 	"fmt"
-	"github.com/docker/docker/client"
-	"go.etcd.io/etcd/api/v3/mvccpb"
-	clientv3 "go.etcd.io/etcd/client/v3"
 	"minik8s/apiserver"
 	"minik8s/constant"
+	"minik8s/environment"
 	"minik8s/lab/dksdk"
+	"minik8s/lab/etcd"
 	. "minik8s/lab/etcd"
 	"minik8s/registry/pod"
 	"minik8s/utils"
+	"time"
+
+	"github.com/docker/docker/client"
+	"go.etcd.io/etcd/api/v3/mvccpb"
+	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
 // region 听
@@ -63,10 +68,10 @@ func nodehandler(event *clientv3.Event) error {
 			podInfo.Addr = podIP
 		case constant.DELETE:
 			// 是删除命令
-					cli := StopPod(podName)
-		RemovePod(podName)
-		dksdk.StopContainer(podName+"-pause", cli)
-		dksdk.RemoveContainer(podName+"-pause", cli)
+			cli := StopPod(podName)
+			RemovePod(podName)
+			dksdk.StopContainer(podName+"-pause", cli)
+			dksdk.RemoveContainer(podName+"-pause", cli)
 		default:
 			fmt.Printf("op = %v, it not in any!\n", operation)
 		}
