@@ -11,10 +11,11 @@ import (
 	"net"
 	"os"
 	"path"
+	"strings"
 	"time"
 )
 
-var Dir = "D:/Schoolwork/2022_spring/CloudComputing/labs/Minik8s/minik8s/src/cuda/"
+var Dir = "/root/work/minik/minik8s/cuda/"
 
 func check(e error) {
 	if e != nil {
@@ -72,7 +73,7 @@ func SSHConnect(user, password, host string, port int) (*ssh.Session, error) {
 	return session, nil
 }
 
-func RunSsh(cmd string) {
+func RunSsh(cmd string) string {
 
 	//var stdOut, stdErr bytes.Buffer
 
@@ -105,7 +106,8 @@ func RunSsh(cmd string) {
 
 	}
 
-	log.Println("命令输出:", string(combo))
+	//log.Println("命令输出:", string(combo))
+	return string(combo)
 
 }
 
@@ -255,7 +257,29 @@ func Submit(yfile string, cfile string) {
 	check(err)
 	err = ScpCopy(cfile, "/lustre/home/acct-stu/stu610/cuda")
 	check(err)
-	RunSsh("cd /lustre/home/acct-stu/stu610/cuda; sbatch " + path.Base(slurmFile))
+	ret := RunSsh("cd /lustre/home/acct-stu/stu610/cuda; sbatch " + path.Base(slurmFile))
+	fmt.Println(ret)
+
+}
+
+func GetStat(name string) []string {
+	res := RunSsh("sacct | grep " + name)
+	arr := strings.Fields(res)
+	size := len(arr)
+	fmt.Println("JobId: " + arr[size-7] + "\t\tName: " + arr[size-6] + "\t\tState: " + arr[size-2])
+	return arr
+}
+
+func GetRes(name string) {
+	res := RunSsh("sacct | grep " + name)
+	arr := strings.Fields(res)
+	size := len(arr)
+	if arr[size-2] == "COMPLETED" || arr[size-2] == "FAILED" {
+		str := RunSsh("cd cuda; cat " + arr[size-7] + ".out")
+		fmt.Println("output:\n" + str)
+	} else {
+		fmt.Println("Job uncompleted\n" + "State: " + arr[size-2])
+	}
 
 }
 

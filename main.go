@@ -54,6 +54,25 @@ func Debug() {
 	apiserver.DisplayAllPodsInfo()
 }
 func main() {
+	// cmd.RootCmdRun() // 关于命令行的测试
+	//rootContainer.Test()
+
+	//fmt.Println(dns.RunCmd("ls"))
+	//out := dns.ParseYaml("./dns/dns.yaml")
+	//dns.C2Dock(out)
+
+	//utils.CopyandRun()
+	//slurm := utils.ParseYaml(utils.Dir + "test.yaml")
+	//fmt.Print(slurm)
+	//utils.Slu2File(slurm)
+	//utils.Submit(utils.Dir+"test.yaml", utils.Dir+"matrix.cu")
+	//utils.GetStat("matrix")
+	//utils.GetRes("matrix")
+
+	//rootContainer.Test()
+	//utils.GetRes("test002")
+	//fmt.Println(err.Error())
+
 	//log.Println("hello world")
 	//Debug()
 	//shellScripts.Main()
@@ -61,6 +80,7 @@ func main() {
 	//watchwithTimeTest() // 关于定时watch的测试
 	//controllerManager.ControllerStartUp()
 	//kubernetes.Test() // kubernetes的测试部分
+	//go kubernetes.Main() // kubernetes的测试部分
 	//go cni.Main() // 测试CNI插件功能部分
 	//go environment.Main() //测试启动前的环境准备
 	//go controllerManager.Main() // 启动controller manager

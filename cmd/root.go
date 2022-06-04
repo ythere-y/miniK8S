@@ -31,6 +31,8 @@ func init() {
 	RootCmd.AddCommand(startCmd)
 	RootCmd.AddCommand(NodeCmd)
 	RootCmd.AddCommand(exitCmd)
+	RootCmd.AddCommand(CudaCmd)
+	RootCmd.AddCommand(DnsCmd)
 }
 
 var rootName string

@@ -48,6 +48,7 @@ func RunRootContainer(name string) string {
 		panic(err)
 	}
 
+	//-p 8088:80
 	runCmd := "docker run -d --name " + name + " busybox /bin/sh -c \"while true; do echo hello world; sleep 1; done\" " + follow + "\n"
 
 	_, err = script.Echo(runCmd).WriteFile("./lab/dksdk/run.sh")
@@ -169,6 +170,12 @@ func StopContainer(containerID string, cli *client.Client) {
 // 删除
 func RemoveContainer(containerID string, cli *client.Client) (string, error) {
 	err := cli.ContainerRemove(context.Background(), containerID, types.ContainerRemoveOptions{})
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	} else {
+		fmt.Printf("容器%s已经被删除\n", containerID)
+	}
 	//log(err)
 	return containerID, err
 }

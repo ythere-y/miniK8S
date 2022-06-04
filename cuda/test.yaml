@@ -1,6 +1,6 @@
 kind: Slurm
 metadata:
-  name: test002
+  name: matrix
   partition: dgx2
 spec:
   n: 1
