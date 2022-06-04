@@ -1,30 +1,24 @@
 package kubelet
 
 import (
-	"encoding/json"
 	"fmt"
-	"minik8s/apiserver"
-	"minik8s/constant"
-	"minik8s/lab/dksdk"
-	"minik8s/lab/etcd"
-	. "minik8s/lab/etcd"
-	"minik8s/registry/pod"
-	"minik8s/utils"
-	"time"
-
 	"github.com/docker/docker/client"
 	"go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
+	"minik8s/apiserver"
+	"minik8s/constant"
+	"minik8s/lab/dksdk"
+	. "minik8s/lab/etcd"
+	"minik8s/registry/pod"
+	"minik8s/utils"
 )
 
 // region 听
 
 func kubeletePodWatch() {
-
-	fmt.Println("[Kubelet] [name = " + NodeName + "] Main started!")
-
+	fmt.Printf("kubelet start watch node name = %v\n", NodeName)
 	watchName := SetKey(
-		SetPrefix(constant.RelationPrefix),
+		SetPrefix(constant.KubeletPrefix),
 		SetSourceType(constant.NodeSourceName),
 		SetNodeName(NodeName),
 	)
@@ -46,28 +40,33 @@ func nodehandler(event *clientv3.Event) error {
 		fmt.Printf("kubelet handling Delete key = %v\n", string(event.Kv.Key))
 
 		podName := utils.GetLastWord(string(event.Kv.Key))
-		cli := StopPod(podName)
+		StopPod(podName)
+		RemovePod(podName)
+	case mvccpb.PUT:
+		fmt.Printf("kubelet handling key = %v, value = %v\n", string(event.Kv.Key), string(event.Kv.Value))
+		// 增加一个pod的操作
+		operation := utils.GetLastWord(string(event.Kv.Key))
+		var podInfoGround pod.Pod
+		var podInfo *pod.Pod
+		err = json.Unmarshal(event.Kv.Value, &podInfoGround)
+		podInfo = &podInfoGround
+		if err != nil {
+			panic(err)
+		}
+		podName := podInfo.Meta.Name
+
+		switch operation {
+		case constant.CREATE:
+			// 是创建操作
+			CreateAndRunPod(podInfo)
+			podIP := environment.GetPodIPByName(podName)
+			podInfo.Addr = podIP
+		case constant.DELETE:
+			// 是删除命令
+					cli := StopPod(podName)
 		RemovePod(podName)
 		dksdk.StopContainer(podName+"-pause", cli)
 		dksdk.RemoveContainer(podName+"-pause", cli)
-	case mvccpb.PUT:
-		fmt.Printf("kubelet handling key = %v, value = %v\n", string(event.Kv.Key), string(event.Kv.Value))
-		// 增加/修改 一个pod的操作
-		podName := utils.GetLastWord(string(event.Kv.Key))
-		operation := string(event.Kv.Value)
-		switch operation {
-		case podName:
-			// 是创建操作
-			var podInfo *pod.Pod
-			podInfo = apiserver.GetPodInfo(podName)
-			CreateAndRunPod(podInfo)
-		case constant.StopFlag:
-			// 是停止命令
-			StopPod(podName)
-		case constant.RemoveFlag:
-			// 是删除命令
-			StopPod(podName)
-			RemovePod(podName)
 		default:
 			fmt.Printf("op = %v, it not in any!\n", operation)
 		}

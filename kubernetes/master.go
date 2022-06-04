@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"minik8s/apiserver"
-	"minik8s/config"
+	//"minik8s/config"
 	"minik8s/constant"
 	"minik8s/controllerManager"
-	"minik8s/environment"
+	//"minik8s/environment"
 	"minik8s/kubelet"
 )
 
@@ -17,12 +17,12 @@ import (
 */
 func StartUpMaster() {
 	var err error
-	err = environment.EtcdStartUp()
+	//err = environment.EtcdStartUp(config.Configs.MasterIP)
 	if err != nil {
 		panic(err)
 		return
 	}
-	err = environment.FlannelStartUp(config.Configs.EtcdIp)
+	//err = environment.FlannelStartUp(config.Configs.MasterIP)
 	if err != nil {
 		panic(err)
 		return

@@ -11,6 +11,7 @@ const (
 	RelationPrefix   string = "relation"
 	ReplayPrefix     string = "reply"
 	WatchPrefix      string = "watch"
+	KubeletPrefix    string = "kubelet"
 
 	ReplayOK    string = "__OK__"
 	ReplayERROR string = "__ERROR__"
@@ -32,8 +33,10 @@ const (
 	RemoveFlag string = "__remove__"
 	UpdateFlag string = "__update__"
 
-	EtcdSh        string = "./Scripts/etcdSh"
+	EtcdSh        string = "./Scripts/etcdSh.sh"
 	EnvironmentSh string = "./Scripts/envStartUp.sh"
+	TmpSh         string = "./Scripts/tmp.sh"
+	FlannelSh     string = "./Scripts/flannelSh.sh"
 
 	MasterNodeFile string = "./config/masterNode.yaml"
 )

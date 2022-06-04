@@ -154,6 +154,18 @@ func DistributePodtoNode(nodeName string, podName string) error {
 	keys = append(keys, key)
 	values = append(values, value)
 
+	key = etcd.SetKey(
+		etcd.SetPrefix(constant.KubeletPrefix),
+		etcd.SetSourceType(constant.NodeSourceName),
+		etcd.SetNodeName(nodeName),
+		etcd.SetPodName(podName),
+		etcd.JustAppend(constant.CREATE))
+	podInfo := GetPodInfo(podName)
+	getstr, _ := json.Marshal(podInfo)
+	value = string(getstr)
+	keys = append(keys, key)
+	values = append(values, string(value))
+
 	SyncPutList(keys, values)
 
 	return nil

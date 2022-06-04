@@ -132,6 +132,20 @@ func SyncDel(key []string) {
 	}
 }
 
+//SyncDelWithPrefix
+/*
+在etcd中删除某个key
+*/
+func SyncDelWithPrefix(key []string) {
+	if len(key) == 0 {
+		return
+	} else if len(key) == 1 {
+		go etcd.DeleteWithPrefix(key[0])
+	} else {
+		go etcd.DeleteListWithPrefix(key)
+	}
+}
+
 // region 添加关系relation
 
 func SaveRelationPodtoNode(keyname string, valname string) {

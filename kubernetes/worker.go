@@ -9,7 +9,6 @@ import (
 	"minik8s/apiserver"
 	"minik8s/config"
 	"minik8s/constant"
-	"minik8s/environment"
 	"minik8s/kubelet"
 	"minik8s/lab/etcd"
 	"minik8s/registry/node"
@@ -20,7 +19,6 @@ var tmpNode node.Node
 
 func StartUpWorker() {
 	var err error
-	err = environment.FlannelStartUp(config.Configs.EtcdIp)
 	if err != nil {
 		panic(err)
 		return
@@ -31,7 +29,7 @@ func StartUpWorker() {
 		panic(err)
 	}
 	fmt.Printf("read file:\n%v\n", string(nodeFile))
-	err = environment.FlannelStartUp(config.Configs.MasterIP)
+	//err = environment.FlannelStartUp(config.Configs.MasterIP)
 	kubelet.StartUp()
 	kubelet.IptablesInit()
 }

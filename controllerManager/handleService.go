@@ -90,11 +90,12 @@ func deleteService(event *clientv3.Event) error {
 	case mvccpb.PUT:
 		var keys []string
 		err = json.Unmarshal(event.Kv.Value, &keys)
+		var name = keys[0]
 		if err != nil {
 			return err
 		}
-		RemoveServices(keys)
-		apiserver.ActDeleteService(keys)
+		delser := RemoveServices(name)
+		apiserver.ActDeleteService(name, delser)
 
 	}
 	return err

@@ -23,5 +23,5 @@ func Main() {
 	fmt.Println("[Api Server] Main started!")
 }
 func init() {
-	etcd.TestConnect()
+	//etcd.TestConnect()
 }
