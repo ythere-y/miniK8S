@@ -30,5 +30,6 @@ func ControllerStartUp() {
 	podControllerWatch()
 	serviceControllerWatch()
 	replicasetControllerWatch()
+	ReloadControllerWatch()
 	RsWatch()
 }
