@@ -42,7 +42,7 @@ var exitCmd = &cobra.Command{
 			names = append(names, podName)
 		}
 		apiserver.CmdStopPods(names)
-		time.Sleep(1 * time.Second)
+		time.Sleep(90 * time.Second)
 		os.Exit(1)
 	},
 }
