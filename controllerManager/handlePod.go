@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"minik8s/apiserver"
 	"minik8s/constant"
+	"minik8s/lab/etcd"
 	. "minik8s/lab/etcd"
 	pod2 "minik8s/registry/pod"
 	"minik8s/utils"
@@ -37,6 +38,19 @@ func podControllerWatch() {
 		JustAppend(constant.STOP),
 	)
 	apiserver.SyncWatch(watchName, stopPod)
+
+	watchName = SetKey(
+		SetPrefix(constant.ControllerPrefix),
+		SetSourceType(constant.PodSourceName),
+		JustAppend(constant.WATCH),
+	)
+	apiserver.SyncWatch(watchName, watchPod)
+
+	watchName = SetKey(
+		SetPrefix(constant.WatchPrefix),
+		SetSourceType(constant.PodSourceName),
+	)
+	apiserver.SyncWatch(watchName, dealFail)
 }
 
 // region 增
@@ -106,6 +120,48 @@ func deletePod(event *clientv3.Event) error {
 	}
 	return err
 
+}
+
+func watchPod(event *clientv3.Event) error {
+	fmt.Printf("controller start watching pod\n")
+	var err error
+	switch event.Type {
+	case mvccpb.PUT:
+		var podName string
+		podName = string(event.Kv.Value)
+		// 根据Podname获得node name
+		nodeName, err := etcd.GetValue(
+			etcd.SetKey(
+				etcd.SetPrefix(constant.RelationPrefix),
+				etcd.SetSourceType(constant.PodSourceName),
+				etcd.JustAppend(podName),
+				etcd.JustAppend(constant.NodeSourceName)))
+		utils.HandleError("watchPod controller get node value error", err)
+		// 通知kubelet监控健康状态
+		buildKey := etcd.SetKey(
+			etcd.SetPrefix(constant.WatchPrefix),
+			etcd.SetSourceType(constant.NodeSourceName),
+			etcd.JustAppend(nodeName),
+			etcd.JustAppend(podName))
+		buildvalue := podName
+		apiserver.SyncPut(buildKey, buildvalue)
+	}
+	return err
+}
+
+// node节点上有Pod fail了
+func dealFail(event *clientv3.Event) error {
+	var err error
+	switch event.Type {
+	case mvccpb.PUT:
+		var podName string
+		podName = string(event.Kv.Value)
+		// //先删除旧的Pod
+		// apiserver.CmdDeletePod([]string{podName})
+		//重新创建fail的pod
+		err = DisPodtoNode(podName)
+	}
+	return err
 }
 
 //CmdStopPods

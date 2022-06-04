@@ -3,13 +3,14 @@ package apiserver
 import (
 	"encoding/json"
 	"fmt"
-	clientv3 "go.etcd.io/etcd/client/v3"
 	"io/ioutil"
 	"minik8s/constant"
 	"minik8s/lab/etcd"
 	pod2 "minik8s/registry/pod"
 	"minik8s/utils"
 	"time"
+
+	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
 // region 增
@@ -107,6 +108,8 @@ func CmdStopPods(names []string) {
 func CmdDeletePod(names []string) {
 	// 检查是否存在在relation关系中
 	nameSet := utils.ParseNames(names)
+	fmt.Printf("cmd delete pod check nameset: ")
+	fmt.Print(nameSet)
 	for _, name := range nameSet {
 		path := etcd.SetKey(
 			etcd.SetPrefix(constant.RegistryPrefix),

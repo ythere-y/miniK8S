@@ -2,9 +2,10 @@ package cmd
 
 import (
 	"fmt"
+	"minik8s/apiserver"
+
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	"minik8s/apiserver"
 )
 
 var PodCmd = &cobra.Command{
@@ -38,7 +39,10 @@ var poddelete = &cobra.Command{
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("delete pod by name %v\n", args[0])
-		apiserver.CmdDeletePod(args)
+		for _, arg := range args {
+			apiserver.CmdDeletePod([]string{arg})
+		}
+		// apiserver.CmdDeletePod(args)
 	},
 }
 var podstop = &cobra.Command{

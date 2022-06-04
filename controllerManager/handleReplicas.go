@@ -9,7 +9,6 @@ import (
 	. "minik8s/lab/etcd"
 	"minik8s/registry/replicaset"
 	"minik8s/utils"
-	"reflect"
 	"strconv"
 
 	"go.etcd.io/etcd/api/v3/mvccpb"
@@ -17,8 +16,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-func init() {
-	fmt.Printf("Pod controller init!")
+func replicasetControllerWatch() {
+	fmt.Printf("Replicaset controller init!")
 	var watchName string
 	watchName = SetKey(
 		SetPrefix(constant.ControllerPrefix),
@@ -41,6 +40,7 @@ func CreateRs(event *clientv3.Event) error {
 	var err error
 	switch event.Type {
 	case mvccpb.PUT:
+		fmt.Printf("controller rs start creating")
 		var newRsYaml replicaset.RSyaml
 		err = yaml.Unmarshal(event.Kv.Value, &newRsYaml)
 		if err != nil {
@@ -50,22 +50,29 @@ func CreateRs(event *clientv3.Event) error {
 		err = apiserver.SaveRsInfo(rsInfo)
 		utils.HandleError("save replicaset info error", err)
 		// TODO: deal with pod replicas, create pod in some nodes. UNFINISHED
-		if reflect.DeepEqual(rsInfo.RSspec.SelectorLabels,
-			rsInfo.PodTemplate.Meta.Labels) {
-			replicas := rsInfo.RSspec.Replicas
-			pods := replicaset.CreatePodInstances(rsInfo, replicas)
-			for _, pod := range pods {
-				err = apiserver.SaveRsPodInfo(rsInfo, pod)
-				utils.HandleError("save rs info error", err)
-				// create pod
-				AddPod(pod)
-				err = apiserver.SavePodInfo(pod)
-				utils.HandleError("save pod info error", err)
-
-				// 这里取消了scheduler的数据转发层，直接把scheduler作为controller内部的一个分支
-				err = DisPodtoNode(pod.Meta.Name)
+		// if reflect.DeepEqual(rsInfo.RSspec.SelectorLabels,
+		// 	rsInfo.PodTemplate.Meta.Labels) {
+		fmt.Printf("controller rs create pods")
+		replicas := rsInfo.RSspec.Replicas
+		pods := replicaset.CreatePodInstances(rsInfo, replicas)
+		for _, pod := range pods {
+			for _, mempod := range MemPods {
+				if mempod.Meta.Name == pod.Meta.Name {
+					fmt.Printf("pod %v already exist~!\n", pod.Meta.Name)
+					return err
+				}
 			}
+			err = apiserver.SaveRsPodInfo(rsInfo, pod)
+			utils.HandleError("save rs info error", err)
+			// create pod
+			AddPod(pod)
+			err = apiserver.SavePodInfo(pod)
+			utils.HandleError("save pod info error", err)
+
+			// 这里取消了scheduler的数据转发层，直接把scheduler作为controller内部的一个分支
+			err = DisPodtoNode(pod.Meta.Name)
 		}
+		// }
 	}
 	return err
 }
@@ -81,7 +88,8 @@ func DeleteRs(event *clientv3.Event) error {
 	case mvccpb.PUT:
 		var names []string
 		var rsDelTar []string
-		var podDelTar []string
+		// var podDelTar []string
+		var rspodDelTar []string
 		err = json.Unmarshal(event.Kv.Value, &names)
 		for _, rsname := range names {
 			// set rs key to be deleted
@@ -98,14 +106,24 @@ func DeleteRs(event *clientv3.Event) error {
 			for i := 1; i <= replicas; i++ {
 				rspodname := podname + "-" + strconv.Itoa(i)
 				// 之后会交给deletePod处理
-				podDelTar = append(podDelTar, rspodname)
+				// podDelTar = append(podDelTar, rspodname)
+				// delete rs pod relations
+				rspodkey := etcd.SetKey(
+					etcd.SetPrefix(constant.RegistryPrefix),
+					etcd.SetSourceType(constant.ReplicaSourceName),
+					etcd.JustAppend(rsname),
+					etcd.JustAppend(rspodname))
+				rspodDelTar = append(rspodDelTar, rspodkey)
+				// delete pod
+				apiserver.CmdDeletePod([]string{rspodname})
 			}
 		}
-		// delete rs info
+		// delete rs info and relation info
 		apiserver.SyncDel(rsDelTar)
+		apiserver.SyncDel(rspodDelTar)
 		// delete pods in these rs
-		apiserver.CmdStopPods(podDelTar)
-		apiserver.CmdDeleteNode(podDelTar)
+		// apiserver.CmdStopPods(podDelTar)
+		// apiserver.CmdDeletePod(podDelTar)
 	}
 	return err
 }

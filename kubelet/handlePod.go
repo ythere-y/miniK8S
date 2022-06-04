@@ -1,14 +1,12 @@
 package kubelet
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/docker/docker/client"
 	"go.etcd.io/etcd/api/v3/mvccpb"
 	clientv3 "go.etcd.io/etcd/client/v3"
 	"minik8s/apiserver"
 	"minik8s/constant"
-	"minik8s/environment"
 	"minik8s/lab/dksdk"
 	. "minik8s/lab/etcd"
 	"minik8s/registry/pod"
@@ -26,10 +24,24 @@ func kubeletePodWatch() {
 	)
 	apiserver.SyncWatch(watchName, nodehandler)
 
+	watchName = SetKey(
+		SetPrefix(constant.WatchPrefix),
+		SetSourceType(constant.NodeSourceName),
+		SetNodeName(NodeName),
+	)
+	apiserver.SyncWatch(watchName, watchHandler)
+
 }
 func nodehandler(event *clientv3.Event) error {
 	var err error
 	switch event.Type {
+	case mvccpb.DELETE:
+		// 删除一个pod的操作
+		fmt.Printf("kubelet handling Delete key = %v\n", string(event.Kv.Key))
+
+		podName := utils.GetLastWord(string(event.Kv.Key))
+		StopPod(podName)
+		RemovePod(podName)
 	case mvccpb.PUT:
 		fmt.Printf("kubelet handling key = %v, value = %v\n", string(event.Kv.Key), string(event.Kv.Value))
 		// 增加一个pod的操作
@@ -51,8 +63,10 @@ func nodehandler(event *clientv3.Event) error {
 			podInfo.Addr = podIP
 		case constant.DELETE:
 			// 是删除命令
-			StopPod(podName)
-			RemovePod(podName)
+					cli := StopPod(podName)
+		RemovePod(podName)
+		dksdk.StopContainer(podName+"-pause", cli)
+		dksdk.RemoveContainer(podName+"-pause", cli)
 		default:
 			fmt.Printf("op = %v, it not in any!\n", operation)
 		}
@@ -126,7 +140,7 @@ func CliCreatePodByPod(cli *client.Client, pod pod.Pod, net string) uint32 {
  * API: stop pod
  * cli: docker client; podId: pod id specified to stop
 **/
-func StopPod(name string) {
+func StopPod(name string) *client.Client {
 	for index, pod := range KPods {
 		if pod.Meta.Name == name {
 			// get its client
@@ -136,8 +150,10 @@ func StopPod(name string) {
 			}
 			// stop manually, failed
 			KPods[index].Stats.Status = POD_FAILED
+			return cli
 		}
 	}
+	return nil
 }
 
 //RemovePod
@@ -145,7 +161,7 @@ func StopPod(name string) {
  * API: remove pod
  * cli: docker client; podId: pod to remove
 **/
-func RemovePod(name string) {
+func RemovePod(name string) *client.Client {
 	for index, pod := range KPods {
 		if pod.Meta.Name == name {
 			// get its client
@@ -156,8 +172,10 @@ func RemovePod(name string) {
 			}
 			// delete pod info from global list
 			KPods = append(KPods[:index], KPods[index+1:]...)
+			return cli
 		}
 	}
+	return nil
 }
 
 // endregion
@@ -213,6 +231,63 @@ func RunPodByName(podName string) {
 	}
 	utils.DebugTanInfo()
 
+}
+
+func watchHandler(event *clientv3.Event) error {
+	var err error
+	switch event.Type {
+	case mvccpb.PUT:
+		var podName string
+		podName = string(event.Kv.Value)
+		go kubeletWatchPod(podName)
+	}
+	return err
+}
+
+func kubeletWatchPod(podname string) {
+	cli, err := client.NewClientWithOpts(client.FromEnv)
+	utils.HandleError("kubelete watch pod create client error", err)
+	//拿到对应的pod
+	value, err := etcd.GetValue(
+		etcd.SetKey(
+			etcd.SetPrefix(constant.RegistryPrefix),
+			etcd.SetSourceType(constant.PodSourceName),
+			etcd.JustAppend(podname)))
+	utils.HandleError("kubelet watch pod get pod error", err)
+
+	var podtmp pod.Pod
+	err = json.Unmarshal([]byte(value), &podtmp)
+	utils.HandleError("kubelet watch get pod json unmarshal error", err)
+
+	//获取pod里面的容器信息
+	var contNames []string
+	for _, cont := range podtmp.Containers {
+		contname := cont.Name
+		contNames = append(contNames, contname)
+	}
+
+	go func(cli *client.Client, names []string, podname string) {
+		for {
+			//每4秒检查一次
+			t := time.NewTicker(4 * time.Second)
+			select {
+			case <-t.C:
+				//检查容器运行情况，如果有容器fail了，就通知master
+				for _, name := range names {
+					if !dksdk.IsRun(cli, name) {
+						buildkey := etcd.SetKey(
+							etcd.SetPrefix(constant.WatchPrefix),
+							etcd.SetSourceType(constant.PodSourceName),
+							etcd.JustAppend(podname),
+						)
+						buildvalue := podname
+						apiserver.SyncPut(buildkey, buildvalue)
+						break
+					}
+				}
+			}
+		}
+	}(cli, contNames, podname)
 }
 
 // endregion
