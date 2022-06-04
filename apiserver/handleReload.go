@@ -13,5 +13,5 @@ func Reload() {
 		etcd.JustAppend(time.Now().String()),
 	)
 	value := "reload"
-	etcd.Put(key, string(value))
+	SyncPut(key, string(value))
 }
