@@ -22,4 +22,5 @@ func SaveAsInfo(as autoscaler.AutoScaler) error {
 	value, err := json.Marshal(as)
 	utils.HandleError("save as info error", err)
 	SyncPut(key, string(value))
+	return err
 }
