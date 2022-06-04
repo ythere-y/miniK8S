@@ -10,7 +10,7 @@ type AutoScalerSpec struct {
 	MaxReplicas uint32
 	Metrics     AutoScalerMetrics
 	Selector    struct {
-		Labels map[string]string
+		PodName string
 	}
 }
 
@@ -28,12 +28,12 @@ type AutoScalerYaml struct {
 	Spec     struct {
 		MinReplicas uint32 `yaml:"minreplicas"`
 		MaxReplicas uint32 `yaml:"maxreplicas"`
-		Metrics     struct {
+		Selector    struct {
+			PodName string `yaml:"podname"`
+		}
+		Metrics struct {
 			Cpu float32 `yaml:"cpu"`
 			Mem float32 `yaml:"memory"`
-		}
-		Selector struct {
-			Labels map[string]string `yaml:"labels"`
 		}
 	}
 }

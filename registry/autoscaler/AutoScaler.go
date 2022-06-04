@@ -26,7 +26,7 @@ func ParseAutoScaler(file string) AutoScaler {
 	newAutoScaler.Spec.MaxReplicas = asYaml.Spec.MaxReplicas
 	newAutoScaler.Spec.Metrics.Cpu = asYaml.Spec.Metrics.Cpu
 	newAutoScaler.Spec.Metrics.Mem = asYaml.Spec.Metrics.Mem
-	newAutoScaler.Spec.Selector.Labels = asYaml.Spec.Selector.Labels
+	newAutoScaler.Spec.Selector.PodName = asYaml.Spec.Selector.PodName
 
 	return newAutoScaler
 }

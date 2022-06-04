@@ -28,6 +28,7 @@ const (
 	STOP   string = "stop"
 	CHECK  string = "check"
 	WATCH  string = "watch"
+	RELOAD string = "reload"
 
 	StopFlag   string = "__stop__"
 	RemoveFlag string = "__remove__"
