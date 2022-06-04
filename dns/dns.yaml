@@ -2,7 +2,7 @@ kind: Dns
 name: test
 host: test.service
 binds:
-  - service-ip: '10.10.10.10'
-    path: s11
-  - service-ip: '10.10.10.10'
-    path: s22
+  - service-ip: '192.168.30.30'
+    path: s1
+  - service-ip: '192.168.40.40'
+    path: s2
