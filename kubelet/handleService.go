@@ -41,19 +41,37 @@ func servicehandler(event *clientv3.Event) error {
 		case constant.CREATE:
 			fmt.Printf("[set]\n")
 			// 遍历写入iptables
-			for _, podip := range servieInfo.PodIp {
-				err = environment.SetIptables(servieInfo.ServiceIP, servieInfo.ServicePort, podip, servieInfo.TargetPort)
-				if err != nil {
-					panic(err)
+			len := len(servieInfo.PodIp)
+			for index, podip := range servieInfo.PodIp {
+				if index != len-1 {
+					probability := utils.GetProbability(len)
+					err = environment.SetIptablesWithRandom(servieInfo.ServiceIP, servieInfo.ServicePort, podip, servieInfo.TargetPort, probability)
+					if err != nil {
+						panic(err)
+					}
+				} else {
+					err = environment.SetIptables(servieInfo.ServiceIP, servieInfo.ServicePort, podip, servieInfo.TargetPort)
+					if err != nil {
+						panic(err)
+					}
 				}
 			}
 		case constant.DELETE:
 			fmt.Printf("[remove]\n")
 			// 遍历写入iptables
-			for _, podip := range servieInfo.PodIp {
-				err = environment.RemoveIptables(servieInfo.ServiceIP, servieInfo.ServicePort, podip, servieInfo.TargetPort)
-				if err != nil {
-					panic(err)
+			len := len(servieInfo.PodIp)
+			for index, podip := range servieInfo.PodIp {
+				if index != len-1 {
+					probability := utils.GetProbability(len)
+					err = environment.RemoveIptablesWithRandom(servieInfo.ServiceIP, servieInfo.ServicePort, podip, servieInfo.TargetPort, probability)
+					if err != nil {
+						panic(err)
+					}
+				} else {
+					err = environment.RemoveIptables(servieInfo.ServiceIP, servieInfo.ServicePort, podip, servieInfo.TargetPort)
+					if err != nil {
+						panic(err)
+					}
 				}
 			}
 

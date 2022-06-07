@@ -8,6 +8,7 @@ import (
 	"minik8s/constant"
 	"os"
 	"os/exec"
+	"strconv"
 	"time"
 )
 
@@ -39,6 +40,16 @@ func FlannelStartUp(etcdip string) error {
 	return err
 }
 
+func SetIptablesWithRandom(srcIP string, srcPort string, desIP string, desPort string, probability float64) error {
+	var (
+		err error
+	)
+	fmt.Printf("[IPtables] set ~!\n")
+	iptablesSetWithRandom(srcIP, srcPort, desIP, desPort, probability)
+	err = nil
+	return err
+}
+
 func SetIptables(srcIP string, srcPort string, desIP string, desPort string) error {
 	var (
 		err error
@@ -49,12 +60,21 @@ func SetIptables(srcIP string, srcPort string, desIP string, desPort string) err
 	return err
 }
 
+func RemoveIptablesWithRandom(srcIP string, srcPort string, desIP string, desPort string, probability float64) error {
+	var (
+		err error
+	)
+	fmt.Printf("[IPtables] set ~!\n")
+	iptablesDeleteWithRandom(srcIP, srcPort, desIP, desPort, probability)
+	err = nil
+	return err
+}
 func RemoveIptables(srcIP string, srcPort string, desIP string, desPort string) error {
 	var (
 		err error
 	)
 	fmt.Printf("[IPtables] set ~!\n")
-	iptablesSet(srcIP, srcPort, desIP, desPort)
+	iptablesDelete(srcIP, srcPort, desIP, desPort)
 	err = nil
 	return err
 }
@@ -149,6 +169,19 @@ func writeAndRun(filename string, context string) {
 
 }
 
+func iptablesDeleteWithRandom(srcIP string, srcPort string, desIP string, desPort string, probability float64) {
+	var (
+		totalString string
+		cmdLine     string
+	)
+	getstr := strconv.FormatFloat(probability, 'f', 2, 64)
+	//iptables -t nat -A OUTPUT -d 192.168.30.30/32 -p tcp -m statistic --dport 10 --mode random --probability 0.33 -j DNAT --to-destination 10.0.17.2:80
+	cmdLine = "iptables -t nat -D OUTPUT -d " + srcIP + "/32 -p tcp -m statistic --dport " + srcPort + " --mode_random --probability " + getstr + " -j DNAT --to-destination " + desIP + ":" + desPort
+	totalString += cmdLine + " \n"
+	cmdLine = "iptables -t nat -D PREROUTING -d " + srcIP + "/32 -p tcp -m statistic --dport " + srcPort + " --mode_random --probability " + getstr + " -j DNAT --to-destination " + desIP + ":" + desPort
+	totalString += cmdLine + " \n"
+	writeAndRun(constant.TmpSh, totalString)
+}
 func iptablesDelete(srcIP string, srcPort string, desIP string, desPort string) {
 	var (
 		totalString string
@@ -162,6 +195,19 @@ func iptablesDelete(srcIP string, srcPort string, desIP string, desPort string) 
 	writeAndRun(constant.TmpSh, totalString)
 }
 
+func iptablesSetWithRandom(srcIP string, srcPort string, desIP string, desPort string, probability float64) {
+	var (
+		totalString string
+		cmdLine     string
+	)
+	getstr := strconv.FormatFloat(probability, 'f', 2, 64)
+	//iptables -t nat -A OUTPUT -d 192.168.30.30/32 -p tcp -m statistic --dport 10 --mode random --probability 0.33 -j DNAT --to-destination 10.0.17.2:80
+	cmdLine = "iptables -t nat -A OUTPUT -d " + srcIP + "/32 -p tcp -m statistic --dport " + srcPort + " --mode_random --probability " + getstr + " -j DNAT --to-destination " + desIP + ":" + desPort
+	totalString += cmdLine + " \n"
+	cmdLine = "iptables -t nat -A PREROUTING -d " + srcIP + "/32 -p tcp -m statistic --dport " + srcPort + " --mode_random --probability " + getstr + " -j DNAT --to-destination " + desIP + ":" + desPort
+	totalString += cmdLine + " \n"
+	writeAndRun(constant.TmpSh, totalString)
+}
 func iptablesSet(srcIP string, srcPort string, desIP string, desPort string) {
 	var (
 		totalString string
